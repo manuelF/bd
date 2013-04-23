@@ -7,78 +7,89 @@ CK corresponde a \textit{Candidate Key} o \textit{Clave candidata}, y FK corresp
 \textit{Foreign Key} o \textit{Clave for\'anea}.
 
 \begin{itemize}
-	\item \textbf{Usuario}(idUsuario,username,nombre,apellido,telefono,fechaNacimiento,
-	preferencias,\\ direccion,profesion,email,clavehash,idClase,idPaisNacimiento)
+	\item \textbf{Usuario}(\underline{idUsuario},username,nombre,apellido,telefono,fechaNacimiento,
+	preferencias,\\ direccion,profesion,email,clavehash,\dashuline{idClase},\dashuline{idPaisNacimiento},\dashuline{idClaseFrecuente})
 		\begin{itemize}
 			\item \textit{PK:} idUsuario
 			\item \textit{CK:} idUsuario,username
-			\item \textit{FK:} idClase,idPaisNacimiento
+			\item \textit{FK:} idClase,idPaisNacimiento,idClaseFrecuente
 		\end{itemize}
-	\item \textbf{Tarjeta}(idTarjeta,username,empresa,nroTarjeta,codigoSeguridad,direccion)
+	\item \textbf{Tarjeta}(\underline{\dashuline{idUsuario},idTarjeta},empresa,nroTarjeta,codigoSeguridad,direccion)
 		\begin{itemize}
-			\item \textit{PK:} idUsuario,idTarjeta
+			\item \textit{PK:} (idUsuario,idTarjeta)
 			\item \textit{CK:} (idUsuario,idTarjeta), (idUsuario,empresa,nroTarjeta)
-			\item \textit{FK:} username
+			\item \textit{FK:} idUsuario
 		\end{itemize}
-	\item \textbf{Reservas}(idReserva,username,tipoPago,fechaCaducidad,datosViajante)
+	\item \textbf{Reservas}(\underline{idReserva},\dashuline{idUsuario},tipoPago,fechaCaducidad,datosViajante)
 		\begin{itemize}
 			\item \textit{PK = CK:} idReserva
-			\item \textit{FK:} username
+			\item \textit{FK:} idUsuario
 		\end{itemize}
-	\item \textbf{ViajesConEscalas}(idViajeConEscalas,idViajePartida,idViajeLlegada)
+	\item \textbf{ViajesConEscalas}(\underline{idViajeConEscalas},\dashuline{idViajePartida},\dashuline{idViajeLlegada})
 		\begin{itemize}
 			\item \textit{PK = CK:} idViajeConEscalas
 			\item \textit{FK: } idViajePartida,idViajeLlegada
 		\end{itemize}
-	\item \textbf{EsReservaPara}(idReserva,idVueloConEscalas,idClase,costo)
+	\item \textbf{EsReservaPara}(\underline{\dashuline{idReserva},\dashuline{idVueloConEscalas}},\dashuline{idClase},costo)
 		\begin{itemize}
-			\item \textit{PK = CK: } (idReserva,idVueloConEscalas,idClase)
+			\item \textit{PK = CK: } (idReserva,idVueloConEscalas)
 			\item \textit{FK: } idReserva,idVueloConEscalas,idClase
 		\end{itemize}
-	\item \textbf{Vuelos}(idVuelo,idAeronave,fechaSalida,fechaLlegada,idAeropuertoSalida,idAeropuertoLlegada)
+	\item \textbf{Vuelos}(\underline{idVuelo},\dashuline{idAeronave},fechaSalida,fechaLlegada,\dashuline{idAeropuertoSalida},\dashuline{idAeropuertoLlegada})
 		\begin{itemize}
 			\item \textit{PK = CK:} idVuelo
 			\item \textit{FK: } idAeronave,idAeropuertoSalida,idAeropuertoLlegada
 		\end{itemize}
-	\item \textbf{HaceEscalaEn}(idVueloConEscalas,idVuelo,NumeroEscala)
+	\item \textbf{HaceEscalaEn}(\underline{\dashuline{idVueloConEscalas},\dashuline{idVuelo}},NumeroEscala)
 		\begin{itemize}
 			\item \textit{PK = CK:} (idVueloConEscalas,idVuelo)
 			\item \textit{FK: } idVuelo,idVueloConEscalas
 		\end{itemize}
-	\item \textbf{Aeropuertos}(idAeropuerto,tasa,opcionesTransporte, nombre, idCiudad)
+	\item \textbf{Aeropuertos}(\underline{idAeropuerto},tasa,opcionesTransporte, nombre, \dashuline{idCiudad})
 		\begin{itemize}
 			\item \textit{PK: } idAeropuerto
 			\item \textit{CK: } nombre
-			\item \textit{FK: } idPais
+			\item \textit{FK: } idCiudad
 		\end{itemize}
-	\item \textbf{TelefonoAeropuerto}	(idAeropuerto,número)
+	\item \textbf{TelefonoAeropuerto}	(\dashuline{idAeropuerto},numero)
 		\begin{itemize}
-			\item \textit{PK = CK: } (idAeropuerto,número)
+			\item \textit{PK = CK: } (idAeropuerto,numero)
 			\item \textit{FK: } idAeropuerto
 		\end{itemize}
-	\item \textbf{Aeronaves}(idAeronave,tripulacion,millas,modelo,idPaisOrigen)
+	\item \textbf{Aeronaves}(\underline{idAeronave},tripulacion,millas,modelo,\dashuline{idPaisOrigen})
 		\begin{itemize}
 			\item \textit{PK = CK: } idAeronave
 			\item \textit{FK: } idPaisOrigen
 		\end{itemize}
-	\item \textbf{Paises}(idPais,nombre)
+	\item \textbf{Paises}(\underline{idPais},nombre)
 		\begin{itemize}
 			\item \textit{PK: } idPais
 			\item \textit{CK: } idPais, nombre
 		\end{itemize}
-	\item \textbf{Ciudades}(idCiudad,nombre)
+	\item \textbf{Ciudades}(\underline{idCiudad},nombre,\dashuline{idPais})
 		\begin{itemize}
 			\item \textit{PK: } idCiudad
 			\item \textit{CK: } idCiudad, nombre
+			\item \textit{FK: } idPais
 		\end{itemize}
-	\item \textbf{Clases}(idClase,nombre)
+	\item \textbf{Clases}(\underline{idClase},nombre)
 		\begin{itemize}
 			\item \textit{PK: } idClase
 			\item \textit{CK: } idClase, nombre
 		\end{itemize}
-	\item \textbf{DisponeDeAsientos}(idAeronave,idClase,asientos)
+	\item \textbf{DisponeDeAsientos}(\underline{\dashuline{idAeronave},\dashuline{idClase}},asientos)
 		\begin{itemize}
 			\item \textit{PK = CK: } (idAeronave,idClase)
 			\item \textit{FK: } idClase, idAeronave	
+		\end{itemize}
+	\item \textbf{CiudadesFavoritas}(\underline{\dashuline{idUsuario},\dashuline{idCiudad}})
+		\begin{itemize}
+			\item \textit{PK = CK: } (idUsuario,idCiudad)
+			\item \textit{FK: } idUsuario, idCiudad	
+		\end{itemize}
+	\item \textbf{Tel\'efono}(\underline{n\'umero,\dashuline{idAeropuerto}})
+		\begin{itemize}
+			\item \textit{PK = CK: } (numero,idAeropuerto)
+			\item \textit{FK: } idAeropuerto
 		\end{itemize}
 \end{itemize}	
