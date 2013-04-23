@@ -9,23 +9,7 @@
 
 			\item Resoluci\'on:
 
-			\begin{lstlisting}
-SELECT nombre, apellido, idUsuario FROM usuarios
-	WHERE idUsuario IN (
-		SELECT idUsuario FROM usuarios WHERE NOT EXISTS (
-			SELECT p.idPais FROM paises WHERE NOT EXISTS (
-				SELECT idReserva FROM reservas r
-				JOIN esReservaPara ep ON r.idReserva = ep.idReserva
-				JOIN viajeConEscalas vce 
-					ON vce.idViajeConEscalas = ep.idViajeConEscalas
-				JOIN viaje v ON v.idViaje = vce.idViajeLlegada
-				JOIN aeropuerto ap ON v.llega = ap.idAeropuerto
-				JOIN ciudades c ON c.idCiudad = ap.idCiudad
-					WHERE c.idPais = p.idPais
-			)
-		)
-	)
-			\end{lstlisting}
+			\lstinputlisting{primeraConsulta.sql}
 		\end{itemize}
 	\item Segunda funcionalidad:
 		\begin{itemize}
@@ -36,46 +20,17 @@ SELECT nombre, apellido, idUsuario FROM usuarios
 			de los pr\'oximos 7 d\'ias.
 			\item Resultado: Vamos a utilizar un \textit{trigger}:
 
-			\begin{lstlisting}
-CREATE TRIGGER RestringirReservasUsuario ON Reservas
-	BEFORE INSERT
-	FOR EACH ROW
-	BEGIN
-
-	DECLARE fechaSalida AS DATE
-	DECLARE fechaLlegada AS DATE
-					
-	-- Conseguimos las fechas de salida y llegada
-	SELECT v.fechaSalida INTO fechaSalida 
-		FROM vuelos v,vuelosConEscalas ve, EsReservaDe er
-			WHERE v.idVuelo = ve.idVueloPartida
-			AND ve.idVueloConEscalas = er.idVueloConEscalas
-			AND er.idReserva = :NEW.idReserva
-
-	SELECT v.fechaLlegada INTO fechaLlegada
-	FROM vuelos v,vuelosConEscalas ve, EsReservaDe er
-	WHERE v.idVuelo = ve.idVueloLlegada
-	AND ve.idVueloConEscalas = er.idVueloConEscalas
-	AND er.idReserva = :NEW.idReserva
-				
-	-- Nos fijamos si una reserva se superpone
-	IF( SELECT COUNT(*) FROM reservas WHERE EXISTS
-		( SELECT * FROM vuelos v,vuelosConEscala ve,
-			EsReservaPara ep,Reservas r, Usuario u
-			WHERE v.fechaSalida <= fechaSalida
-				AND v.fechaLlegada >= fechaLlegada
-				AND v.
-		)
-	> 0)
-		BEGIN
-						
-
-			RAISE ERROR ('Restriccion de reservas violada')
-			ROLLBACK TRANSACTION
-		END
-	END
-	\end{lstlisting}
-	
-			\end{itemize}
+			\lstinputlisting{segundaConsulta.sql}
+		\end{itemize}
+	\item Tercera funcionalidad:
+		\begin{itemize}
+			\item Enunciado: Para las rseervas superpuestas que se permiten en el punto anterior, se debe
+			contar con una funcionalidad que cancele una de las reservas duplicadas (la m\'as econ\'omica)
+			cuando la fecha de parida se encuentre dentro de los pr\'oximos 7 d\'ias.
+			
+			\item Resultado:
+			
+			\lstinputlisting{terceraConsulta.sql}
+		\end{itemize}
 \end{itemize}
 
