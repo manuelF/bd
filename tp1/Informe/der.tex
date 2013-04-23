@@ -1,0 +1,57 @@
+\section{Diagrama Entidad Relaci\'on}
+
+\subsection{Diagrama en si}
+
+A continuaci\'on incluimos el Diagrama Entidad Relaci\'on (DER) correspondiente
+al dise\~no realizado para este trabajo. El mismo se puede ver en la Figura~\ref{fig::der}
+
+\subsection{Restricciones adicionales en lenguaje coloquial}
+
+Las siguientes limitaciones adicionales del Diagrama Entidad Relaci\'on mostrado anteriormente,
+y que no se pueden detallar utilizando la notaci\'on misma, se incluyen a continuaci\'on.
+
+\begin{itemize}
+	\item Un usuario puede tener hasta 3 ciudades favoritas (restricci\'on tomada del enunciado).
+	\item Los \'indices de escala de un vuelo con escalas son consecutivos. Adicionalmente, se cumple
+	que los aeropuertos de llegada y de salida es encadenan (esta restricci\'on, si bien no es necesaria
+	la tomamos por simplicidad). Por ``se encadenan'' se entiende que, dada la escala con \'indice $i$
+	ocurre que
+	
+	\begin{itemize}
+		\item $i = 0$ o el aeropuerto de llegada de la escala $i-1$ es el aeropuerto de salida de
+		la escala $i$.
+		\item $i = n-1$ con $n$ la cantidad de escalas del viaje con escalas considerado, o el aeropuerto
+		de llegada de la escala $i$ es el aeropuerto de salida de la escala $i+1$.
+	\end{itemize}
+	
+	\item El vuelo esta determinado no solo por el vuelo en si sino tambi\'en por la clase del asiento. No se
+	hacen otras distinciones entre asientos dentro de una misma clase ni nada por el estilo.
+	\item El precio de un vuelo esta determinado por la clase y el viaje, para cada uno de los viajes que corresponden
+	a las escalas del vuelo.
+	\item La cantidad de reservas que tienen un vuelo bajo una cierta clase dentro de su lista (considerando escalas)
+	no puede superar la cantidad de asientos disponibles para esa clase por la aeronave del vuelo.
+\end{itemize}
+
+\subsection{Explicaci\'on de las decisiones tomadas}
+
+A continuaci\'on detallamos el por qu\'e de algunas de las decisiones tomadas para el diseño del Diagrama Entidad Relaci\'on.
+
+\begin{itemize}
+	\item Se considero, como se explico anteriormente, que un viaje con escalas consiste de un viaje con varias escalas. El
+	precio del viaje esta determinado por las relaci\'on entre los vuelos y clases de los asientos para cada uno los varios 
+	vuelos del viaje, considerando adem\'as las tasas de llegada de los aeropuertos de llegada y salida.
+	\item Se considero preferible mantener la informaci\'on de los datos del viajero separado en cada reserva: La motivaci\'on
+	de esto es que se ve por que el enunciado dice que una reserva puede ser realizada en nombre de otra persona (sin que esa
+	persona sea un usuario registrado). Sin embargo, se le cobrar\'a a la persona registrada que realiz\'o la reserva (usando
+	para ello los datos de cobro que tiene el usuario registrado). Si bien esto puede introducir redundancia cuando un usuario
+	saca una reserva para si mismo, la otra opci\'on ser\'ia mantener valores especiales. Preferimos mantener una duplicaci\'on
+	(se puede para ello usar un \textit{trigger} en los inserts) para mantener la simplicidad de los datos (las otras opciones
+	consideradas implicaban mantener posibles nulls lo cual implicaba mantener una l\'ogica impl\'icita independiente de los
+	datos guardados).
+	\item Se decidi\'o que las multiples reservas de un usuario se modelan como reservas separadas. Sin embargo, una reserva
+	puede comprender varios vuelos.
+	\item Algunos de los detalles del enunciado, a falta de una especificaci\'on m\'as fina de los datos, se decidi\'o mantenerlos
+	como campos de texto con contenido indeterminado. Ejemplos incluyen: la composici\'on de la tripulaci\'on, los datos de llegada
+	y salida de un aeropuerto, los datos de la persona a nombre de cual se hace una reserva, la tasa de un aeropuerto, el modelo
+	de una aeronave, etc.
+\end{itemize}	
