@@ -25,6 +25,7 @@
 \usepackage{listings}
 \usepackage{ulem}
 \usepackage{dashrule}
+\usepackage{pdflscape}
 
 \floatname{algorithm}{Algoritmo}
 
@@ -57,7 +58,7 @@
 \parindent 0em
 \algrenewcommand{\algorithmiccomment}[1]{//\textit{#1} }
 
-\lstset{language=sql,numbers=left,tabsize=4,
+\lstset{language=sql,numbers=left,tabsize=2,
 	morekeywords={BEGIN,DECLARE,FOR,CREATE,PROCEDURE,RAISEERROR,EACH,ROW,BEFORE,AFTER}}
 
 \pagestyle{fancy}
@@ -94,5 +95,15 @@
 \include{mr}
 
 \include{consultas}
+
+\newpage
+\begin{landscape}
+	\begin{figure}[H]
+		\caption{Diagrama Entidad Relaci\'on correspondiente al dise\~no del trabajo pr\'actico}
+		\label{fig::der}
+		\centering
+		\includegraphics[width=1.3\textwidth]{der.png}
+	\end{figure} 
+\end{landscape}
 
 \end{document}

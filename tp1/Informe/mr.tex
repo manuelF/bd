@@ -22,7 +22,7 @@ CK corresponde a \textit{Candidate Key} o \textit{Clave candidata}, y FK corresp
 			\item \textit{FK:} idUsuario
 		\end{itemize}
 	\item \textbf{Reservas}(\underline{idReserva},\dashuline{idUsuario},tipoPago,fechaCaducidad,datosViajante,
-		idVueloConEscalas,idClase}
+		idVueloConEscalas,idClase)
 		\begin{itemize}
 			\item \textit{PK = CK:} idReserva
 			\item \textit{FK:} idUsuario,idVueloConEscalas,idClase
@@ -37,7 +37,8 @@ CK corresponde a \textit{Candidate Key} o \textit{Clave candidata}, y FK corresp
 			\item \textit{PK = CK: } idVueloConEscalas
 			\item \textit{FK: } idVueloConEscalas,idReserva
 		\end{itemize}
-	\item \textbf{Vuelos}(\underline{idVuelo},\dashuline{idAeronave},fechaSalida,fechaLlegada,\dashuline{idAeropuertoSalida},\dashuline{idAeropuertoLlegada})
+	\item \textbf{Vuelos}(\underline{idVuelo},\dashuline{idAeronave},fechaSalida,fechaLlegada,\\ 
+		\dashuline{idAeropuertoSalida},\dashuline{idAeropuertoLlegada})
 		\begin{itemize}
 			\item \textit{PK = CK:} idVuelo
 			\item \textit{FK: } idAeronave,idAeropuertoSalida,idAeropuertoLlegada

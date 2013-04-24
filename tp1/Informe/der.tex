@@ -19,17 +19,20 @@ y que no se pueden detallar utilizando la notaci\'on misma, se incluyen a contin
 	
 	\begin{itemize}
 		\item $i = 0$ o el aeropuerto de llegada de la escala $i-1$ es el aeropuerto de salida de
-		la escala $i$.
+		la escala $i$. Si $i = 0$ el aeropuerto de salida tiene que coincidir con el aeropuerto de llegada
+		del vuelo que sale.
 		\item $i = n-1$ con $n$ la cantidad de escalas del viaje con escalas considerado, o el aeropuerto
-		de llegada de la escala $i$ es el aeropuerto de salida de la escala $i+1$.
+		de llegada de la escala $i$ es el aeropuerto de salida de la escala $i+1$. Si $i = n-1$ entonces
+		el aeropuerto de llegada de esa escala debe concidir con el aeropuerto de salida del vuelo que termina.
 	\end{itemize}
+
+	En particular esto quiere decir, que un vuelo sin escalas tiene el mismo vuelo de salida y llegada.
 	
-	\item El vuelo esta determinado no solo por el vuelo en si sino tambi\'en por la clase del asiento. No se
-	hacen otras distinciones entre asientos dentro de una misma clase ni nada por el estilo.
-	\item El precio de un vuelo esta determinado por la clase y el viaje, para cada uno de los viajes que corresponden
-	a las escalas del vuelo.
-	\item La cantidad de reservas que tienen un vuelo bajo una cierta clase dentro de su lista (considerando escalas)
-	no puede superar la cantidad de asientos disponibles para esa clase por la aeronave del vuelo.
+	\item El precio de un vuelo esta determinado por la clase y el viaje. Se asume que los vuelos
+	intermedios se hacen en la misma clase y esto no tiene injerencia directa en el precio (no se guardan precios intermedios).
+	\item Para cada viaje, la cantidad de asientos reservados para ese viaje (considerando tambi\'en los vuelos
+	que no reservaron directamente sino que es solamente una escala en su viaje) para una clase determinada no supera la
+	cantidad de asientos para esa misma clase en la aeronave.
     \item El usuario unicamente podr\'a tener cargada una tarjeta a la vez en el sistema.
 \end{enumerate}
 
@@ -39,8 +42,11 @@ A continuaci\'on detallamos el por qu\'e de algunas de las decisiones tomadas pa
 
 \begin{enumerate}
 	\item Se consider\'o, como se explico anteriormente, que un viaje con escalas consiste de un viaje con varias escalas. El
-	precio del viaje esta determinado por las relaci\'on entre los vuelos y clases de los asientos para cada uno los varios 
-	vuelos del viaje, considerando adem\'as las tasas de llegada de los aeropuertos de llegada y salida.
+	precio del viaje esta determinado por la relaci\'on entre el vuelo y la clase con la que se realiza el vuelo. Esto implica
+	que se asume que los viajes intermedios (las escalas) se realizan en la misma clase que el viaje. Esto se hizo en base a que
+	simplificaba el modelo y no encontramos un punto del enunciado que requiriera mantener las clases para viajes intermedios.
+	Esto sin embargo produce que para vuelos sin escalas, implicitamente deba ocurrir que el vuelo de llegada y salida sean el
+	mismo vuelo. El resultado fue elegido despu\'es de analizar los \textit{tradeoffs} de implementaci\'on.
 	\item Se consider\'o preferible mantener la informaci\'on de los datos del viajero separado en cada reserva: La motivaci\'on
 	de esto es que se ve por que el enunciado dice que una reserva puede ser realizada en nombre de otra persona (sin que esa
 	persona sea un usuario registrado). Sin embargo, se le cobrar\'a a la persona registrada que realiz\'o la reserva (usando
@@ -49,13 +55,14 @@ A continuaci\'on detallamos el por qu\'e de algunas de las decisiones tomadas pa
 	(se puede para ello usar un \textit{trigger} en los inserts) para mantener la simplicidad de los datos (las otras opciones
 	consideradas implicaban mantener posibles nulls lo cual implicaba mantener una l\'ogica impl\'icita independiente de los
 	datos guardados).
-	\item Se decidi\'o que las multiples reservas de un usuario se modelan como reservas separadas. Sin embargo, una reserva
-	puede comprender varios vuelos.
+	\item Se decidi\'o que las multiples reservas de un usuario se modelan como reservas separadas. Se decidi\'o adicionalmente
+	modelar que una reserva corresponde a solamente un vuelo (dentro de lo que se consideran los datos del backend del WIS).
 	\item Algunos de los detalles del enunciado, a falta de una especificaci\'on m\'as fina de los datos, se decidi\'o mantenerlos
 	como campos de texto con contenido indeterminado. Ejemplos incluyen: la composici\'on de la tripulaci\'on, los datos de llegada
 	y salida de un aeropuerto, los datos de la persona a nombre de cual se hace una reserva, la tasa de un aeropuerto, el modelo
 	de una aeronave, etc.
-	\item El tel\'efono de Aeropuerto se guarda como una entidad d\'ebil (y no como argumento) porque consideramos que un aeropuerto puede tener varios tel\'efonos (a diferencia de un usuario, de quien consideramos s\'olo uno).
+	\item El tel\'efono de Aeropuerto se guarda como una entidad d\'ebil (y no como argumento) porque consideramos 
+	que un aeropuerto puede tener varios tel\'efonos (a diferencia de un usuario, de quien consideramos s\'olo uno).
     \item La unicidad de la tarjeta se desprende de simplificar el sistema de facturaci\'on, que no es la parte crucial de
     modelar. Se podria arreglar vinculando como atributo de la relacion en la reserva la tarjeta usada, pero
     agregaria complejidad convirtiendo la tarjeta en entidades fuertes que tienen que existir aunque el usuario no la use mas,
