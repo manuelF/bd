@@ -21,20 +21,21 @@ CK corresponde a \textit{Candidate Key} o \textit{Clave candidata}, y FK corresp
 			\item \textit{CK:} (idUsuario,idTarjeta), (idUsuario,empresa,nroTarjeta)
 			\item \textit{FK:} idUsuario
 		\end{itemize}
-	\item \textbf{Reservas}(\underline{idReserva},\dashuline{idUsuario},tipoPago,fechaCaducidad,datosViajante)
+	\item \textbf{Reservas}(\underline{idReserva},\dashuline{idUsuario},tipoPago,fechaCaducidad,datosViajante,
+		idVueloConEscalas,idClase}
 		\begin{itemize}
 			\item \textit{PK = CK:} idReserva
-			\item \textit{FK:} idUsuario
+			\item \textit{FK:} idUsuario,idVueloConEscalas,idClase
 		\end{itemize}
-	\item \textbf{ViajesConEscalas}(\underline{idViajeConEscalas},\dashuline{idViajePartida},\dashuline{idViajeLlegada})
+	\item \textbf{VueloConEscalas}(\underline{idViajeConEscalas},\dashuline{idViajePartida},\dashuline{idViajeLlegada})
 		\begin{itemize}
-			\item \textit{PK = CK:} idViajeConEscalas
+			\item \textit{PK = CK:} idVueloConEscalas
 			\item \textit{FK: } idViajePartida,idViajeLlegada
 		\end{itemize}
-	\item \textbf{EsReservaPara}(\underline{\dashuline{idReserva},\dashuline{idVueloConEscalas}},\dashuline{idClase},costo)
+	\item \textbf{PrecioParaClase}(\underline{\dashuline{idVueloConEscalas},\dashuline{isClase}},precio)
 		\begin{itemize}
-			\item \textit{PK = CK: } (idReserva,idVueloConEscalas)
-			\item \textit{FK: } idReserva,idVueloConEscalas,idClase
+			\item \textit{PK = CK: } idVueloConEscalas
+			\item \textit{FK: } idVueloConEscalas,idReserva
 		\end{itemize}
 	\item \textbf{Vuelos}(\underline{idVuelo},\dashuline{idAeronave},fechaSalida,fechaLlegada,\dashuline{idAeropuertoSalida},\dashuline{idAeropuertoLlegada})
 		\begin{itemize}
@@ -43,7 +44,8 @@ CK corresponde a \textit{Candidate Key} o \textit{Clave candidata}, y FK corresp
 		\end{itemize}
 	\item \textbf{HaceEscalaEn}(\underline{\dashuline{idVueloConEscalas},\dashuline{idVuelo}},NumeroEscala)
 		\begin{itemize}
-			\item \textit{PK = CK:} (idVueloConEscalas,idVuelo)
+			\item \textit{PK:} (idVueloConEscalas,idVuelo)
+			\item \textit{CK:} (idVueloConEscalas,idVuelo)
 			\item \textit{FK: } idVuelo,idVueloConEscalas
 		\end{itemize}
 	\item \textbf{Aeropuertos}(\underline{idAeropuerto},tasa,opcionesTransporte, nombre, \dashuline{idCiudad})
