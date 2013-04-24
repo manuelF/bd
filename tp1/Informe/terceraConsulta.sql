@@ -28,7 +28,7 @@ CREATE TRIGGER RestringirCupo ON Reservas
 					AND da.asientos > 
 						( -- contar asientos ocupados de un vuelo/clase
 						SELECT COUNT(*) FROM reservas r
-							WHERE r.idClase = :new.idClase
+							WHERE r.idClase = :NEW.idClase
 							AND 
 							(
 								EXISTS

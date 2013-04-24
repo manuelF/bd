@@ -24,11 +24,16 @@
 		\end{itemize}
 	\item Tercera funcionalidad:
 		\begin{itemize}
-			\item Enunciado: Para las reservas superpuestas que se permiten en el punto anterior, se debe
-			contar con una funcionalidad que cancele una de las reservas duplicadas (la m\'as econ\'omica)
-			cuando la fecha de partida se encuentre dentro de los pr\'oximos 7 d\'ias.
-			
-			\item Resultado:
+			\item Enunciado: Implementaci\'on de alguna restricci\'on adicional que surga del dise\~no.			
+			\item Resultado: Decidimos implementar la siguiente restricci\'on:
+
+			\begin{quotation}
+				Para cada viaje, la cantidad de asientos reservados para ese viaje (considerando tambi\'en los vuelos
+				que no reservaron directamente sino que es solamente una escala en su viaje) para una clase determinada 
+				no supera la cantidad de asientos para esa misma clase en la aeronave.
+			\end{quotation}
+
+			Esta restricci\'on la implementamos mediante un \textit{trigger} en la inserci\'on de una reserva. 
 			
 			\lstinputlisting{terceraConsulta.sql}
 		\end{itemize}

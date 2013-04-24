@@ -26,9 +26,11 @@ CREATE TRIGGER RestringirReservasUsuario ON Reservas
 
 	-- Conseguimos el aeropuerto de llegada y el de salida
 	
-	-- Nos fijamos si una reserva con distinto aeropuerto se superpone 	
+	-- Nos fijamos si una reserva con distinto aeropuerto 
+	-- se superpone 	
 	SELECT r.idReserva AS idReserva
-		FROM reservas r, vuelos v,vuelosConEscalas ve,haceEscalaEn he
+		FROM reservas r,vuelos v,vuelosConEscalas ve,
+			 haceEscalaEn he
 			WHERE v.fechaSalida <= fechaSalida
 				AND v.fechaLlegada >= fechaLlegada
 				AND he.idVuelo = v.idVuelo
@@ -49,11 +51,12 @@ CREATE TRIGGER RestringirReservasUsuario ON Reservas
 	
 	IF(@@ROWCOUNT > 0)
 		BEGIN 
-			RAISEERROR ('Restriccion de reservas violada: Reservas se superponen')
+			RAISEERROR ('Reservas se superponen')
 			ROLLBACK TRANSACTION
 		END
 	
-	-- Nos fijamos si hay mas de 2 reservas con esa fecha de partida igual aeropuerto
+	-- Nos fijamos si hay mas de 2 reservas con esa fecha 
+	-- de partida igual aeropuerto
 	SELECT r.idReservas
 		FROM reservas r,vuelos v,vuelosConEscala ve
 		WHERE r.idVuelosConEscalas = ve.idVueloConEscalas
@@ -70,16 +73,17 @@ CREATE TRIGGER RestringirReservasUsuario ON Reservas
 	
 	if @@ROWCOUNT > 1
 		BEGIN
-			RAISEERROR ('Restriccion de reservas violada: Mas de dos reservas por aeropuerto')
+			RAISEERROR ('Mas de dos reservas por aeropuerto')
 			ROLLBACK TRANSACTION
 		END
 
-	-- Nos fijamos si, habiendo una reserva, la reserva tiene fecha de partida en los proximos dias	
+	-- Nos fijamos si, habiendo una reserva, la reserva tiene 
+	-- fecha de partida en los proximos dias	
 	IF @@ROWCOUNT = 1
 		BEGIN
 			IF fechaSalida >= DATEADD(fechaSalida,DATEADD(day,7,GETDATE()))
 			BEGIN
-				RAISEERROR('Restriccion de reservas violada: La reserva es para dentro de mas de 7 dias')
+				RAISEERROR('La reserva es para dentro de mas de 7 dias')
 				ROLLBACK TRANSACTION
 			END
 		END

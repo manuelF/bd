@@ -4,6 +4,7 @@
 
 A continuaci\'on incluimos el Diagrama Entidad Relaci\'on (DER) correspondiente
 al dise\~no realizado para este trabajo. El mismo se puede ver en la Figura~\ref{fig::der}
+(dado el tama\~no del mismo y para comodidad de an\'alisis se incluye al final de este trabajo).
 
 \subsection{Restricciones adicionales en lenguaje coloquial}
 
@@ -30,9 +31,9 @@ y que no se pueden detallar utilizando la notaci\'on misma, se incluyen a contin
 	
 	\item El precio de un vuelo esta determinado por la clase y el viaje. Se asume que los vuelos
 	intermedios se hacen en la misma clase y esto no tiene injerencia directa en el precio (no se guardan precios intermedios).
-	\item Para cada viaje, la cantidad de asientos reservados para ese viaje (considerando tambi\'en los vuelos
-	que no reservaron directamente sino que es solamente una escala en su viaje) para una clase determinada no supera la
-	cantidad de asientos para esa misma clase en la aeronave.
+	\item Para cada viaje dentro de los viajes de salida llegada y escalas de un viaje con escala, la cantidad de asientos 
+	reservados para ese viaje para una clase determinada no supera la cantidad de asientos para esa misma clase en la aeronaves
+	que realizan los viajes. Es decir no se puede sobrevender pasajes para ninguna clase.
     \item El usuario unicamente podr\'a tener cargada una tarjeta a la vez en el sistema.
 \end{enumerate}
 

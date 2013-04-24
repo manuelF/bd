@@ -15,26 +15,32 @@ CK corresponde a \textit{Candidate Key} o \textit{Clave candidata}, y FK corresp
 			\item \textit{CK:} idUsuario,username
 			\item \textit{FK:} idClase,idPaisNacimiento,idClaseFrecuente
 		\end{itemize}
-	\item \textbf{Tarjeta}(\underline{\dashuline{idUsuario},idTarjeta},empresa,nroTarjeta,codigoSeguridad,direccion)
+	\item \textbf{CiudadFavorita}\underline{(\dashuline{idUsuario},\dashuline{idCiudad})}
+		\begin{itemize}
+			\item \textit{PK = CK: } (idUsuario,idCiudad)
+			\item \textit{FK:} idUsuario,idCiudad
+		\end{itemize}
+	\item \textbf{Tarjeta}(\underline{\dashuline{idUsuario},idTarjeta},empresa,nroTarjeta,
+	codigoSeguridad,direccion)
 		\begin{itemize}
 			\item \textit{PK:} (idUsuario,idTarjeta)
 			\item \textit{CK:} (idUsuario,idTarjeta), (idUsuario,empresa,nroTarjeta)
 			\item \textit{FK:} idUsuario
 		\end{itemize}
-	\item \textbf{Reservas}(\underline{idReserva},\dashuline{idUsuario},tipoPago,fechaCaducidad,datosViajante,
-		idVueloConEscalas,idClase)
+	\item \textbf{Reservas}(\underline{idReserva},\dashuline{idUsuario},tipoPago,fechaCaducidad, datosViajante,
+		\dashuline{idVueloConEscalas}\\,\dashuline{idClase})
 		\begin{itemize}
 			\item \textit{PK = CK:} idReserva
 			\item \textit{FK:} idUsuario,idVueloConEscalas,idClase
 		\end{itemize}
-	\item \textbf{VueloConEscalas}(\underline{idViajeConEscalas},\dashuline{idViajePartida},\dashuline{idViajeLlegada})
+	\item \textbf{VueloConEscalas}(\underline{idViajeConEscalas},\dashuline{idViajePartida},\\ \dashuline{idViajeLlegada})
 		\begin{itemize}
 			\item \textit{PK = CK:} idVueloConEscalas
 			\item \textit{FK: } idViajePartida,idViajeLlegada
 		\end{itemize}
 	\item \textbf{PrecioParaClase}(\underline{\dashuline{idVueloConEscalas},\dashuline{isClase}},precio)
 		\begin{itemize}
-			\item \textit{PK = CK: } idVueloConEscalas
+			\item \textit{PK = CK: } (idVueloConEscalas,idClase)
 			\item \textit{FK: } idVueloConEscalas,idReserva
 		\end{itemize}
 	\item \textbf{Vuelos}(\underline{idVuelo},\dashuline{idAeronave},fechaSalida,fechaLlegada,\\ 
@@ -55,7 +61,7 @@ CK corresponde a \textit{Candidate Key} o \textit{Clave candidata}, y FK corresp
 			\item \textit{CK: } nombre
 			\item \textit{FK: } idCiudad
 		\end{itemize}
-	\item \textbf{TelefonoAeropuerto}	(\dashuline{idAeropuerto},numero)
+	\item \textbf{TelefonoAeropuerto} \underline{(\dashuline{idAeropuerto},numero)}
 		\begin{itemize}
 			\item \textit{PK = CK: } (idAeropuerto,numero)
 			\item \textit{FK: } idAeropuerto
@@ -91,9 +97,4 @@ CK corresponde a \textit{Candidate Key} o \textit{Clave candidata}, y FK corresp
 			\item \textit{PK = CK: } (idUsuario,idCiudad)
 			\item \textit{FK: } idUsuario, idCiudad	
 		\end{itemize}
-	\item \textbf{Tel\'efono}(\underline{n\'umero,\dashuline{idAeropuerto}})
-		\begin{itemize}
-			\item \textit{PK = CK: } (numero,idAeropuerto)
-			\item \textit{FK: } idAeropuerto
-		\end{itemize}
-\end{itemize}	
+\end{itemize}

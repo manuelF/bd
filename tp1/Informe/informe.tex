@@ -59,7 +59,8 @@
 \algrenewcommand{\algorithmiccomment}[1]{//\textit{#1} }
 
 \lstset{language=sql,numbers=left,tabsize=2,
-	morekeywords={BEGIN,DECLARE,FOR,CREATE,PROCEDURE,RAISEERROR,EACH,ROW,BEFORE,AFTER}}
+	morekeywords={BEGIN,DECLARE,FOR,CREATE,PROCEDURE,RAISEERROR,EACH,ROW,BEFORE,AFTER,MINUS,IF},
+	breaklines=true,breakatwhitespace=true}
 
 \pagestyle{fancy}
 \thispagestyle{fancy}
@@ -96,13 +97,13 @@
 
 \include{consultas}
 
-\newpage
+\include{conclusiones}
+
 \begin{landscape}
 	\begin{figure}[H]
 		\caption{Diagrama Entidad Relaci\'on correspondiente al dise\~no del trabajo pr\'actico}
 		\label{fig::der}
-		\centering
-		\includegraphics[width=1.3\textwidth]{der.png}
+		\includegraphics[width=1.45\textwidth]{der.png}
 	\end{figure} 
 \end{landscape}
 
