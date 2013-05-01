@@ -1,0 +1,145 @@
+%BEGIN COPYPASTE EL INFORME DEL INFO
+\documentclass[10pt, a4paper,english,spanish]{article}
+\usepackage{subfig}
+
+\parindent=20pt
+\parskip=8pt
+\usepackage[width=15.5cm, left=3cm, top=2.5cm, height= 24.5cm]{geometry}
+
+%\usepackage{ccfonts,eulervm} 
+\usepackage[T1]{fontenc}
+\usepackage{epigraph}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage[activeacute, spanish]{babel}
+\usepackage{cancel}
+\usepackage[utf8]{inputenc}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{afterpage}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{ulem}
+\usepackage{dashrule}
+\usepackage{stmaryrd}
+\floatname{algorithm}{Algoritmo}
+
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{proposition}[theorem]{Proposici\'on}
+\newtheorem{corollary}[theorem]{Corolario}
+
+\newcommand{\Var}{\textbf{var }}
+\newcommand{\True}{\textbf{true }}
+\newcommand{\False}{\textbf{false }}
+\newcommand{\Break}{\textbf{break }}
+\newcommand{\Continue}{\textbf{continue }}
+\newcommand{\Param}{\textbf{param }}
+
+\newenvironment{proof}[1][Demostraci\'on]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{definition}[1][Definici\'on]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{example}[1][Ejemplo]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{remark}[1][Observaci\'on]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+\newcommand{\qed}{\nobreak \ifvmode \relax \else
+      \ifdim\lastskip<1.5em \hskip-\lastskip
+      \hskip1.5em plus0em minus0.5em \fi \nobreak
+      \vrule height0.75em width0.5em depth0.25em\fi}
+
+
+      \newcommand{\imp}{\shortrightarrow}
+      \newcommand{\imps}{$\shortrightarrow$}
+\parindent 0em
+\algrenewcommand{\algorithmiccomment}[1]{//\textit{#1} }
+
+\lstset{language=sql,numbers=left,tabsize=2,
+	morekeywords={BEGIN,DECLARE,FOR,CREATE,PROCEDURE,RAISEERROR,EACH,ROW,BEFORE,AFTER,MINUS,IF},
+	breaklines=true,breakatwhitespace=true}
+
+\pagestyle{fancy}
+\thispagestyle{fancy}
+\addtolength{\headheight}{1pt}
+\lhead{Bases de Datos}
+\rhead{Apunte de normalizaci\'on}
+\cfoot{\thepage}
+\renewcommand{\footrulewidth}{0.4pt}
+\newcommand{\hblacksquare}{\hfill \blacksquare}
+%FIN COPYPASTE EL INFORME DEL INFO
+\begin{document}
+
+\section{Normalizaci\'on}
+
+\subsection{Modelo Relacional}
+
+$R$: Esquema de relaci\'on
+
+$A_{1}, A_{2}, ..., A_n$ o $A, B, C, ..., etc$ atributos de $R$
+
+$r$: Instancia de $R$
+
+$t_1, t_2, ..., etc$ tuplas de r
+
+\section{Dependencias Funcionales (DF)}
+\subsection{Definicion de DF}
+
+Decimos que vale $X \imp Y en R \iff t_1(X)=t_2(X) \imp t_1(Y)=t_2(Y)$ 
+
+Decimos que ``$X$ determina funcionalmente a $Y$'', o que ``$Y$ es determinado funcionalmente por $X$.
+
+$X$, conjunto de atributos de $R$, lado izquierdo.
+$Y$, conjunto de atributos de $R$, lado derecho.
+$X e Y$ no tienen que ser ecesariamente disjuntos.
+$t_1 y t_2$ dos tuplas cualesquiera de $r$.
+
+Si $r$ cumple con todas las dependencias funcionales entonces decimos que $r$ es LEGAL.
+
+Las dependencias funcionales las establece el dise\~nador de la BD.
+
+\subsubsection{Ejemplo}
+Supongamos que queremos registrar para una facultad los datos personales de los alumnos, las materias en las que se inscribieron y los ex\'amenes que rindieron.
+
+Para esto definimos el siguiente esquema de la relaci\'on:
+
+\textit{FACULTAD (LU, NOMBRE, MATERIA, IFEC, EFEC, NOTA)}
+
+Y el siguiente conjunto de dependencias funcionales $F$:
+
+\begin{itemize}
+    \item LU \imps NOMBRE (no puede haber dos alumnos con el mismo LU)
+    \item LU, MATERIA \imps IFEC (se puede inscribir una sola vez en cada materia)
+    \item LU, MATERIA, EFEC \imps NOTA (hay una sola nota por examen)
+\end{itemize}
+
+Nota: Al no estar LU, MATERIA \imps EFEC se puede rendir varias veces la misma materia.
+
+\subsection{Inferencias de F}
+
+
+Decimos que si $F$ INFIERE $f$ ($F \vDash f$) toda $r$ que satisface $F$ debe necesariamente satisfacer también $f$
+
+\subsubsection{Ejemplo}
+Del conjunto de dependencias funcionales del Ejemplo 1, podemos inferir:
+
+$F \vDash$ LU, MATERIA \imps NOMBRE, IFEC
+
+\subsection{Reglas de inferencia (Axiomas de Armstrong)}
+\begin{enumerate}
+    \item \textbf{Reflexividad}: $Y \subseteq X \Rightarrow X \imp Y$
+    \item \textbf{Aumento}: $(\forall W) X \imp Y \Rightarrow XW \imp WY$
+    \item \textbf{Transitividad}: $X \imp Y \land Y \imp Z \Rightarrow X \imp Z$
+\end{enumerate}
+
+De $1$ inferimos las triviales.
+
+Se sigue que siempre se cumple que $X \imp X$.
+
+Por inercia se tiende a pensar que $X \imp Y \Rightarrow Y \imp X$, pero esto, aunque a veces puede ser verdadero, en general es falso.
+
+\end{document}
