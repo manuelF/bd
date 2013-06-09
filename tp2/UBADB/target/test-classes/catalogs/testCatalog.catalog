@@ -1,0 +1,9 @@
+<catalog>
+	<table>
+		<tableId>
+			<internalName>test.table</internalName>
+		</tableId>
+		<tableName>A Test Table</tableName>
+		<tablePath>testTable.table</tablePath>
+	</table>
+</catalog>

@@ -4,10 +4,11 @@ import java.util.List;
 
 import ubadb.core.common.TableId;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 /**
  * Serializable class that represents the catalog
- * 
  */
 public class Catalog
 {
@@ -15,7 +16,10 @@ public class Catalog
 
 	public TableDescriptor getTableDescriptorByTableId(TableId tableId)
 	{
-		//TODO Completar
+		for(TableDescriptor t : tableDescriptors ){
+			if(t.getTableId().equals(tableId)) 
+				return t;
+		}
 		return null;
 	}
 }

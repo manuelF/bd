@@ -7,7 +7,7 @@ public class TableDescriptor
 	private TableId tableId;
 	private String tableName;
 	private String tablePath;
-
+	
 	public TableDescriptor(TableId tableId, String tableName, String tablePath)
 	{
 		this.tableId = tableId;
