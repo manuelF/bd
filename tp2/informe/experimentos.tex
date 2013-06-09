@@ -17,3 +17,7 @@ un orden estricto).
 Para poder investigar cual fue el hit rate de accesos al disco, se utilizaron las estadisticas que se pudieron
 obtener de las clases Spy que hacian de proxy entre el driver de disco y la funci\'on que hacia el request
 correspondiente. 
+
+El fin de estos experimentos es poder visualizar las diferencias de performance que se pueden obtener si a la
+hora de designar los buffers en memoria lo hacemos de una forma m\'as inteligente, en multiples Buffer Pools,
+mejora el hitrate comparado con un \'unico Buffer Pool.
