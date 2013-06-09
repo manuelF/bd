@@ -24,17 +24,12 @@ public class MultipleBufferPool implements BufferPool {
 	
 	@Override
 	public boolean isPageInPool(PageId pageId) {
-		return 	keepPool.isPageInPool(pageId) ||
-				recyclePool.isPageInPool(pageId) ||
-				defaultPool.isPageInPool(pageId);
+		return getPool(pageId.getTableId()).isPageInPool(pageId);
 	}
 
 	@Override
 	public BufferFrame getBufferFrame(PageId pageId) throws BufferPoolException {
-		if(keepPool.isPageInPool(pageId)) return keepPool.getBufferFrame(pageId);
-		if(recyclePool.isPageInPool(pageId)) return recyclePool.getBufferFrame(pageId);
-		if(defaultPool.isPageInPool(pageId)) return defaultPool.getBufferFrame(pageId);
-		return null;
+		return getPool(pageId.getTableId()).getBufferFrame(pageId);
 	}
 	
 	private void setTableBuffer(TableId tableId,BufferPool pool){

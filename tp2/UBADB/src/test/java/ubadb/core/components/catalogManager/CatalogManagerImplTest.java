@@ -1,10 +1,13 @@
 package ubadb.core.components.catalogManager;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import ubadb.core.common.TableId;
+import ubadb.core.components.bufferManager.pools.multiple.BufferPoolId;
 
 public class CatalogManagerImplTest {
 	@Test
@@ -18,7 +21,7 @@ public class CatalogManagerImplTest {
 			assertEquals(t.getTableId(),td);
 			assertEquals(t.getTableName(),"A Test Table");
 			assertEquals(t.getTablePath(),"testTable.table");
-
+			assertEquals(t.getTablePool(),BufferPoolId.KEEP);
 			TableDescriptor t2 = c.getTableDescriptorByTableId(new TableId("notPresent.table"));
 			assertNull(t2);
 		} catch(CatalogManagerException e) {
@@ -38,6 +41,7 @@ public class CatalogManagerImplTest {
 			assertEquals(t.getTableId(),td);
 			assertEquals(t.getTableName(),"A Test Table");
 			assertEquals(t.getTablePath(),"testTable.table");
+			assertEquals(t.getTablePool(),BufferPoolId.RECYCLE);
 			
 			td = new TableId("test2.table");
 			t = c.getTableDescriptorByTableId(td);
@@ -45,6 +49,7 @@ public class CatalogManagerImplTest {
 			assertEquals(t.getTableId(),td);
 			assertEquals(t.getTableName(),"Another Test Table");
 			assertEquals(t.getTablePath(),"testTable2.table");
+			assertEquals(t.getTablePool(),BufferPoolId.DEFAULT);
 
 		} catch(CatalogManagerException e) {
 			assertTrue(false);
