@@ -1,0 +1,12 @@
+\section{Experimentos}
+
+
+Para plantear los experimentos que ibamos a correr, deberiamos simular los accesos a disco que serian ejecutados
+en este motor de base de datos para resolver consultas.
+
+Los experimentos buscaron replicar accesos comunes, donde hay tablas que son mas requeridas que otras y, por
+consiguiente se deberian tratar de forma distinta a nivel de Buffer Manager. Como implementamos un mecanismo
+similar al que utiliza Oracle con el Buffer Manager, vamos a simular accesos multiples y contar cuantas veces
+accede a memoria principal a buscarlas, y cuantas veces deber\'a pedir p\'aginas f\'isicas del disco.
+
+
