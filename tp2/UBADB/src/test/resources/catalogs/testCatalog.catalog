@@ -1,9 +1,8 @@
 <catalog>
 	<table>
-		<tableId>
-			<internalName>test.table</internalName>
-		</tableId>
+		<tableId>test.table</tableId>
 		<tableName>A Test Table</tableName>
 		<tablePath>testTable.table</tablePath>
+		<tablePool>KEEP</tablePool>
 	</table>
 </catalog>

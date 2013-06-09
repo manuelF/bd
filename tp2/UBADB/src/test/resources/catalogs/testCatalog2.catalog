@@ -1,15 +1,12 @@
 <catalog>
 	<table>
-		<tableId>
-			<internalName>test.table</internalName>
-		</tableId>
+		<tableId>test.table</tableId>
 		<tableName>A Test Table</tableName>
 		<tablePath>testTable.table</tablePath>
+		<tablePool>RECYCLE</tablePool>
 	</table>
 	<table>
-		<tableId>
-			<internalName>test2.table</internalName>
-		</tableId>
+		<tableId>test2.table</tableId>
 		<tableName>Another Test Table</tableName>
 		<tablePath>testTable2.table</tablePath>
 	</table>

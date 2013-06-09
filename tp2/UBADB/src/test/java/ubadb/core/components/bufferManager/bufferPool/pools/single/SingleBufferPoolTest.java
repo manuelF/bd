@@ -34,7 +34,7 @@ public class SingleBufferPoolTest
 	}
 	
 	@Test
-	public void testIsPageInPoolTrue() throws Exception
+	public void testIs12PageInPoolTrue() throws Exception
 	{
 		bufferPool.addNewPage(PAGE_0);
 		

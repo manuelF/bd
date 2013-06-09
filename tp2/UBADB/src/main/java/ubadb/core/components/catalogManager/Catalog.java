@@ -1,11 +1,9 @@
 package ubadb.core.components.catalogManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ubadb.core.common.TableId;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 /**
  * Serializable class that represents the catalog
@@ -13,7 +11,12 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
 public class Catalog
 {
 	private List<TableDescriptor> tableDescriptors;
-
+	public Catalog(){
+		tableDescriptors = new ArrayList<TableDescriptor>();
+	}
+	public void addTableDescriptor(TableDescriptor td){
+		tableDescriptors.add(td);		
+	}
 	public TableDescriptor getTableDescriptorByTableId(TableId tableId)
 	{
 		for(TableDescriptor t : tableDescriptors ){
