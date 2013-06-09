@@ -9,4 +9,11 @@ consiguiente se deberian tratar de forma distinta a nivel de Buffer Manager. Com
 similar al que utiliza Oracle con el Buffer Manager, vamos a simular accesos multiples y contar cuantas veces
 accede a memoria principal a buscarlas, y cuantas veces deber\'a pedir p\'aginas f\'isicas del disco.
 
+Para correr los experimentos se utiliz\'o el framework de generaci\'on de trazas incluido en el c\'odigo provisto
+por la c\'atedra. Se generaron las trazas que pudieran simular accesos reales a tablas de forma directa (filescan),
+indices clustered y unclustered, joins por BNLJ y mixtos (donde se simulan accesos concurrentes, que no respeten
+un orden estricto).
 
+Para poder investigar cual fue el hit rate de accesos al disco, se utilizaron las estadisticas que se pudieron
+obtener de las clases Spy que hacian de proxy entre el driver de disco y la funci\'on que hacia el request
+correspondiente. 
