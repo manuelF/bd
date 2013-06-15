@@ -1,17 +1,15 @@
 package ubadb.core.components.catalogManager;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
-
 import ubadb.core.common.TableId;
-import ubadb.core.components.bufferManager.pools.multiple.BufferPoolId;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class CatalogManagerImpl implements CatalogManager {
 	private String catalogFilePath;
@@ -23,10 +21,10 @@ public class CatalogManagerImpl implements CatalogManager {
 		this.filePathPrefix = filePathPrefix;
 	}
 
-	public void loadCatalog() throws CatalogManagerException {
+	public void loadCatalog() throws CatalogManagerException{
 		String fp = filePathPrefix + catalogFilePath;
 		File inputFile = new File(fp);
-		catalog = new Catalog();
+        catalog = new Catalog();
 
 		Element root = processCatalogFile(fp, inputFile);
 		addTableDescriptors(root);
@@ -35,8 +33,7 @@ public class CatalogManagerImpl implements CatalogManager {
 	private Element processCatalogFile(String fp, File inputFile)
 			throws CatalogManagerException {
 		try {
-			Element root = getXMLRootElement(fp, inputFile);
-			return root;
+			return getXMLRootElement(fp, inputFile);
 		} catch (FileNotFoundException e) {
 			throw new CatalogManagerException(fp + " cannot be found");
 		} catch (JDOMException e) {
@@ -48,7 +45,7 @@ public class CatalogManagerImpl implements CatalogManager {
 	}
 
 	private Element getXMLRootElement(String fp, File inputFile)
-			throws JDOMException, IOException, FileNotFoundException,
+			throws JDOMException, IOException,
 			CatalogManagerException {
 		SAXBuilder builder = new SAXBuilder();
 		Document doc = builder.build(new FileInputStream(inputFile));
@@ -60,14 +57,18 @@ public class CatalogManagerImpl implements CatalogManager {
 	}
 
 	private void addTableDescriptors(Element root) {
-		for (Object oTableElement : root.getChildren("table")) {
+        for (Object oTableElement : root.getChildren("table")) {
 			Element tableElement = (Element) oTableElement;
-			TableId tableId = new TableId(tableElement.getChildText("tableId"));			
-			TableDescriptor tableDesc = new TableDescriptor(tableId,
-					tableElement.getChildText("tableName"),
-					tableElement.getChildText("tablePath"),
-					BufferPoolId.fromString(tableElement.getChildText("tablePool"))
-					);
+			TableId tableId = new TableId(tableElement.getChildText("tableId"));
+            String tName= tableElement.getChildText("tableName");
+            String tPath= tableElement.getChildText("tablePath");
+            String tablePoolText = tableElement.getChildText("tablePool");
+            if(tablePoolText == null) tablePoolText = "DEFAULT";
+            String tPool= tablePoolText.toUpperCase();
+        	TableDescriptor tableDesc = new TableDescriptor(tableId,
+					tName,
+					tPath,
+					tPool);
 			catalog.addTableDescriptor(tableDesc);
 		}
 	}

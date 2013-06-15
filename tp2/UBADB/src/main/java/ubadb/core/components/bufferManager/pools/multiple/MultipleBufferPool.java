@@ -1,8 +1,5 @@
 package ubadb.core.components.bufferManager.pools.multiple;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ubadb.core.common.Page;
 import ubadb.core.common.PageId;
 import ubadb.core.common.TableId;
@@ -11,16 +8,27 @@ import ubadb.core.components.bufferManager.bufferPool.BufferPool;
 import ubadb.core.components.bufferManager.bufferPool.BufferPoolException;
 import ubadb.core.components.bufferManager.bufferPool.pools.single.SingleBufferPool;
 import ubadb.core.components.bufferManager.bufferPool.replacementStrategies.fifo.FIFOReplacementStrategy;
+import ubadb.core.components.catalogManager.CatalogManager;
+import ubadb.core.components.catalogManager.TableDescriptor;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MultipleBufferPool implements BufferPool {
-	BufferPool keepPool,recyclePool,defaultPool;
-	Map<TableId,BufferPool> tableMapper;
-	public MultipleBufferPool(int keepPoolSize,int recyclePoolSize, int defaultPoolSize){
-		keepPool = new SingleBufferPool(keepPoolSize,new FIFOReplacementStrategy());
-		recyclePool = new SingleBufferPool(recyclePoolSize,new FIFOReplacementStrategy());
-		defaultPool = new SingleBufferPool(defaultPoolSize,new FIFOReplacementStrategy());
-		tableMapper = new HashMap<TableId,BufferPool>();
-	}
+	Map<String,BufferPool> poolNameMapper;
+    BufferPool defaultPool;
+    CatalogManager catalogManager;
+	public MultipleBufferPool(Map<String,Integer> poolSizeByName, int defaultPoolSize, CatalogManager manager){
+		poolNameMapper = new HashMap();
+		for(Map.Entry<String, Integer> s : poolSizeByName.entrySet()){
+            poolNameMapper.put(s.getKey(),
+                    new SingleBufferPool(s.getValue(),
+                            new FIFOReplacementStrategy()));
+        }
+        defaultPool = new SingleBufferPool(defaultPoolSize, new FIFOReplacementStrategy());
+	    this.catalogManager = manager;
+    }
+
 	
 	@Override
 	public boolean isPageInPool(PageId pageId) {
@@ -31,20 +39,13 @@ public class MultipleBufferPool implements BufferPool {
 	public BufferFrame getBufferFrame(PageId pageId) throws BufferPoolException {
 		return getPool(pageId.getTableId()).getBufferFrame(pageId);
 	}
-	
-	private void setTableBuffer(TableId tableId,BufferPool pool){
-		tableMapper.put(tableId,pool);
-	}
-
-	public void setTableAsKeep(TableId t){ setTableBuffer(t, keepPool); }
-	public void setTableAsRecycle(TableId t){ setTableBuffer(t, recyclePool); }
-	public void setTableAsDefault(TableId t){ setTableBuffer(t, defaultPool); }
 
 	private BufferPool getPool(TableId t){
-		BufferPool bp = tableMapper.get(t);
-		if(bp == null) bp = defaultPool;
-		return bp;
-	}
+        TableDescriptor tableDesc = catalogManager.getTableDescriptorByTableId(t);
+        if(!poolNameMapper.containsKey(tableDesc.getTablePool()))
+            return defaultPool;
+        return poolNameMapper.get(tableDesc.getTablePool());
+    }
 	
 	@Override
 	public boolean hasSpace(PageId pageToAddId) {
@@ -69,9 +70,10 @@ public class MultipleBufferPool implements BufferPool {
 
 	@Override
 	public int countPagesInPool() {
-		return 	keepPool.countPagesInPool() +
-				recyclePool.countPagesInPool() +
-				defaultPool.countPagesInPool();
+		int result = 0;
+        for(BufferPool bp : poolNameMapper.values())
+            result += bp.countPagesInPool();
+        return result;
 	}
 
 }

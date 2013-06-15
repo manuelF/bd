@@ -1,24 +1,23 @@
 package ubadb.core.components.catalogManager;
 
 import ubadb.core.common.TableId;
-import ubadb.core.components.bufferManager.pools.multiple.BufferPoolId;
 
 public class TableDescriptor
 {
 	private TableId tableId;
 	private String tableName;
 	private String tablePath;
-	private BufferPoolId tablePool;
+	private String tablePool;
 	
 	public TableDescriptor(TableId tableId, String tableName, String tablePath,
-			BufferPoolId tablePool) {
+			String tablePoolName) {
 		this.tableId = tableId;
 		this.tableName = tableName;
 		this.tablePath = tablePath;
-		this.tablePool = tablePool;
+		this.tablePool = tablePoolName;
 	}
 
-	public BufferPoolId getTablePool() {
+	public String getTablePool() {
 		return tablePool;
 	}
 
