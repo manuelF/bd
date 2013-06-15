@@ -18,15 +18,15 @@ public class MultipleBufferPool implements BufferPool {
 	Map<String,BufferPool> poolNameMapper;
     BufferPool defaultPool;
     CatalogManager catalogManager;
-	public MultipleBufferPool(Map<String,Integer> poolSizeByName, int defaultPoolSize, CatalogManager manager){
-		poolNameMapper = new HashMap();
-		for(Map.Entry<String, Integer> s : poolSizeByName.entrySet()){
+	public MultipleBufferPool(Map<String,Integer> poolSizeByName, CatalogManager manager){
+		poolNameMapper = new HashMap<>();
+        for(Map.Entry<String, Integer> s : poolSizeByName.entrySet()){
             poolNameMapper.put(s.getKey(),
                     new SingleBufferPool(s.getValue(),
                             new FIFOReplacementStrategy()));
         }
-        defaultPool = new SingleBufferPool(defaultPoolSize, new FIFOReplacementStrategy());
-	    this.catalogManager = manager;
+        System.err.println(poolNameMapper);
+        this.catalogManager = manager;
     }
 
 	
