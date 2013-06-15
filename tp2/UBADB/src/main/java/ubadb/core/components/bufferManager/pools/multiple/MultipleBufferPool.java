@@ -16,17 +16,18 @@ import java.util.Map;
 
 public class MultipleBufferPool implements BufferPool {
 	Map<String,BufferPool> poolNameMapper;
-    BufferPool defaultPool;
     CatalogManager catalogManager;
-	public MultipleBufferPool(Map<String,Integer> poolSizeByName, CatalogManager manager){
+    BufferPool defaultPool;
+
+    public MultipleBufferPool(Map<String,Integer> poolSizeByName, String defaultPoolName, CatalogManager manager){
 		poolNameMapper = new HashMap<>();
         for(Map.Entry<String, Integer> s : poolSizeByName.entrySet()){
             poolNameMapper.put(s.getKey(),
                     new SingleBufferPool(s.getValue(),
                             new FIFOReplacementStrategy()));
         }
-        System.err.println(poolNameMapper);
         this.catalogManager = manager;
+        this.defaultPool = poolNameMapper.get(defaultPoolName);
     }
 
 	
