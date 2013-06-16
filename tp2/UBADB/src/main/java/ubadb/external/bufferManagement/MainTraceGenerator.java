@@ -1,5 +1,6 @@
 package ubadb.external.bufferManagement;
 
+import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +17,11 @@ import ubadb.external.bufferManagement.traceGenerators.MixedTraceGenerator;
 
 public class MainTraceGenerator
 {
-	public static void main(String[] args) throws Exception
+    static String currentPath;
+
+    public static void main(String[] args) throws Exception
 	{
+        currentPath = new File(".").getAbsoluteFile() + "/";
 //		basicDataSet();
 		complexDataSet();
 	}
@@ -81,6 +85,7 @@ public class MainTraceGenerator
 	
 	private static void serialize(String fileName, PageReferenceTrace trace, PageReferenceTraceSerializer serializer) throws Exception
 	{
+        fileName=currentPath+fileName;
 		serializer.write(trace, fileName);
 		System.out.println("File '" + fileName + "' generated!!");
 	}
@@ -124,7 +129,7 @@ public class MainTraceGenerator
 		List<PageReferenceTrace> tracesToMix = new ArrayList<>();
 		Random random = new Random(System.currentTimeMillis());
 		
-		String[] traceFiles = Paths.get(folderName).toFile().list();
+		String[] traceFiles = Paths.get(currentPath+folderName).toFile().list();
 		
 		for(int i=0; i < totalTracesCount; i++)
 		{

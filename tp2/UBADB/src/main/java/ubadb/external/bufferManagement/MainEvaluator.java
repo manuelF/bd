@@ -16,6 +16,8 @@ import ubadb.external.bufferManagement.etc.PageReference;
 import ubadb.external.bufferManagement.etc.PageReferenceTrace;
 import ubadb.external.bufferManagement.etc.PageReferenceTraceSerializer;
 
+import java.io.File;
+
 public class MainEvaluator {
 	private static final int PAUSE_BETWEEN_REFERENCES = 0;
 
@@ -38,8 +40,9 @@ public class MainEvaluator {
 			InterruptedException, BufferManagerException {
 		
 		FaultCounterDiskManagerSpy faultCounterDiskManagerSpy = new FaultCounterDiskManagerSpy();
-		// CatalogManager catalogManager = new CatalogManagerImpl();
-		CatalogManager catalogManager = null;
+        String currentPath = new File(".").getAbsoluteFile() + "/src/test/resources/catalogs/";
+        CatalogManager catalogManager = new CatalogManagerImpl("testCatalog.catalog",currentPath);
+
 		BufferManager bufferManager = createBufferManager(
 				faultCounterDiskManagerSpy, catalogManager,
 				pageReplacementStrategy, bufferPoolSize);
