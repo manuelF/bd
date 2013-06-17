@@ -94,9 +94,13 @@ public class MainTraceGenerator
 	{
 		PageReferenceTraceSerializer serializer = new PageReferenceTraceSerializer();
 
-		String folder = "generated/escenarios";
+		String folder = "generated/escenarios1";
 		String file = "generated/mixed-filescans.trace";
 		mixTraces(file,folder,100,5,serializer);
+
+        folder = "generated/escenarios2";
+        file = "generated/mixed-filescans-clustered.trace";
+        mixTraces(file,folder,100,7,serializer);
 	}
 
 	private static void mixTraces(String fileNameForNewTrace, String folderName, int totalTracesCount, int maxConcurrentTracesCount, PageReferenceTraceSerializer serializer) throws Exception

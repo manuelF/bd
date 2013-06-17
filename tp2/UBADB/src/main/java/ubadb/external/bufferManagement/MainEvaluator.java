@@ -27,7 +27,8 @@ public class MainEvaluator {
 	public static void main(String[] args) {
 		try {
 			PageReplacementStrategy pageReplacementStrategy = new FIFOReplacementStrategy();
-			String traceFileName = "generated/mixed-filescans.trace";
+            String  traceFileName = "generated/mixed-filescans-clustered.trace";
+                    traceFileName = "generated/mixed-filescans.trace";
 			int bufferPoolSize = 100;
 
 			evaluate(pageReplacementStrategy, traceFileName, bufferPoolSize);
@@ -89,7 +90,7 @@ public class MainEvaluator {
 		/*BufferPool singleBufferPool = new SingleBufferPool(bufferPoolSize,
 				pageReplacementStrategy);                                   */
         Map<String,Integer> pages = new HashMap<>();
-        pages.put("KEEP",150);
+        pages.put("KEEP",20);
         pages.put("DEFAULT",150);
         pages.put("RECYCLE",120);
         BufferPool multipleBufferPool = new MultipleBufferPool(pages,"DEFAULT",catalogManager);
