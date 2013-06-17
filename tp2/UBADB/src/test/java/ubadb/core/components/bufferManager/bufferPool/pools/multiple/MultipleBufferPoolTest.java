@@ -17,6 +17,7 @@ import ubadb.core.common.TableId;
 import ubadb.core.components.bufferManager.bufferPool.BufferFrame;
 import ubadb.core.components.bufferManager.bufferPool.BufferPool;
 import ubadb.core.components.bufferManager.bufferPool.BufferPoolException;
+import ubadb.core.components.bufferManager.bufferPool.replacementStrategies.fifo.FIFOReplacementStrategy;
 import ubadb.core.components.bufferManager.pools.multiple.MultipleBufferPool;
 import ubadb.core.testDoubles.DummyObjectFactory;
 
@@ -48,7 +49,8 @@ public class MultipleBufferPoolTest {
 		pools.put("RECYCLE", RECYCLE_POOL_MAX_SIZE);
 		pools.put("KEEP", KEEP_POOL_MAX_SIZE);
 		pools.put("DEFAULT",DEFAULT_POOL_MAX_SIZE);        
-        bufferPool = new MultipleBufferPool(pools,"DEFAULT",DummyObjectFactory.CATALOG);
+        bufferPool = new MultipleBufferPool(pools,"DEFAULT",
+                new FIFOReplacementStrategy(),DummyObjectFactory.CATALOG);
 	}
 	
 	@Test

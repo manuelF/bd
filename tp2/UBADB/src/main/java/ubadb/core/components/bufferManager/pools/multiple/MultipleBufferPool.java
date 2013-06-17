@@ -7,6 +7,7 @@ import ubadb.core.components.bufferManager.bufferPool.BufferFrame;
 import ubadb.core.components.bufferManager.bufferPool.BufferPool;
 import ubadb.core.components.bufferManager.bufferPool.BufferPoolException;
 import ubadb.core.components.bufferManager.bufferPool.pools.single.SingleBufferPool;
+import ubadb.core.components.bufferManager.bufferPool.replacementStrategies.PageReplacementStrategy;
 import ubadb.core.components.bufferManager.bufferPool.replacementStrategies.fifo.FIFOReplacementStrategy;
 import ubadb.core.components.catalogManager.CatalogManager;
 import ubadb.core.components.catalogManager.TableDescriptor;
@@ -19,12 +20,14 @@ public class MultipleBufferPool implements BufferPool {
     CatalogManager catalogManager;
     BufferPool defaultPool;
 
-    public MultipleBufferPool(Map<String,Integer> poolSizeByName, String defaultPoolName, CatalogManager manager){
+    public MultipleBufferPool(Map<String,Integer> poolSizeByName,
+                              String defaultPoolName,
+                              PageReplacementStrategy strategy,
+                              CatalogManager manager){
 		poolNameMapper = new HashMap<>();
         for(Map.Entry<String, Integer> s : poolSizeByName.entrySet()){
             poolNameMapper.put(s.getKey(),
-                    new SingleBufferPool(s.getValue(),
-                            new FIFOReplacementStrategy()));
+                    new SingleBufferPool(s.getValue(),strategy));
         }
         this.catalogManager = manager;
         this.defaultPool = poolNameMapper.get(defaultPoolName);

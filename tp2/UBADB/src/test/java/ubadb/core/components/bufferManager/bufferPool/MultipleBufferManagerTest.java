@@ -4,15 +4,15 @@ import org.junit.Test;
 import ubadb.core.common.Page;
 import ubadb.core.common.PageId;
 import ubadb.core.common.TableId;
+import ubadb.core.components.bufferManager.bufferPool.replacementStrategies.PageReplacementStrategy;
+import ubadb.core.components.bufferManager.bufferPool.replacementStrategies.PageReplacementStrategyException;
+import ubadb.core.components.bufferManager.bufferPool.replacementStrategies.fifo.FIFOReplacementStrategy;
 import ubadb.core.components.bufferManager.pools.multiple.MultipleBufferPool;
 import ubadb.core.components.catalogManager.CatalogManager;
 import ubadb.core.components.catalogManager.TableDescriptor;
 import ubadb.core.testDoubles.DummyObjectFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -24,7 +24,8 @@ public class MultipleBufferManagerTest {
         sizes.put("KEEP",150);
         sizes.put("DEFAULT",150);
         sizes.put("RECYCLE",120);
-        BufferPool bm = new MultipleBufferPool(sizes,"DEFAULT", DummyObjectFactory.CATALOG);
+        BufferPool bm = new MultipleBufferPool(sizes,"DEFAULT",
+                new FIFOReplacementStrategy(),DummyObjectFactory.CATALOG);
 
         bm.addNewPage(new Page(new PageId(1,new TableId("hello")),new byte[] {1,2,3,4,5}));
         assertEquals(1, bm.countPagesInPool());

@@ -93,7 +93,8 @@ public class MainEvaluator {
         pages.put("KEEP",20);
         pages.put("DEFAULT",150);
         pages.put("RECYCLE",120);
-        BufferPool multipleBufferPool = new MultipleBufferPool(pages,"DEFAULT",catalogManager);
+        BufferPool multipleBufferPool = new MultipleBufferPool(pages,"DEFAULT",
+                new FIFOReplacementStrategy(),catalogManager);
         try
         {
             catalogManager.loadCatalog();

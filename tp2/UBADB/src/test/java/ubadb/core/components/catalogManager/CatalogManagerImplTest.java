@@ -62,8 +62,8 @@ public class CatalogManagerImplTest {
 			assertEquals(t.getTablePool(),"DEFAULT");
 
 		} catch(Exception e) {
-			assertTrue(false);
 			e.printStackTrace();
-		}
+            assertTrue(false);
+        }
 	}
 }
