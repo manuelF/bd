@@ -7,6 +7,7 @@ import ubadb.core.components.bufferManager.bufferPool.BufferPool;
 import ubadb.core.components.bufferManager.bufferPool.pools.single.SingleBufferPool;
 import ubadb.core.components.bufferManager.bufferPool.replacementStrategies.PageReplacementStrategy;
 import ubadb.core.components.bufferManager.bufferPool.replacementStrategies.fifo.FIFOReplacementStrategy;
+import ubadb.core.components.bufferManager.pools.multiple.MultipleBufferPool;
 import ubadb.core.components.catalogManager.CatalogManager;
 import ubadb.core.components.catalogManager.CatalogManagerImpl;
 import ubadb.core.components.diskManager.DiskManager;
@@ -17,6 +18,8 @@ import ubadb.external.bufferManagement.etc.PageReferenceTrace;
 import ubadb.external.bufferManagement.etc.PageReferenceTraceSerializer;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainEvaluator {
 	private static final int PAUSE_BETWEEN_REFERENCES = 0;
@@ -24,7 +27,7 @@ public class MainEvaluator {
 	public static void main(String[] args) {
 		try {
 			PageReplacementStrategy pageReplacementStrategy = new FIFOReplacementStrategy();
-			String traceFileName = "generated/a.trace";
+			String traceFileName = "generated/BNLJ-ProductXSale-group_50.trace";
 			int bufferPoolSize = 100;
 
 			evaluate(pageReplacementStrategy, traceFileName, bufferPoolSize);
@@ -41,7 +44,7 @@ public class MainEvaluator {
 		
 		FaultCounterDiskManagerSpy faultCounterDiskManagerSpy = new FaultCounterDiskManagerSpy();
         String currentPath = new File(".").getAbsoluteFile() + "/src/test/resources/catalogs/";
-        CatalogManager catalogManager = new CatalogManagerImpl("testCatalog.catalog",currentPath);
+        CatalogManager catalogManager = new CatalogManagerImpl("salesCatalog.catalog",currentPath);
 
 		BufferManager bufferManager = createBufferManager(
 				faultCounterDiskManagerSpy, catalogManager,
@@ -83,10 +86,24 @@ public class MainEvaluator {
 	private static BufferManager createBufferManager(DiskManager diskManager,
 			CatalogManager catalogManager,
 			PageReplacementStrategy pageReplacementStrategy, int bufferPoolSize) {
-		BufferPool singleBufferPool = new SingleBufferPool(bufferPoolSize,
-				pageReplacementStrategy);
+		/*BufferPool singleBufferPool = new SingleBufferPool(bufferPoolSize,
+				pageReplacementStrategy);                                   */
+        Map<String,Integer> pages = new HashMap<>();
+        pages.put("KEEP",150);
+        pages.put("DEFAULT",150);
+        pages.put("RECYCLE",120);
+        BufferPool multipleBufferPool = new MultipleBufferPool(pages,"DEFAULT",catalogManager);
+        try
+        {
+            catalogManager.loadCatalog();
+        }
+        catch (Exception e)
+        {
+            System.err.println("Cannot load catalog!");
+        }
+
 		BufferManager bufferManager = new BufferManagerImpl(diskManager,
-				catalogManager, singleBufferPool);
+				catalogManager, multipleBufferPool);
 
 		return bufferManager;
 	}
