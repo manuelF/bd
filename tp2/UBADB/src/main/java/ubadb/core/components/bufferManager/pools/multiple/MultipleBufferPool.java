@@ -43,7 +43,7 @@ public class MultipleBufferPool implements BufferPool {
 
 	private BufferPool getPool(TableId t){
         TableDescriptor tableDesc = catalogManager.getTableDescriptorByTableId(t);
-        if(!poolNameMapper.containsKey(tableDesc.getTablePool()))
+        if(tableDesc == null || !poolNameMapper.containsKey(tableDesc.getTablePool()))
             return defaultPool;
         return poolNameMapper.get(tableDesc.getTablePool());
     }

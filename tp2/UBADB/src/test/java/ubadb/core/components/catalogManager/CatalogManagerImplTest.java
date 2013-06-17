@@ -6,14 +6,15 @@ import ubadb.core.common.TableId;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import static org.junit.Assert.*;
 
 public class CatalogManagerImplTest {
 	public static String currentPath;
     @BeforeClass
-    public static void loadPath(){
-        currentPath = new File(".").getAbsoluteFile() + "/../src/test/resources/catalogs/";
+    public static void loadPath() throws IOException{
+        currentPath = new File(".").getCanonicalPath() + "/src/test/resources/catalogs/";
     }
     @Test
 	public void testCatalog(){
