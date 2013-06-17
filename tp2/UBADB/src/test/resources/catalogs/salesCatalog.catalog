@@ -1,0 +1,22 @@
+<catalog>
+	<table>
+		<tableId>Sales</tableId>
+		<tableName>Sales</tableName>
+		<tablePath>Sales.table</tablePath>
+		<tablePool>KEEP</tablePool>
+	</table>
+
+    <table>
+		<tableId>Product</tableId>
+		<tableName>Product</tableName>
+		<tablePath>Product.table</tablePath>
+		<tablePool>KEEP</tablePool>
+	</table>
+
+	<table>
+		<tableId>Customers</tableId>
+		<tableName>Customers</tableName>
+		<tablePath>Customers.table</tablePath>
+		<tablePool>KEEP</tablePool>
+	</table>
+</catalog>
