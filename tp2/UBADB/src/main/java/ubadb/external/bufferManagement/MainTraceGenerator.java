@@ -93,25 +93,10 @@ public class MainTraceGenerator
 	private static void complexDataSet() throws Exception
 	{
 		PageReferenceTraceSerializer serializer = new PageReferenceTraceSerializer();
-		String folderA = "generated/escenario3/originalesA";
-		String fileA = "generated/mixedA_tot4_conc2.trace";
-		mixTraces(fileA,folderA,4,2,serializer);
 
-		String folderB = "generated/escenario3/originalesB";
-		String fileB = "generated/mixedB_tot10_conc2.trace";
-		mixTraces(fileB,folderB,10,2,serializer);
-
-		String folderC = "generated/escenario3/originalesC";
-		String fileC = "generated/mixedC_tot50_conc2.trace";
-		mixTraces(fileC,folderC,50,2,serializer);
-
-		String folderD = "generated/escenario3/originalesD";
-		String fileD = "generated/mixedD_tot50_conc5.trace";
-		mixTraces(fileD,folderD,50,5,serializer);
-
-		String folderE = "generated/escenario3/originalesE";
-		String fileE = "generated/mixedE_tot100_conc5.trace";
-		mixTraces(fileE,folderE,100,5,serializer);
+		String folder = "generated/escenarios";
+		String file = "generated/mixed-filescans.trace";
+		mixTraces(file,folder,100,5,serializer);
 	}
 
 	private static void mixTraces(String fileNameForNewTrace, String folderName, int totalTracesCount, int maxConcurrentTracesCount, PageReferenceTraceSerializer serializer) throws Exception

@@ -27,7 +27,7 @@ public class MainEvaluator {
 	public static void main(String[] args) {
 		try {
 			PageReplacementStrategy pageReplacementStrategy = new FIFOReplacementStrategy();
-			String traceFileName = "generated/BNLJ-ProductXSale-group_50.trace";
+			String traceFileName = "generated/mixed-filescans.trace";
 			int bufferPoolSize = 100;
 
 			evaluate(pageReplacementStrategy, traceFileName, bufferPoolSize);
