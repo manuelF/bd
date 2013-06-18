@@ -9,8 +9,8 @@ tama\~nos parametrizados o accesos a indices del estilo \textit{B+ Tree Clustere
 
 Una vez generadas estas trazas corrimos el evaluador (tambi\'en incluido en el c\'odigo) y observamos el
 desempe\~no de nuestras implementaciones de single y m\'ultiple buffer pools. Para realizar mediciones m\'as
-precisas, comparamos los hit rates de acceso a disco considerando casos interesantes de las trazas generadas.
-Con esta informaci\'on de los hit-rates, pudimos generar tablas comparativas que se pueden apreciar en la secci\'on \ref{secTablas}.
+precisas, comparamos los \textit{hitrates} de acceso a disco considerando casos interesantes de las trazas generadas.
+Con esta informaci\'on de los \textit{hitrate}, pudimos generar tablas comparativas que se pueden apreciar en la secci\'on \ref{secTablas}.
 
 
 \subsection{Resultados de la experimentaci\'on}\label{secTablas}
@@ -46,7 +46,7 @@ Es decir, solamente con 3 p\'aginas y una administraci\'on inteligente, la efici
 de este mecanismo de m\'ultiples buffers supera ampliamente a un buffer pool \'unico de
 m\'as de 50 veces el tama\~no.
 
-Otro expermiento realizado consistio en los accesos a indices.
+Otro expermiento realizado consistió en los accesos a indices.
 
 Se puede decir que estos experimentos son conociendo el algoritmo del Or\'aculo,
 pero es claramente posible comprobarlo en motores reales. Si se contasen
