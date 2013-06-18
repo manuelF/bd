@@ -37,8 +37,8 @@ public class CatalogManagerImpl implements CatalogManager {
 		} catch (FileNotFoundException e) {
 			throw new CatalogManagerException(fp + " cannot be found");
 		} catch (JDOMException e) {
-			throw new CatalogManagerException(fp
-					+ " is not a valid XML document");
+			throw new CatalogManagerException(fp + 
+				" is not a valid XML document");
 		} catch (IOException e) {
 			throw new CatalogManagerException(fp + " could not be read");
 		}
@@ -59,16 +59,15 @@ public class CatalogManagerImpl implements CatalogManager {
 	private void addTableDescriptors(Element root) {
         for (Object oTableElement : root.getChildren("table")) {
 			Element tableElement = (Element) oTableElement;
-			TableId tableId = new TableId(tableElement.getChildText("tableId"));
+			TableId tableId = 
+				new TableId(tableElement.getChildText("tableId"));
             String tName= tableElement.getChildText("tableName");
             String tPath= tableElement.getChildText("tablePath");
             String tablePoolText = tableElement.getChildText("tablePool");
             if(tablePoolText == null) tablePoolText = "DEFAULT";
             String tPool= tablePoolText.toUpperCase();
-        	TableDescriptor tableDesc = new TableDescriptor(tableId,
-					tName,
-					tPath,
-					tPool);
+        	TableDescriptor tableDesc = 
+        		new TableDescriptor(tableId,tName,tPath,tPool);
 			catalog.addTableDescriptor(tableDesc);
 		}
 	}
