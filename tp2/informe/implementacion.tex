@@ -52,5 +52,5 @@ La configuraci\'on del buffer usado como default decidimos tambi\'en dejarla al 
 La implementaci\'on es sencilla, puesto que se pudo reutilizar mucho c\'odigo ya provisto: cada buffer pool se modela mediante un \texttt{SingleBufferPool}. Se mantiene
 un \texttt{Map<String,BufferPool>} que mapea $\text{nombre de pool} \rightarrow \text{instancia de pool}$. Estos mapeos se obtienen del cat\'alogo (que recibe el MultipleBufferPool de par\'ametro). La \'unica tarea del \texttt{MultipleBufferPool} por lo tanto es, dada una operaci\'on para una p\'agina, obtener el buffer correspondiente (que podría ser el DEFAULT si esta tabla no tiene asignado ningun pool) y realizar esa operaci\'on mediante \texttt{SingleBufferPool}.
 
-Como se realizo anteriormente, se incluyen test de unidad para este m\'odulo realizados en JUnit. Para realizar los mismos se provee un \textit{mock} de la implementaci\'on de un cat\'alogo, que carga una lista est\'atica de descriptores.
+Como se realizó anteriormente, se incluyen test de unidad para este m\'odulo realizados en JUnit. Para realizar los mismos se provee un \textit{mock} de la implementaci\'on de un cat\'alogo, que carga una lista est\'atica de descriptores.
 
