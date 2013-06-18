@@ -1,15 +1,19 @@
-\section{Tests y Gr\'aficos}
-Para correr los tests y generar los gr\'aficos se utiliz\'o la funci\'on \textit{traceGenerator} provista en el
-motor para generar trazas v\'alidas que utilizamos como inputs. 
+\section{Tests de performance}
+Para correr los tests de performance se utiliz\'o el paquete \texttt{ubadb.external.bufferManagement} provisto en el
+motor para generar trazas v\'alidas que utilizamos como inputs, mediante las clases \texttt{MainEvaluator} y \texttt{MainTraceGenerator}.
+
+Para generar las trazas, utilizamos m\'etodos similares a los implementados en \texttt{MainTraceGenerator}. Esto es
+utilizar distintos objetos para generar trazas que simulen accesos normales a una base de datos, siguiente un cierto
+patr\'on. Es decir, podemos generar por ejemplo, Filescans de \textit{n} accesos, joins de tipo \textit{BNLJ}, con
+tama\~nos parametrizados o accesos a indices del estilo \textit{B+ Tree Clustered} o \textit{Hash}.
 
 Una vez generadas estas trazas corrimos el evaluador (tambi\'en incluido en el c\'odigo) y observamos el
 desempe\~no de nuestras implementaciones de single y m\'ultiple buffer pools. Para realizar mediciones m\'as
-precisas, comparamos los hit rates de acceso a disco considerando distintos accesos tales como \texttt{BNLJ}, \texttt{INLJ}, etc.
-Con esta informaci\'on de los hit-rates generamos tablas con sus correspondientes los gr\'aficos que se pueden
-ver en la secci\'on \ref{secTablasYGraficos}.
+precisas, comparamos los hit rates de acceso a disco considerando casos interesantes de las trazas generadas.
+Con esta informaci\'on de los hit-rates, pudimos generar tablas comparativas que se pueden apreciar en la secci\'on \ref{secTablas}.
 
 
-\subsection{Tablas y Gr\'aficos}\label{secTablasYGraficos}
+\subsection{Resultados de la experimentaci\'on}\label{secTablas}
 
 Fue de interes buscar casos patol\'ogicos para comprobar donde una pol\'itica de
 buffers presentara ventajas sobre la otra (buffer compartido vs buffer m\'ultiples).
@@ -26,7 +30,7 @@ En total, designamos dos buffer pools con capacidad de dos p\'aginas cada uno
 y comparamos contra varios tama\~nos de single buffer pools distintos.
 
 \begin{table}[H]\centering
-    \begin{tabular}{c | c}
+    \begin{tabular}{l || c}
     \large{\textbf{Estrategia}}                             & \large{\textbf{Hitrate}} [\%] \\
     \hline
     Multiple Buffer Pools KEEP=2 RECYCLE=1 & 49.95       \\
