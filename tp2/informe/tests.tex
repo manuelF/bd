@@ -1,7 +1,48 @@
-\section{Tests y Gráficos}
-Para correr los tests y generar los gráficos se utilizó la función \textit{traceGenerator} provista en el motor para generar trazas válidas que utilizamos como inputs. 
+\section{Tests y Gr\'aficos}
+Para correr los tests y generar los gr\'aficos se utiliz\'o la funci\'on \textit{traceGenerator} provista en el
+motor para generar trazas v\'alidas que utilizamos como inputs. 
 
-Una vez generadas estas trazas corrimos el evaluador (también incluido en el código) y observamos el desempeño de nuestras implementaciones de single y múltiple buffer pools. Para realizar mediciones más precisas, comparamos los hit rates de acceso a disco considerando distintos accesos tales como BNLJ, INLJ, etc. Con esta información de los hit-rates generamos tablas con sus correspondientes los gráficos que se pueden ver en la sección \ref{secTablasYGraficos}.
+Una vez generadas estas trazas corrimos el evaluador (tambi\'en incluido en el c\'odigo) y observamos el
+desempe\~no de nuestras implementaciones de single y m\'ultiple buffer pools. Para realizar mediciones m\'as
+precisas, comparamos los hit rates de acceso a disco considerando distintos accesos tales como BNLJ, INLJ, etc.
+Con esta informaci\'on de los hit-rates generamos tablas con sus correspondientes los gr\'aficos que se pueden
+ver en la secci\'on \ref{secTablasYGraficos}.
 
 
-\subsection{Tablas y Gráficos}\label{secTablasYGraficos}
+\subsection{Tablas y Gr\'aficos}\label{secTablasYGraficos}
+
+Fue de interes buscar casos patol\'ogicos para comprobar donde una pol\'itica de
+buffers presentara ventajas sobre la otra (buffer compartido vs buffer m\'ultiples).
+Nuestra herramienta para comprobar accesos m\'as eficientes es el hitrate,
+es decir, cuantas veces se puede acceder a una p\'agina en memoria por cada vez que
+la tenemos que acceder a disco. Decimos que el hitrate es ideal cuando
+tiende a 100\%, el m\'aximo te\'orico. Entre m\'as alto, mejor.
+
+Una simulaci\'on que hicimos fue una union BNLJ con buffers muy peque\~nos.
+Tenemos una tabla de dos p\'aginas, que la marcamos como KEEP y tenemos
+una tabla de mil p\'aginas, que la marcamos como RECYCLE.
+
+En total, designamos dos buffer pools con capacidad de dos p\'aginas cada uno
+y comparamos contra varios tama\~nos de single buffer pools distintos.
+
+\begin{table}
+    \begin{tabular}{ll}
+    Estrategia                             & Hitrate [%] \\
+    Multiple Buffer Pools KEEP=2 RECYCLE=1 & 49.95       \\
+    Single Buffer Pool SIZE=2              & 17.55       \\
+    Single Buffer Pool SIZE=4              & 37.70       \\
+    Single Buffer Pool SIZE=10             & 48.15       \\
+    Single Buffer Pool SIZE=100            & 49.50       \\
+    Single Buffer Pool SIZE=200            & 49.70       \\
+    \end{tabular}
+\end{table}
+
+Se puede decir que estos experimentos son conociendo el algoritmo del Or\'aculo,
+pero es claramente posible comprobarlo en motores reales. Si se contasen
+con estadisiticas de uso de las tablas, seria posible asignarles de manera
+din\'amica a que pool van a pertenecer cuando se carguen, e incluso es
+posible preveer la performance de las operaciones de acuerdo a que pool
+se le asigne, considerando como se la va a emplear. Es decir, no estaria
+igual de bien asignar una tabla a KEEP si se la va a usar para filescan
+una vez que asignar a KEEP una tabla que va a ser usada cientos de veces
+en un BNLJ.
