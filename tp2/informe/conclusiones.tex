@@ -1,10 +1,9 @@
 \section{Conclusiones}
 
-En este trabajo pr\'actico se investig\'o el manejo de buffers
-como m\'odulo de un \textit{DBMS}, usando UBADB como plataforma de estudio. 
+En este trabajo pr\'actico se investig\'o el manejo de buffers como m\'odulo de un \textit{DBMS}, usando \texttt{UBADB} como plataforma de estudio. 
 
-Se implement\'o la pol\'itica de \textit{Multiple Buffer Pools} bas\'andonos en la informaci\'on conocida del motor de bases de datos de Oracle, incluyendo adem\'as la implementaci\'on de un manejador b\'asico de cat\'alogo. 
+Se implement\'o la pol\'itica de \textit{Multiple Buffer Pools} bas\'andonos en la informaci\'on conocida del motor de bases de datos de \texttt{Oracle}, incluyendo adem\'as la implementaci\'on de un manejador b\'asico de cat\'alogo. 
 
 Posteriormente a implementar y verificar la correctitud de estos m\'odulos (mediante tests de unidad) se procedi\'o a investigar y comparar esta estrategia de buffers contra la estrategia (ya implementada) de \textit{Single Buffer Pool} en una serie de casos de inter\'es. 
 
-Se obtuvo que la performance del \textit{Multiple Buffer Pool} es similar o mejor a la del \textit{Single Buffer Pool} con una cantidad comparativa o incluso significativamente menor de recursos (en particular, se considero a este recurso como la cantidad de memoria principal necesaria). Concluimos entonces que la estrategia de \textit{Multiple Buffer Pools} es \'util para diversas situaciones, evitando con un gasto razonable de recursos la disminuci\'on de la \textit{performance} (en t\'erminos de accesos a disco por sobre accesos a memoria, que dada su diferencia de tiempo de acceso consideramos el \textit{hit-rate} como una buena medici\'on de \textit{performance}).
+Se obtuvo que la performance del \textit{Multiple Buffer Pool} es similar o mejor a la del \textit{Single Buffer Pool} con una cantidad comparativa o incluso significativamente menor de recursos (en particular, se considero a este recurso como la cantidad de memoria principal necesaria). Concluimos entonces que la estrategia de \textit{Multiple Buffer Pools} es \'util para diversas situaciones, evitando con un gasto razonable de recursos la disminuci\'on de la \textit{performance} (en t\'erminos de accesos a disco por sobre accesos a memoria, que dada su diferencia de tiempo de acceso consideramos el \textit{hitrate} como una buena medici\'on de \textit{performance}).

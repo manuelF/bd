@@ -22,6 +22,8 @@ es decir, cuantas veces se puede acceder a una p\'agina en memoria por cada vez 
 la tenemos que acceder a disco. Decimos que el \textit{hitrate} es ideal cuando
 tiende a 100\%, el m\'aximo te\'orico. Entre m\'as alto, mejor.
 
+\subsubsection{Test BNLJ}
+
 Una simulaci\'on que hicimos fue una uni\'on \texttt{BNLJ} con buffers muy peque\~nos.
 Tenemos una tabla de dos p\'aginas, que la marcamos como \texttt{KEEP} y tenemos
 una tabla de mil p\'aginas, que la marcamos como \texttt{RECYCLE}.
@@ -48,12 +50,10 @@ y comparamos contra varios tama\~nos de single buffer pools distintos.
     \label{grafiquito}
 \end{figure}
 
-%MANU, SI QUERES HACER GRAFICOS TAN TOP COMO LOS NUESTROS, CLAVATE UN http://www.chartgo.com/. =D =D =D.
-%BESITOSSSSSSS Juampi y Juli.
-
 Como se puede observar, con sólamente 3 p\'aginas y una administraci\'on inteligente, la eficiencia
 de este mecanismo de m\'ultiples buffers supera a un buffer pool \'unico con tama\~no m\'as de 50 veces mayor.
 
+\subsubsection{Test Random Access}
 Otro experimento realizado consistió en simular los accesos a una base de datos realizados
 por distintos usuarios. El caso de uso que modelamos ac\'a es realizar accesos a dos tablas,
 una chica de 100 p\'aginas y una mucho mas grande, de 10000 p\'aginas. Esto representa de manera
@@ -94,6 +94,8 @@ poder capturar algo de performance. Hay que tener en cuenta que son accesos alea
 sin patr\'on definido y con que los buffers en memoria puedan capturar un peque\~no 
 porcentaje de los accesos m\'as frecuentes basta para traer considerables mejoras al sistema.
 
+
+\subsubsection{Test INLJ}
 También testeamos la eficiencia de un INLJ. Implementamos un generador de traces que simulara un INLJ entre dos tablas.
 Este generador toma por cada página de la primera tabla y se le indica cuantas tuplas está guardando en cada página. 
 Por cada una de estas tuplas hace una busque en un índice (el cual se le pasa como  parámetro la cantidad de paginas
@@ -108,9 +110,9 @@ Generamos la traza haciendo un \textit{file scan} de una primer tabla de 100 pá
 supusimos que tenía 5 tuplas adentro y que cada una de esas tuplas podría encontrar entre 0 y 5 páginas
 para leer de la tabla indexada que cuenta con 1000 paginas (con un índice de 5 páginas y de altura 2)
 
-\begin{table}[H]
-        \begin{tabular}{l||l}
-    \large{\textbf{Estrategia}}                             & \large{\textbf{Hitrate}} [\%] \\
+\begin{table}[H]\centering
+        \begin{tabular}{l || c}
+    \multicolumn{1}{c ||}{\large{\textbf{Estrategia}}}      & \large{\textbf{Hitrate}} [\%] \\
     \hline
                 Multiple Buffer Pools KEEP=5 RECYCLE=2		&	47.52	\\
                 Multiple Buffer Pools KEEP=50 RECYCLE=2		&	47.52	\\
@@ -137,6 +139,10 @@ a pesar de tener un tama\~{n}o considerable.
 A diferencia del MBP, el SBP comparte las páginas del índice con las otras tablas, por lo que el hitrate
 bajo considerablemente, esto puede solucionarse fácilmente manteniendo las páginas del índice en estado
 $"REQUEST"$ y liberarlas todas juntas al final, en este caso la performance de SBP sacaría equivalente a la de MBP.
+
+~\newline
+
+~\newline
 
 Se puede decir que estos experimentos son conociendo el algoritmo del Or\'aculo,
 pero es claramente posible comprobarlo en motores reales. Si se contasen
