@@ -23,10 +23,25 @@ public class MainTraceGenerator
 	{
         currentPath = new File(".").getAbsoluteFile() + "/";
 //		basicDataSet();
-		complexDataSet();
+//		complexDataSet();
+        specialDataSet();
 	}
-	
-	private static void basicDataSet() throws Exception
+    private static void specialDataSet() throws Exception
+    {
+        PageReferenceTraceSerializer serializer = new PageReferenceTraceSerializer();
+
+        String fileNameD1 = "generated/BNLJ-Colors-Gadgets.trace";
+        PageReferenceTrace traceD1 = new BNLJTraceGenerator().generateBNLJ(1,"Gadgets", 1000, "Colors", 1, 1);
+        serialize(fileNameD1, traceD1, serializer);
+        String fileNameE1 = "generated/Index-Colors-Gadgets.trace";
+        PageReferenceTrace traceE1 = new IndexScanTraceGenerator().generateMultipleIndexScanUnclusteredForASingleLeaf(1,"Gadgets", 1, 5, 5, 100);
+        serialize(fileNameE1, traceE1, serializer);
+        String fileNameF1 = "generated/Index-tp-tg.trace";
+        PageReferenceTrace traceF1 = new IndexScanTraceGenerator().generateWeird(1,"Colors",200,100,"Gadgets",1000,10000);
+        serialize(fileNameF1, traceF1, serializer);
+
+    }
+    private static void basicDataSet() throws Exception
 	{
 		PageReferenceTraceSerializer serializer = new PageReferenceTraceSerializer();
 		

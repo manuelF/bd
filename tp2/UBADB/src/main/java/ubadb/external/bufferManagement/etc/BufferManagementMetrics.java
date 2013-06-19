@@ -31,6 +31,6 @@ public class BufferManagementMetrics
 
 	public void showSummary()
 	{
-		System.out.println("Hit rate: " + calculateHitRate());
+		System.out.println("Hit rate: " + 100.*calculateHitRate());
 	}
 }
