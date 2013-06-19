@@ -12,6 +12,28 @@
 		<tablePath>Product.table</tablePath>
 		<tablePool>KEEP</tablePool>
 	</table>
+	
+    <table>
+		<tableId>Colors</tableId>
+		<tableName>Colors</tableName>
+		<tablePath>Colors.table</tablePath>
+		<tablePool>KEEP</tablePool>
+	</table>
+ 
+    <table>
+		<tableId>Gadgets_index</tableId>
+		<tableName>Gadgets_index</tableName>
+		<tablePath>Gadgets_index.table</tablePath>
+		<tablePool>KEEP</tablePool>
+	</table>
+
+
+    <table>
+		<tableId>Gadgets</tableId>
+		<tableName>Gadgets</tableName>
+		<tablePath>Gadgets.table</tablePath>
+		<tablePool>RECYCLE</tablePool>
+	</table>
 
 	<table>
 		<tableId>Customers</tableId>
