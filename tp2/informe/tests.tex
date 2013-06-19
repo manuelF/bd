@@ -42,11 +42,20 @@ y comparamos contra varios tama\~nos de single buffer pools distintos.
     \end{tabular}
 \end{table}
 
+\begin{figure}[H]\centering
+    \includegraphics[scale=0.4]{BNLJ.png}
+    \caption{Gráfico de Hitrate con respecto a buffer utilizado}
+    \label{grafiquito}
+\end{figure}
+
+%MANU, SI QUERES HACER GRAFICOS TAN TOP COMO LOS NUESTROS, CLAVATE UN http://www.chartgo.com/. =D =D =D.
+%BESITOSSSSSSS Juampi y Juli.
+
 Es decir, solamente con 3 p\'aginas y una administraci\'on inteligente, la eficiencia
 de este mecanismo de m\'ultiples buffers supera ampliamente a un buffer pool \'unico de
 m\'as de 50 veces el tama\~no.
 
-Otro expermiento realizado consistió en los accesos a indices.
+Otro experimento realizado consistió en los accesos a indices.
 
 Se puede decir que estos experimentos son conociendo el algoritmo del Or\'aculo,
 pero es claramente posible comprobarlo en motores reales. Si se contasen
