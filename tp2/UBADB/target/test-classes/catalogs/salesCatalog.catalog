@@ -19,6 +19,41 @@
 		<tablePath>Colors.table</tablePath>
 		<tablePool>KEEP</tablePool>
 	</table>
+	
+	<table>
+		<tableId>Colors_index</tableId>
+		<tableName>Colors_index</tableName>
+		<tablePath>Colors_index.table</tablePath>
+		<tablePool>KEEP</tablePool>
+	</table>
+	
+	<table>
+		<tableId>Style</tableId>
+		<tableName>Style</tableName>
+		<tablePath>Style.table</tablePath>
+		<tablePool>RECYCLE</tablePool>
+	</table>
+	
+	<table>
+		<tableId>Style_index</tableId>
+		<tableName>Style_index</tableName>
+		<tablePath>Style_index.table</tablePath>
+		<tablePool>KEEP</tablePool>
+	</table>
+	
+	<table>
+		<tableId>Colors</tableId>
+		<tableName>Colors</tableName>
+		<tablePath>Colors.table</tablePath>
+		<tablePool>KEEP</tablePool>
+	</table>
+	
+	<table>
+		<tableId>Colors_index</tableId>
+		<tableName>Colors_index</tableName>
+		<tablePath>Colors_index.table</tablePath>
+		<tablePool>KEEP</tablePool>
+	</table>
  
     <table>
 		<tableId>Gadgets_index</tableId>
@@ -41,4 +76,5 @@
 		<tablePath>Customers.table</tablePath>
 		<tablePool>KEEP</tablePool>
 	</table>
+	
 </catalog>
