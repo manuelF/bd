@@ -4,6 +4,7 @@ import ubadb.core.components.bufferManager.BufferManager;
 import ubadb.core.components.bufferManager.BufferManagerException;
 import ubadb.core.components.bufferManager.BufferManagerImpl;
 import ubadb.core.components.bufferManager.bufferPool.BufferPool;
+import ubadb.core.components.bufferManager.bufferPool.pools.single.SingleBufferPool;
 import ubadb.core.components.bufferManager.bufferPool.replacementStrategies.PageReplacementStrategy;
 import ubadb.core.components.bufferManager.bufferPool.replacementStrategies.fifo.FIFOReplacementStrategy;
 import ubadb.core.components.bufferManager.pools.multiple.MultipleBufferPool;
@@ -23,19 +24,28 @@ public class MainEvaluator {
 		try {
 			PageReplacementStrategy pageReplacementStrategy = new FIFOReplacementStrategy();
             //String  traceFileName = "generated/mixed-filescans-clustered.trace";
-            String traceFileName2 = "generated/mixed-filescans.trace";
+            //String traceFileName2 = "generated/mixed-filescans.trace";
+            //String traceFileName3 = "generated/BNLJ-Colors-Gadgets.trace";
+            //String traceFileName4 = "generated/Index-Colors-Gadgets.trace";
+            String traceFileName5 = "generated/Index-tp-tg.trace";
 
             String currentPath = new File(".").getAbsoluteFile() + "/src/test/resources/catalogs/";
             CatalogManager catalogManager = new CatalogManagerImpl("salesCatalog.catalog",currentPath);
 
             Map<String,Integer> pages = new HashMap<>();
-            pages.put("KEEP",20);
+            pages.put("KEEP",30);
             pages.put("DEFAULT",150);
-            pages.put("RECYCLE",120);
+            pages.put("RECYCLE",1);
 
             BufferPool bp = createMultipleBufferPool(catalogManager,pageReplacementStrategy,pages);
+            System.out.print("Multiple Buffer Pool ");
+            evaluate(traceFileName5, catalogManager, bp);
+            System.out.print("Single Buffer Pool ");
+            int singleBufferPoolSize=101;
+            bp = new SingleBufferPool(singleBufferPoolSize,pageReplacementStrategy);
 
-            evaluate(traceFileName2, catalogManager, bp);
+            evaluate(traceFileName5, catalogManager, bp);
+
 		} catch (Exception e) {
 			System.out.println("FATAL ERROR (" + e.getMessage() + ")");
 			e.printStackTrace();
