@@ -54,6 +54,8 @@ y comparamos contra varios tama\~nos de single buffer pools distintos.
 Como se puede observar, con sólamente 3 p\'aginas y una administraci\'on inteligente, la eficiencia
 de este mecanismo de m\'ultiples buffers supera a un buffer pool \'unico con tama\~no m\'as de 50 veces mayor.
 
+\ \\
+
 Otro experimento realizado consistió en simular los accesos a una base de datos realizados
 por distintos usuarios. El caso de uso que modelamos ac\'a es realizar accesos a dos tablas,
 una chica de 100 p\'aginas y una mucho mas grande, de 10000 p\'aginas. Esto representa de manera
@@ -94,7 +96,47 @@ poder capturar algo de performance. Hay que tener en cuenta que son accesos alea
 sin patr\'on definido y con que los buffers en memoria puedan capturar un peque\~no 
 porcentaje de los accesos m\'as frecuentes basta para traer considerables mejoras al sistema.
 
+\ \\
 
+Tambien testeamos la eficiensa de un INLJ. Implementamos un generador de traces que simulara un INLJ entre dos tablas.
+Este generador toma por cada pagina de la primer tabla
+
+
+Generamos la traza haciendo un scanFile de una primer tabla de 100 páginas de tama\~{n}o, por cada una de las paginas
+supusimos que tenía 5 tuplas adentro y que cada una de esas tuplas podría encontrar entre 0 y 5 páginas
+para leer de la tabla indexada que cuenta con 1000 paginas (con un índice de 5 páginas y de altura 2)
+
+\begin{table}[H]
+        \begin{tabular}{l||l}
+    \large{\textbf{Estrategia}}                             & \large{\textbf{Hitrate}} [\%] \\
+    \hline
+                Multiple Buffer Pools KEEP=5 RECYCLE=2		&	47.52	\\
+                Multiple Buffer Pools KEEP=50 RECYCLE=2		&	47.52	\\
+                Multiple Buffer Pools KEEP=50 RECYCLE=50 	&	49.80	\\
+                Single Buffer Pools SIZE=21             	&	31.12	\\
+                Single Buffer Pools SIZE=31             	&	40.94	\\
+                Single Buffer Pools SIZE=51             	&	44.66	\\
+                Single Buffer Pools SIZE=101            	&	45.80	\\
+                \end{tabular}
+            \end{table}
+\begin{figure}[H]\centering
+    \includegraphics[scale=0.4]{INLJ.png}
+    \caption{Gráfico de \textit{hitrate} para INLJ con respecto a buffer utilizado}
+    \label{grafiquito3}
+\end{figure}
+
+Se puede observar que múltiple buffer pool llega rápidamente a su máximo hitrate una vez que keep alcanzada
+la cantidad de páginas que cuenta el índice, debido a que tiene los índices en el buffer keep 
+y a las dos tablas en recycle. Esto se debe a que para la tabla peque\~{n}a, donde se hace el scanFile, 
+es evidente que no va a dar ni un solo hit por lo que es un claro candidato a recycle, y la tabla con índice,
+ debido a sus tama\~{n}o, es muy poco probable que vuelva a ser llamada la misma página para que de un hit
+ a pesar de tener un tama\~{n}o conciderable.\\
+
+A diferencia del MBP, el SBP comparte las páginas del índice con las otras tablas, por lo que el hitrate
+bajo considerablemente, esto puede solucionarse fácilmente manteniendo las páginas del índice en estado
+$"REQUEST"$ y liberarlas todas juntas al final, en este caso la performance de SBP sacaría equivalente a la de MBP.
+
+\ \\
 
 Se puede decir que estos experimentos son conociendo el algoritmo del Or\'aculo,
 pero es claramente posible comprobarlo en motores reales. Si se contasen
