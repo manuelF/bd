@@ -98,8 +98,14 @@ porcentaje de los accesos m\'as frecuentes basta para traer considerables mejora
 
 \ \\
 
-Tambien testeamos la eficiensa de un INLJ. Implementamos un generador de traces que simulara un INLJ entre dos tablas.
-Este generador toma por cada pagina de la primer tabla
+También testeamos la eficiencia de un INLJ. Implementamos un generador de traces que simulara un INLJ entre dos tablas.
+Este generador toma por cada página de la primera tabla y se le indica cuantas tuplas está guardando en cada página. 
+Por cada una de estas tuplas hace una busque en un índice (el cual se le pasa como  parámetro la cantidad de paginas
+que tiene y la altura), haciendo k lecturas random de alguna página, donde k es la altura del árbol. También simula
+la búsqueda de páginas en la segunda tabla, se le pasa al generador un número mínimo y máximo de páginas que se 
+podrían necesitar buscar en esta segunda página por cada tupla, y se hace R lecturas a de páginas random de la
+segunda tabla (donde R es un random entre [min,max] especificados como parámetros.
+
 
 
 Generamos la traza haciendo un scanFile de una primer tabla de 100 páginas de tama\~{n}o, por cada una de las paginas
