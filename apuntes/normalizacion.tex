@@ -6,7 +6,7 @@
 \parskip=8pt
 \usepackage[width=15.5cm, left=3cm, top=2.5cm, height= 24.5cm]{geometry}
 
-%\usepackage{ccfonts,eulervm} 
+%\usepackage{ccfonts,eulervm}
 \usepackage[T1]{fontenc}
 \usepackage{epigraph}
 \usepackage{amsmath}
@@ -31,13 +31,6 @@
 \newtheorem{lemma}[theorem]{Lema}
 \newtheorem{proposition}[theorem]{Proposici\'on}
 \newtheorem{corollary}[theorem]{Corolario}
-
-\newcommand{\Var}{\textbf{var }}
-\newcommand{\True}{\textbf{true }}
-\newcommand{\False}{\textbf{false }}
-\newcommand{\Break}{\textbf{break }}
-\newcommand{\Continue}{\textbf{continue }}
-\newcommand{\Param}{\textbf{param }}
 
 \newenvironment{proof}[1][Demostraci\'on]{\begin{trivlist}
 \item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
@@ -89,9 +82,9 @@ $t_1, t_2, ..., etc$ tuplas de r
 \section{Dependencias Funcionales (DF)}
 \subsection{Definicion de DF}
 
-Decimos que vale $X \imp Y en R \iff t_1(X)=t_2(X) \imp t_1(Y)=t_2(Y)$ 
+Decimos que vale $X \imp Y en R \iff t_1(X)=t_2(X) \imp t_1(Y)=t_2(Y)$
 
-Decimos que ``$X$ determina funcionalmente a $Y$'', o que ``$Y$ es determinado funcionalmente por $X$.
+Decimos que ``$X$ determina funcionalmente a $Y$'', o que ``$Y$ es determinado funcionalmente por $X$''.
 
 $X$, conjunto de atributos de $R$, lado izquierdo.
 $Y$, conjunto de atributos de $R$, lado derecho.
@@ -142,4 +135,152 @@ Se sigue que siempre se cumple que $X \imp X$.
 
 Por inercia se tiende a pensar que $X \imp Y \Rightarrow Y \imp X$, pero esto, aunque a veces puede ser verdadero, en general es falso.
 
+
+\subsection{Clausura de $F$ ($F^{+}$)}
+Conjunto de todas las dependencias funcionales que pueden inferirise de F aplicando los axiomas.
+
+$F^{+} = \{ X \imp Y | F \vDash X \imp Y \}$
+
+
+\subsubsection{Ejemplo}
+R (A, B)
+
+F: $A \imp B$
+
+$F^{+} = \{ A \imp B, A \imp A, AB \imp B, AB \imp AB, B \imp B, A \imp AB\}$
+
+
+\subsubsection{Ejemplo}
+R (A, B, C)
+
+F: $\{AB \imp C, C \imp B \}$
+
+$F^{+} = \{
+    A\imp A, AB\imp A, AC\imp A, ABC\imp A, B\imp B, AB\imp B, BC\imp B,
+    ABC\imp B, C\imp C,
+    AC\imp C, BC\imp C, ABC\imp C, AB\imp AB, ABC\imp AB, AC\imp AC, ABC\imp AC,
+    BC\imp BC, ABC\imp BC, ABC\imp ABC, AB\imp C, AB\imp AC, AB\imp BC, AB\imp ABC,
+    C\imp B, C\imp BC, AC\imp B, AC\imp AB\}$
+
+
+\subsection{Reglas Adicionales}
+\begin{enumerate}
+\setcounter{enumi}{4}
+    \item \textbf{Uni\'on}: $X \imp Y \land X\imp Z \Rightarrow X \imp YZ$
+    \item \textbf{Pseudotransitividad}: $(\forall W) X \imp Y \land YW\imp Z \Rightarrow XW \imp Z$
+    \item \textbf{Descomposici\'on}: $X\imp YZ \Rightarrow X\imp Y \land X\imp Z$
+
+\end{enumerate}
+
+Las reglas adicionales se demuestras aplicando los axiomas.
+
+\subsubsection{Ejemplo}
+Demostraremos la regla de uni\'on:
+
+\begin{enumerate}
+    \item $X \imp Y$ (dada)
+    \item $X \imp Z$ (dada)
+    \item $X \imp XY$ (aumento de 1 con X)
+    \item $XY \imp YZ$ (aumento de 2 con Y)
+    \item $X \imp YZ$ (transitividad de 3 y 4)
+\end{enumerate}
+
+
+\subsubsection{Ejemplo}
+$\{ X\imp Z, Y\imp Z\} \vDash X \imp Y$ ?
+
+%tabla
+\begin{table}[H]\centering
+    \begin{tabular}{c | c | c }
+    X & Y & Z \\
+    \hline
+    1 & 2 & 5 \\
+    1 & 3 & 5 \\
+    2 & 2 & 5 \\
+    2 & 3 & 5 \\
+
+    \end{tabular}
+\end{table}
+
+\subsection{Clausura de un conjunto de atributos}
+X+ con respecto a F es el conjunto de todos los atributos tal que $X \imp A$, o sea:
+
+$X+ = \{A \in R / F\vDash X \imp A\}$
+
+Una forma de calcular X+ es computar una secuencia de conjuntos de atributos $X_0, X_1, \dotsb$ aplicando las siguientes reglas:
+
+\begin{enumerate}
+\item $X_0$ es $X$
+\item $X_{i+1}$ es $X_i$ union el conjunto de atributos A tal que hay alguna dependencia
+ funcional $Y \imp Z$ en F, A esta en Z e $Y \subseteq X_i$
+\end{enumerate}
+
+Aplicamos repetidas veces la regla 2 hasta que $X_i = X_i+1$
+
+Nota: Como $X = X_0 \subseteq \dotsb \subseteq X_i \subseteq R$ y R es finito,
+ eventualmente llegaremos a que $X_i = X_{i+1}$, que es la parada del algoritmo,
+ luego termina.
+
+\subsection{Propiedades de la clausura}
+Dados F y $X \imp Y$, luego $F \vDash X \imp Y \iff Y \subseteq X+$
+
+Si $X+ = R$ entonces X es superclave de R.
+
+Ejemplo \label{ej:clausuraconj}:
+
+Tomando el mismo R y F del Ejemplo \ref{ej:clausuraref}
+
+$R(A,B)$\\
+$F: A \imp B$\\
+$F+ = \{A \imp B, A \imp A, B \imp B, AB \imp A, AB \imp B, AB  \imp AB, A \imp AB\}$\\
+\\
+$B+ = B$\\
+$A+ = AB = R$, luego A es clave.
+
+Ejemplo \label{ej:clasuraconj2}:
+
+$R(A,B,C,D,E)$\\
+$F: \{AB \imp C, C \imp D, BD \imp E \}$\\
+$AB+$ ? \\
+$X_0=AB$, por $AB\imp C$\\
+$X_1=ABC$, por $C\imp D$\\
+$X_2=ABCD$, por $BD\imp E$\\
+\\
+$X_3=ABCDE=R$, por lo tanto AB es suplerclave.
+
+\subsection{Superclave y Clave}
+Si $X\imp R$ entonces decimos que X es \textbf{superclave}.\\
+Si adem\'as no existe ningun $Z \subset X$ tal que $Z \imp R$ entonces
+X tambien es \textbf{clave}.
+
+En el ejemplo 1, la clave es {LU, MATERIA, EFEC} `? Por qu\'e?
+
+R puede tener una o varias claves a las que llamaremos en general \textit{claves candidatas}.
+
+Un ejercicio t\'ipico consiste en hallar todas las claves de R.
+Una forma de hacerlo es computando primero los atributos que no est\'an en ning\'un lado
+derecho, llam\'emoslo X. Si $X+ = R$, entonces X es la \'unica CC (clave candidata).
+Sino hay que probar todos los casos.
+Es decir, comenzamos con $X \cup A , \forall A$. Si $XA+ = R$, XA es CC, y todos los
+que incluyan a XA ser\'an superclave. Si $XA+ \not = R$, agregamos un atributo
+m\'as a XA, sea este B, y computamos $XAB+$, y as\'i sucesivamente.
+
+
+\subsection{Equivalencia de conjuntos de dependencias funcionales}
+
+Decimos que dos conjuntos de dependencias funcionales F y G sobre R son equivalentes
+($F \equiv G$) si $F+ = G+$.
+
+Tambi\'en si $F \vDash G$ y $G \vDash F$ (si F cubre a G, y G cubre a F).
+
+Ejemplo \label{ej:conjuntoDependencias}
+
+$R(A,B,C)$\\
+$F=\{A\imp B, B \imp C, C\imp A\}$\\
+$G=\{B\imp A, C \imp B, A\imp C\}$\\
+
+Luego, $F\equiv G$.
+
+
+\subsection{Cubrimiento Minimal}
 \end{document}
