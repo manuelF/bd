@@ -4,6 +4,7 @@ import ubadb.core.components.bufferManager.BufferManager;
 import ubadb.core.components.bufferManager.BufferManagerException;
 import ubadb.core.components.bufferManager.BufferManagerImpl;
 import ubadb.core.components.bufferManager.bufferPool.BufferPool;
+import ubadb.core.components.bufferManager.bufferPool.pools.single.SingleBufferPool;
 import ubadb.core.components.bufferManager.bufferPool.replacementStrategies.PageReplacementStrategy;
 import ubadb.core.components.bufferManager.bufferPool.replacementStrategies.fifo.FIFOReplacementStrategy;
 import ubadb.core.components.bufferManager.pools.multiple.MultipleBufferPool;
@@ -13,7 +14,10 @@ import ubadb.core.components.diskManager.DiskManager;
 import ubadb.external.bufferManagement.etc.*;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class MainEvaluator {
@@ -23,19 +27,39 @@ public class MainEvaluator {
 		try {
 			PageReplacementStrategy pageReplacementStrategy = new FIFOReplacementStrategy();
             //String  traceFileName = "generated/mixed-filescans-clustered.trace";
-            String traceFileName2 = "generated/mixed-filescans.trace";
+            //String traceFileName2 = "generated/mixed-filescans.trace";
+            //String traceFileName3 = "generated/BNLJ-Colors-Gadgets.trace";
+            //String traceFileName4 = "generated/Index-Colors-Gadgets.trace";
+            //String traceFileName5 = "generated/Index-tp-tg.trace";
+            String traceFileName6 = "generated/INLJ-Style-Gadgets-tp-tg.trace";
 
             String currentPath = new File(".").getAbsoluteFile() + "/src/test/resources/catalogs/";
             CatalogManager catalogManager = new CatalogManagerImpl("salesCatalog.catalog",currentPath);
+            
+            List<Integer> testSize = Arrays.asList(5, 10,20, 30, 50, 100);
+            Iterator<Integer> iterator = testSize.iterator();
+        	while (iterator.hasNext()) {
+        		Integer sizebuffer = iterator.next();
+        		System.out.print("MBP KEEP=" + sizebuffer+ " ");
+            	Map<String,Integer> pages = new HashMap<>();
+                pages.put("KEEP",sizebuffer);
+                pages.put("DEFAULT",1);
+                pages.put("RECYCLE",50);
 
-            Map<String,Integer> pages = new HashMap<>();
-            pages.put("KEEP",20);
-            pages.put("DEFAULT",150);
-            pages.put("RECYCLE",120);
+                BufferPool bp = createMultipleBufferPool(catalogManager,pageReplacementStrategy,pages);
+                System.out.print("Multiple Buffer Pool ");
+                evaluate(traceFileName6, catalogManager, bp);
+        	}
+            
+            
+            iterator = testSize.iterator();
+        	while (iterator.hasNext()) {
+        		Integer sizebuffer = iterator.next()+1;
+        		System.out.print("Size SBP " + sizebuffer+ " ");
+        		BufferPool bp = new SingleBufferPool(sizebuffer.intValue(), pageReplacementStrategy);
+            	evaluate(traceFileName6, catalogManager, bp);
+        	}
 
-            BufferPool bp = createMultipleBufferPool(catalogManager,pageReplacementStrategy,pages);
-
-            evaluate(traceFileName2, catalogManager, bp);
 		} catch (Exception e) {
 			System.out.println("FATAL ERROR (" + e.getMessage() + ")");
 			e.printStackTrace();

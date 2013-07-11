@@ -15,7 +15,11 @@ public class BNLJTraceGenerator extends PageReferenceTraceGenerator
 	public PageReferenceTrace generateBNLJ(long transactionNumber, String tableNameOuter, int pageCountOuter, String tableNameInner, int pageCountInner, int groupSize)
 	{
 		PageReferenceTrace ret = new PageReferenceTrace();
-		int groups = (int)Math.ceil((double)pageCountOuter/(double)groupSize);
+        int groups;
+        if(groupSize==0)
+		    groups = pageCountOuter;
+        else
+            groups = (int)Math.ceil((double)pageCountOuter/(double)groupSize);
 		int offset = 0;
 		for(int i=0; i < groups; i++)
 		{

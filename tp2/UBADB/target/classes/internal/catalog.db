@@ -1,0 +1,28 @@
+<catalog>
+
+    <table>
+        <id>1</id>
+        <name>Alumnos</name>
+        <path>alumnos.xml</path>
+    </table>
+    <table>
+        <id>2</id>
+        <name>Profesores</name>
+        <path>profesor.xml</path>
+    </table>
+    <table>
+        <id>3</id>
+        <name>Materias</name>
+        <path>materias.xml</path>
+    </table>
+    <table>
+        <id>4</id>
+        <name>Cursada</name>
+        <path>cursada.xml</path>
+    </table>
+    <table>
+        <id>5</id>
+        <name>Cuota</name>
+        <path>cuota.xml</path>
+    </table>
+</catalog>

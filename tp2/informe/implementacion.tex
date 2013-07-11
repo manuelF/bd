@@ -12,7 +12,7 @@ En primer lugar realizamos la implementaci\'on del manejador de c\'atalogo (\tex
 	por \texttt{default} seg\'un la sem\'antica de buffers). 
 \end{itemize}
 
-La implementaci\'on del \textit{Catalog Manager} sigue la interfaz dada por la c\'atedra en \texttt{CatalogManager}. La implementaci\'on mantiene los cat\'alogos mediante el uso de archivos XML. A continuaci\'on presentamos un ejemplo de archivo:
+La implementaci\'on del \textit{Catalog Manager} sigue la interfaz dada por la c\'atedra en \texttt{CatalogManager}. \texttt{CatalogManagerImpl} mantiene los cat\'alogos mediante el uso de archivos XML. A continuaci\'on presentamos un ejemplo de archivo:
 
 \begin{Verbatim}[xleftmargin=-3em]
 	<catalog>
@@ -30,27 +30,23 @@ La implementaci\'on del \textit{Catalog Manager} sigue la interfaz dada por la c
 	</catalog>
 \end{Verbatim}
 
-Como se puede ver el formato es autoexplicativo: Se mantiene una secci\'on \textit{table} por cada tabla dentro de la cual se incluyen los datos pertinentes a esa tabla.
+Como se puede ver el formato es autoexplicativo: Se mantiene una secci\'on \textit{table} por cada tabla dentro de la cual se incluyen los datos pertinentes a esa tabla. Para facilitar el parseo todas las entradas para la informaci\'on de tablas se mantienen \textit{wrappeadas} en una secci\'on \texttt{catalog}.
 
-El único rol de la clase \texttt{CatalogManagerImpl} es levantar el archivo XML y parsear sus datos. Para ello decidimos utilizar la librer\'ia \texttt{JDOM 1.1}. Esta librer\'ia, si bien es de m\'as bajo nivel que XStream, no implica que tenemos \textit{coupling} de nombres entre el formato del XML y los nombres de las propiedades de los descriptores de tabla (lo cual es requerido por la librer\'ia antes mencionada por el uso de  \textit{reflection}). Utilizando esta librer\'ia de bajo nivel mantenemos separadas la representaci\'on en XML y la representaci\'on de los descriptores de tabla en c\'odigo en Java.
+El único rol de la clase \texttt{CatalogManagerImpl} es levantar el archivo XML indicado y parsear sus datos. Para ello decidimos utilizar la librer\'ia \texttt{JDOM 1.1}. Esta librer\'ia, si bien es de m\'as bajo nivel que \texttt{XStream}, su uso implica que no tenemos \textit{coupling} de nombres entre el formato del XML y los nombres de las propiedades de los descriptores de tabla (lo cual es requerido por la librer\'ia \texttt{XStream} antes mencionada por el uso de  \textit{reflection}). Utilizando esta librer\'ia de bajo nivel mantenemos separadas la representaci\'on en XML y la representaci\'on de los descriptores de tabla en c\'odigo en Java (porque para setearlos usamos sus \textit{accessor methods}).
 
 Una vez levantado el cat\'alogo desde un archivo XML, la interfaz que provee permite, dada una tabla, obtener el descriptor de tabla. Esto lo hace instanciando un objeto de clase \texttt{Catalog}, que contiene una lista de \texttt{TableDescriptors}, la representaci\'on de descriptores de tabla. Este contiene todos los datos mencionados anteriormente. En caso de no existir un descriptor correspondiente a la tabla, se devuelve un valor nulo (\texttt{null} en Java).
 
-Junto a la implementaci\'on se incluyen test de unidad de este m\'odulo. Los mismos est\'an realizados mediante el framework JUnit. Consisten en levantar el cat\'alogo
-de un archivo XML creado para el test y realizar luego una serie de verificaciones sobre los descriptores de tabla presentes, incluyendo casos borde como por ejemplo, un
-descriptor de tabla que no tiene especificado en el XML a que pool debe ir (el comportamiento para este caso es enviarla al buffer \texttt{DEFAULT}) y que el valor correspondiente a un descriptor de tabla que no existe es nulo.
+Junto a la implementaci\'on se incluyen test de unidad de este m\'odulo. Los mismos est\'an realizados mediante el framework JUnit. Consisten en levantar el cat\'alogo de un archivo XML creado para el test y realizar luego una serie de verificaciones sobre los descriptores de tabla presentes, incluyendo casos borde como por ejemplo, un descriptor de tabla que no tiene especificado en el XML a que pool debe ir (el comportamiento para este caso es enviarla al buffer \texttt{DEFAULT}) y que el valor correspondiente a un descriptor de tabla que no existe es nulo.
 
 \subsection{Multiple Buffer Manager}
 
-Siguiendo la l\'inea de la investigaci\'on realizada anteriormente, implementamos el manejo de buffers usado por el motor \texttt{Oracle 11g}.
+Siguiendo la l\'inea de la investigaci\'on realizada anteriormente, implementamos el manejo de buffers usado por el motor \texttt{Oracle 11g} (aunque nos basamos principalmente en el sistema que viene implementado desde la versi\'on 8g).
 
-Para lograr m\'as generalidad, decidimos implementar buffer pools multiples tal que puedan configurarse pools de nombres arbitrarios. Para ello, le permitimos al motor
-inicializar pools a partir de un diccionario \texttt{Map<String,Integer>} que nos permita obtener los nombres y tama\~nos correspondientes para cada buffer deseado.
+Para lograr m\'as generalidad, decidimos implementar buffer pools multiples tal que puedan configurarse pools de nombres arbitrarios. Para ello, le permitimos al motor inicializar pools a partir de un diccionario \texttt{Map<String,Integer>} que nos permita obtener los nombres y tama\~nos correspondientes para cada buffer deseado.
 
 La configuraci\'on del buffer usado como default decidimos tambi\'en dejarla al instanciador permitiendo pasarla como par\'ametro (a pesar de que se podr\'ia utilizar un nombre como DEFAULT, lo cual corresponde a la implementaci\'on de Oracle). Tambi\'en permitimos definir la estrategia de reemplazo de p\'aginas para usar en los buffers. Por simplicidad se decidi\'o que todos los buffers utilicen esta estrategia pasada como par\'ametro.
 
-La implementaci\'on es sencilla, puesto que se pudo reutilizar mucho c\'odigo ya provisto: cada buffer pool se modela mediante un \texttt{SingleBufferPool}. Se mantiene
-un \texttt{Map<String,BufferPool>} que mapea $\text{nombre de pool} \rightarrow \text{instancia de pool}$. Estos mapeos se obtienen del cat\'alogo (que recibe el MultipleBufferPool de par\'ametro). La \'unica tarea del \texttt{MultipleBufferPool} por lo tanto es, dada una operaci\'on para una p\'agina, obtener el buffer correspondiente (que podría ser el DEFAULT si esta tabla no tiene asignado ningun pool) y realizar esa operaci\'on mediante \texttt{SingleBufferPool}.
+La implementaci\'on es sencilla, puesto que se pudo reutilizar mucho c\'odigo ya provisto: cada buffer pool se modela mediante un \texttt{SingleBufferPool}. Se mantiene un \texttt{Map<String,BufferPool>} que mapea $\text{nombre de pool} \rightarrow \text{instancia de pool}$. Estos mapeos se obtienen del cat\'alogo (que recibe el MultipleBufferPool de par\'ametro). La \'unica tarea del \texttt{MultipleBufferPool} por lo tanto es, dada una operaci\'on para una p\'agina, obtener el buffer correspondiente (que podría ser el DEFAULT si esta tabla no tiene asignado ningun pool) y realizar esa operaci\'on mediante la interfaz de \texttt{BufferPool} que posee \texttt{SingleBufferPool}.
 
-Como se realizo anteriormente, se incluyen test de unidad para este m\'odulo realizados en JUnit. Para realizar los mismos se provee un \textit{mock} de la implementaci\'on de un cat\'alogo, que carga una lista est\'atica de descriptores.
+Como se realizó anteriormente, se incluyen test de unidad para este m\'odulo realizados en JUnit. Para realizar los mismos se provee un \textit{mock} de la implementaci\'on de un cat\'alogo, que carga una lista est\'atica de descriptores.
 

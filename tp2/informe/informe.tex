@@ -56,7 +56,6 @@
       \hskip1.5em plus0em minus0.5em \fi \nobreak
       \vrule height0.75em width0.5em depth0.25em\fi}
 
-\parindent 0em
 \algrenewcommand{\algorithmiccomment}[1]{//\textit{#1} }
 
 \lstset{language=sql,numbers=left,tabsize=2,
@@ -66,7 +65,7 @@
 \pagestyle{fancy}
 \thispagestyle{fancy}
 \addtolength{\headheight}{1pt}
-\lhead{BD - TP1}
+\lhead{BD - TP2}
 \rhead{Grupo 1}
 \cfoot{\thepage}
 \renewcommand{\footrulewidth}{0.4pt}
@@ -99,11 +98,17 @@
 \input{tests.tex}
 \newpage
 
+\input{conclusiones.tex}
+\newpage
+
 \section{Referencias}
 \begin{itemize}
 	\item http://www.dba-oracle.com/phys\_52.htm
-	\item \label{oracle_docs_memory}http://docs.oracle.com/cd/B10500\_01/server.920/a96533/memory.htm
-	\item \label{objetos_pequenios}
+	\item http://docs.oracle.com/cd/B10500\_01/server.920/a96533/memory.htm
+	\item http://www.exploreoracle.com/2009/04/02/keep-buffer-pool-and-recycle-buffer-pool/
+	\item http://docs.oracle.com/cd/B28359\_01/server.111/b28274/memory.htm\#autoId29
+	\item http://www.praetoriate.com/t\_\ tuning\_recycle\_pool.htm
 \end{itemize}
 
 \end{document}
+c
