@@ -51,7 +51,6 @@ CREATE TABLE vuelosConEscalas(
 Foreign Key idViajePartida idViajeLlegada
 
 
-
 CREATE TABLE preciosParaClase(
 	idVueloConEscalas integer NOT NULL,
 	isClase integer,
