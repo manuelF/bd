@@ -1,8 +1,8 @@
 CREATE TABLE usuarios(
 	idUsuario integer NOT NULL,
-	username varchar
-	nombre varchar
-	apellido varchar
+	username varchar NOT NULL,
+	nombre varchar NOT NULL,
+	apellido varchar NOT NULL,
 	telefono integer,
 	fechaNacimiento date,
 	preferencias varchar,
@@ -17,18 +17,18 @@ CREATE TABLE usuarios(
 Foreign Key idClase idPaisNacimiento idClaseFrecuente
 
 CREATE TABLE tarjetas(
-	idUsuario integer,
-	idTarjeta integer,
+	idUsuario integer NOT NULL,
+	idTarjeta integer NOT NULL,
 	empresa integer, 
-	nroTarjeta integer,
-	codigoSeguridad integer,
+	nroTarjeta integer NOT NULL,
+	codigoSeguridad integer NOT NULL,
 	direccion varchar
 ) Primary Key idTarjeta
 Foreign Key idUsuario
 
 CREATE TABLE ciudadesFavoritas(
-	idUsuario integer,
-	idCiudad integer
+	idUsuario integer NOT NULL,
+	idCiudad integer NOT NULL
 ) Primary Key (idUsuario,idCiudad)
 Foreign Key idUsuario idCiudad
 
@@ -44,7 +44,7 @@ CREATE TABLE reservas(
 Foreign Key idUsuario idVueloConEscalas idClase
 
 CREATE TABLE vuelosConEscalas(
-	idViajeConEscalas integer,
+	idViajeConEscalas integer NOT NULL,
 	idViajePartida integer,
 	idViajeLlegada integer
 ) Primary Key (idViajeConEscalas)
@@ -53,7 +53,7 @@ Foreign Key idViajePartida idViajeLlegada
 
 
 CREATE TABLE preciosParaClase(
-	idVueloConEscalas integer,
+	idVueloConEscalas integer NOT NULL,
 	isClase integer,
 	precio money
 ) Primary Key (idVueloConEscalas,idClase)
@@ -61,82 +61,81 @@ Foreign Key idVueloConEscalas idClase
 
 
 CREATE TABLE vuelosDirectos(
-	idVuelo integer,
-	idAeronave integer,
-	fechaSalida datetime,
-	fechaLlegada datetime,
-	idAeropuertoSalida integer,
-	idAeropuertoLlegada integer
+	idVuelo integer NOT NULL,
+	idAeronave integer NOT NULL,
+	fechaSalida datetime NOT NULL,
+	fechaLlegada datetime NOT NULL,
+	idAeropuertoSalida integer NOT NULL,
+	idAeropuertoLlegada integer NOT NULL
 ) Primary Key (idVuelo)
 Foreign Key idAeropuertoLlegada idAeropuertoSalida
 
 
 CREATE TABLE haceEscalaEn(
-	idVueloConEscalas integer,
-	idVuelo integer,
+	idVueloConEscalas integer NOT NULL,
+	idVuelo integer NOT NULL,
 	numeroEscala integer
 ) Primary Key (idVueloConEscalas,idVuelo)
 Foreign Key idVueloConEscalas idVuelo
 
 
 CREATE TABLE aeropuertos(
-	idAeropuerto integer,
+	idAeropuerto integer NOT NULL,
 	tasa money,
 	opcionesTransporte varchar,
-	nombre varchar,
-	idCiudad integer
+	nombre varchar NOT NULL,
+	idCiudad integer NOT NULL
 ) Primary Key (idAeropuerto)
 Foreign Key idCiudad
 
 
-
 CREATE TABLE telefonosAeropuertos(
-	idAeropuerto integer,
+	idAeropuerto integer NOT NULL,
 	numero integer
 ) Primary Key (idAeropuerto,numero)
 Foreign Key idAeropuerto
 
 
 CREATE TABLE aeronaves(
-	idAeronave integer,
-	triplacion varchar,
+	idAeronave integer NOT NULL,
+	tripulacion varchar,
 	millas integer,
 	modelo varchar,
-	idPaisOrigen integer
+	idPaisOrigen integer NOT NULL
 ) Primary Key idAeronave
 Foreign Key idPaisOrigen
 
 
 CREATE TABLE paises(
-	idPais integer,
-	nombre varchar
+	idPais integer NOT NULL,
+	nombre varchar NOT NULL
 ) Primary Key (idPais)
 
 
 CREATE TABLE ciudades(
-	idCiudad integer,
-	nombre varchar,
-	idPais integer
+	idCiudad integer NOT NULL,
+	nombre varchar NOT NULL,
+	idPais integer NOT NULL
 ) Primary Key (idCiudad)
 Foreign Key idPais
 
 
 CREATE TABLE clases(
-	idClase integer,
-	nombre varchar
+	idClase integer NOT NULL,
+	nombre varchar NOT NULL
 ) Primary Key idClase
 
 
 CREATE TABLE disponeDeAsientos(
-	idAeronave integer,
-	idClase integer,
-	asientos integer
+	idAeronave integer NOT NULL,
+	idClase integer NOT NULL,
+	asientos integer NOT NULL
 ) Primary Key (idAeronave,idClase)
 Foreign Key idAeronave idClase
 
 
 CREATE TABLE ciudadesFavoritas(
-	idUsuario integer,
+	idUsuario integer NOT NULL,
 	idCiudad integer
 ) Primary Key (idUsuario,idCiudad)
 Foreign Key idUsuario idCiudad
