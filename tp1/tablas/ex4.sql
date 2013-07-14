@@ -1,8 +1,6 @@
 CREATE PROCEDURE reporteAeropuertosPorRango(IN inicio date, IN fin date)
 LANGUAGE SQL
 BEGIN
-
-
 	SELECT A.idAeropuerto, A.nombre, PasajerosIN.MES,PasajerosIN.ANO, PasajerosIN.pasajerosIN, PasajerosOUT.PasajerosOUT, 
 	FROM Aeropuertos as A, (
 		-- tabla con la cantidad de pasajeros de entrada a un aeropuerto

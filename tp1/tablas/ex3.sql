@@ -1,11 +1,12 @@
+IF OBJECT_ID ('RestringirCupo','TR') IS NOT NULL
+   DROP TRIGGER RestringirCupo;
+GO
+
 CREATE TRIGGER RestringirCupo ON Reservas
-	BEFORE INSERT
-	FOR EACH ROW
-
-	BEGIN
-
-	IF( SELECT COUNT(*) FROM ViajesConEscalas ve
-		WHERE ve.idVueloConEscalas = :NEW.idVueloConEscalas
+	AFTER INSERT
+AS
+	IF EXISTS (SELECT * FROM ViajesConEscalas ve,inserted new
+		WHERE ve.idVueloConEscalas = new.idVueloConEscalas
 		AND 
 		EXISTS -- exista algun vuelo
 		(SELECT * FROM vuelos v 
@@ -24,11 +25,11 @@ CREATE TRIGGER RestringirCupo ON Reservas
 				EXISTS
 				(SELECT * FROM DisponeDeAsientos da
 					WHERE v.idAeronave = da.idAeronave
-					AND da.idClase = :NEW.idClase
+					AND da.idClase = new.idClase
 					AND da.asientos > 
 						( -- contar asientos ocupados de un vuelo/clase
 						SELECT COUNT(*) FROM reservas r
-							WHERE r.idClase = :NEW.idClase
+							WHERE r.idClase = new.idClase
 							AND 
 							(
 								EXISTS
@@ -51,10 +52,9 @@ CREATE TRIGGER RestringirCupo ON Reservas
 						)
 				)
 			)
-		)
-	> 0)
+		))
 		BEGIN
-			RAISEERROR ('No hay asientos sufientes')
+			RAISERROR ('No hay asientos sufientes',10,1)
 			ROLLBACK TRANSACTION
+			RETURN
 		END
-	END
