@@ -53,8 +53,8 @@ CREATE TABLE reservas(
 
 CREATE TABLE vuelosConEscalas(
 	idViajeConEscalas integer NOT NULL,
-	idViajePartida integer,
-	idViajeLlegada integer,
+	idViajePartida integer FOREIGN KEY REFERENCES vuelosDirectos(idVuelo),
+	idViajeLlegada integer FOREIGN KEY REFERENCES vuelosDirectos(idVuelo),
     Primary Key (idViajeConEscalas)
 
     -- NO SE CUALES VAN
