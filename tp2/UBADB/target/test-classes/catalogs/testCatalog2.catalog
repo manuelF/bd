@@ -1,0 +1,13 @@
+<catalog>
+	<table>
+		<tableId>test.table</tableId>
+		<tableName>A Test Table</tableName>
+		<tablePath>testTable.table</tablePath>
+		<tablePool>RECYCLE</tablePool>
+	</table>
+	<table>
+		<tableId>test2.table</tableId>
+		<tableName>Another Test Table</tableName>
+		<tablePath>testTable2.table</tablePath>
+	</table>
+</catalog>

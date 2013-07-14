@@ -1,7 +1,6 @@
 \section{Investigación sobre Oracle}
 
-Desde su versión 8i, el motor de base de datos \texttt{Oracle} utiliza tres buffer pools para tener bloques de datos. Un resumen sucinto de la arquitectura de buffers
-en \texttt{Oracle} puede verse en la figura \ref{fotito}.
+Desde su versión 8i, el motor de base de datos \texttt{Oracle} utiliza tres buffer pools para tener bloques de datos. Un resumen sucinto de la arquitectura de buffers en \texttt{Oracle} puede verse en la figura \ref{fotito}.
 
 \begin{figure}[H]\centering
 	\includegraphics[scale=0.5]{keepRecycle.jpg}
@@ -24,6 +23,8 @@ Es digno observar que estos buffers no tienen un comportamiento automático. Es 
 
 \subsection{Default pool}
 Es el espacio de memoria que se utiliza por defecto para los bloques que pertenecen a objetos que no fueron marcados específicamente para ser usados con otras tablas.
+
+\newpage
 
 \subsection{Keep pool}
 El buffer \texttt{keep} se usa para almacenar bloques pertenecientes a tablas e índices que son utilizados muy frecuentemente. 

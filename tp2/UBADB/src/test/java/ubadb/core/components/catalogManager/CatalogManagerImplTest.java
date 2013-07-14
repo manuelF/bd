@@ -61,6 +61,8 @@ public class CatalogManagerImplTest {
 			assertEquals(t.getTablePath(),"testTable2.table");
 			assertEquals(t.getTablePool(),"DEFAULT");
 
+            TableDescriptor t2 = c.getTableDescriptorByTableId(new TableId("notPresent.table"));
+            assertNull(t2);
 		} catch(Exception e) {
 			e.printStackTrace();
             assertTrue(false);
