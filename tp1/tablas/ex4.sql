@@ -1,6 +1,5 @@
-CREATE PROCEDURE reporteAeropuertosPorRango(IN inicio date, IN fin date)
-LANGUAGE SQL
-BEGIN
+CREATE PROCEDURE reporteAeropuertosPorRango(@inicio date, @fin date)
+AS
 	SELECT A.idAeropuerto, A.nombre, PasajerosIN.MES,PasajerosIN.ANO, PasajerosIN.pasajerosIN, PasajerosOUT.PasajerosOUT, 
 	FROM Aeropuertos as A, (
 		-- tabla con la cantidad de pasajeros de entrada a un aeropuerto
@@ -60,6 +59,3 @@ BEGIN
 	AND PasajerosIN.ANO == PasajerosOUT.ANO
 	
 	ORDER BY (PasajerosIN.pasajerosIN + PasajerosOUT.pasajerosOUT) DESC
-	
-	
-END
