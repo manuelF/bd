@@ -1,5 +1,3 @@
-DROP TABLE paises;
-
 CREATE TABLE paises(
 	idPais INTEGER IDENTITY NOT NULL,
 	nombre VARCHAR(255) NOT NULL,
@@ -101,13 +99,12 @@ CREATE TABLE ciudadesFavoritas(
 
 
 CREATE TABLE tarjetas(
-	idTarjeta INTEGER IDENTITY NOT NULL,
-	idUsuario INTEGER NOT NULL FOREIGN KEY REFERENCES usuarios(idUsuario),
-	empresa INTEGER, 
 	nroTarjeta INTEGER NOT NULL,
+	idUsuario INTEGER NOT NULL FOREIGN KEY REFERENCES usuarios(idUsuario),
+	empresa VARCHAR(255),
 	codigoSeguridad INTEGER NOT NULL,
 	direccion VARCHAR(255),
-    PRIMARY KEY (idTarjeta)        
+    PRIMARY KEY (nroTarjeta)        
 );
 
 CREATE TABLE vuelosConEscalas(
