@@ -32,28 +32,87 @@ INSERT INTO ciudadesFavoritas VALUES (5,1)
 INSERT INTO ciudadesFavoritas VALUES (7,1)
 
 -- INSERT INTO paises VALUES (idPais,nombre)
-INSERT INTO paises VALUES (1,Argentina)
-INSERT INTO paises VALUES (2,USA)
-INSERT INTO paises VALUES (3,Inglaterra)
-INSERT INTO paises VALUES (4,Brasil)
-INSERT INTO paises VALUES (5,Timor Oriental)
-INSERT INTO paises VALUES (6,Argentina) --nombre repetido?
-INSERT INTO paises VALUES (7,Uruguay)
-INSERT INTO paises VALUES (8,Qatar)
+INSERT INTO paises VALUES (1,'Argentina')
+INSERT INTO paises VALUES (2,'USA')
+INSERT INTO paises VALUES (3,'Inglaterra')
+INSERT INTO paises VALUES (4,'Brasil')
+INSERT INTO paises VALUES (5,'Timor Oriental')
+INSERT INTO paises VALUES (6,'Argentina') --nombre repetido?
+INSERT INTO paises VALUES (7,'Uruguay')
+INSERT INTO paises VALUES (8,'Qatar')
 
 -- INSERT INTO ciudades VALUES (idCiudad,nombre,idPais)
-INSERT INTO ciudades VALUES (1,Buenos Aires,1)
-INSERT INTO ciudades VALUES (2,Córdoba,1)
-INSERT INTO ciudades VALUES (3,Londres,3)
-INSERT INTO ciudades VALUES (4,New York,2)
-INSERT INTO ciudades VALUES (5,Córdoba,1) --nombre repetido?
-INSERT INTO ciudades VALUES (6,Montevideo,7)
-INSERT INTO ciudades VALUES (7,Doha,8)
-INSERT INTO ciudades VALUES (8,Lusail,8)
-INSERT INTO ciudades VALUES (9,Sao Paulo,4)
+INSERT INTO ciudades VALUES (1,'Buenos Aires',1)
+INSERT INTO ciudades VALUES (2,'Córdoba',1)
+INSERT INTO ciudades VALUES (3,'Londres',3)
+INSERT INTO ciudades VALUES (4,'New York',2)
+INSERT INTO ciudades VALUES (5,'Córdoba',1) --nombre repetido?
+INSERT INTO ciudades VALUES (6,'Montevideo',7)
+INSERT INTO ciudades VALUES (7,'Doha',8)
+INSERT INTO ciudades VALUES (8,'Lusail',8)
+INSERT INTO ciudades VALUES (9,'Sao Paulo',4)
 	-- jaja los uruguetas no tienen ciudades.
 
+-- INSERT INTO clases VALUES (idClase, nombre)
+INSERT INTO clases VALUES (1,'Primera')
+INSERT INTO clases VALUES (2,'Buisness')
+INSERT INTO clases VALUES (3,'Turista')
+INSERT INTO clases VALUES (4,'Económica')
 
 
+-- INSERT INTO aeropuertos VALUES (idAeropuerto,tasa,opcionesTransporte,nombre,idCiudad)
+INSERT INTO aeropuertos VALUES (1,350,'subte o bondi','JFK',4)
+INSERT INTO aeropuertos VALUES (2,300,'bondi','LGA',4)
+INSERT INTO aeropuertos VALUES (3,20,'taxi','Ezeiza',1)
+INSERT INTO aeropuertos VALUES (4,10,'bondi','Aeroparque',1)
+INSERT INTO aeropuertos VALUES (5,600,'taxi','Heathrow',3)
+INSERT INTO aeropuertos VALUES (6,620,'sulky','Pajas Blancas',2)
+INSERT INTO aeropuertos VALUES (7,50,'auto','Carrasco',6)
+INSERT INTO aeropuertos VALUES (8,110,'camello','Doha International Airport',7)
+INSERT INTO aeropuertos VALUES (9,180,'subte','Guarulhos',9)
+
+-- INSERT INTO telefonosAeropuertos VALUES (idAeropuerto,numero)
+INSERT INTO telefonosAeropuertos VALUES (1,12312312)
+INSERT INTO telefonosAeropuertos VALUES (2,12987654)
+INSERT INTO telefonosAeropuertos VALUES (3,89865456)
+INSERT INTO telefonosAeropuertos VALUES (3,42718920)
+INSERT INTO telefonosAeropuertos VALUES (4,92715262)
+INSERT INTO telefonosAeropuertos VALUES (5,99912283)
+INSERT INTO telefonosAeropuertos VALUES (6,11283471)
+INSERT INTO telefonosAeropuertos VALUES (7,11724719)
+INSERT INTO telefonosAeropuertos VALUES (8,83741967)
+INSERT INTO telefonosAeropuertos VALUES (8,80880131)
+INSERT INTO telefonosAeropuertos VALUES (8,22222222)
+INSERT INTO telefonosAeropuertos VALUES (9,13187416)
+
+-- INSERT INTO aeronaves VALUES (idAeronave,tripulacion,millas,modelo)
+INSERT INTO aeronaves VALUES (1,'Capitan Jack Sparrow',40000,'Boeing 747',4)
+INSERT INTO aeronaves VALUES (2,'Master Gibbs',12000,'Boeing 767',7)
+INSERT INTO aeronaves VALUES (3,'Almirante Brown',35900,'Airbus A320',2)
+INSERT INTO aeronaves VALUES (4,'Capitan Barbosa',88880,'Douglas DC-9',3)
+INSERT INTO aeronaves VALUES (5,'Capitan Barbosa',77110,'Boeing 747',4)
+INSERT INTO aeronaves VALUES (6,'Capitan Picard',11100,'Boeing 747',5)
+INSERT INTO aeronaves VALUES (7,'Capitan Han Solo',99999,'Millenium Falcon',8)
+
+-- INSERT INTO vuelosDirectos VALUES (idVuelo,idAeronave,fechaSalida,fechaLlegada,idAeropuertoSalida,idAeropuertoLlegada)
+INSERT INTO vuelosDirectos VALUES (1,1,'11/1/2013','13/1/2013',1,2)
+INSERT INTO vuelosDirectos VALUES (2,1,'15/1/2013','17/1/2013',2,4)
+INSERT INTO vuelosDirectos VALUES (3,1,'16/1/2013','20/1/2013',4,3) --Esto está mal. 
+INSERT INTO vuelosDirectos VALUES (4,2,'20/5/2013','20/5/2013',4,2)
+INSERT INTO vuelosDirectos VALUES (5,2,'18/2/2013','16/2/2013',1,6) -- Otro error.
+INSERT INTO vuelosDirectos VALUES (6,4,'18/2/2012','19/2/2012',3,3) -- ¿Salida y llegada igual?
+INSERT INTO vuelosDirectos VALUES (7,5,'31/1/2013','2/2/2013',9,1)
+INSERT INTO vuelosDirectos VALUES (8,6,'10/10/2010','11/10/2010',4,8)
+INSERT INTO vuelosDirectos VALUES (9,7,'18/4/2013','19/4/2013',8,4)
+
+
+-- INSERT INTO reservas VALUES (idReserva,idUsuario,tipoPago,fechaCaducidad,datosViajante,idVueloConEscalas,idClase)
+-- INSERT INTO vuelosConEscalas VALUES (idViajeConEscalas,idViajePartida,idViajeLlegada)
+-- INSERT INTO preciosParaClase VALUES (idVueloConEscalas,,isClase,precio)
+-- INSERT INTO vuelosDirectos VALUES (idVuelo,idAeronave,fechaSalida,fechaLlegada,idAeropuertoSalida,idAeropuertoLlegada)
+-- INSERT INTO haceEscalaEn VALUES (idVueloConEscalas,idVuelo,numeroEscala)
+
+
+-- INSERT INTO disponeDeAsientos VALUES (idAeronave,idClase,asientos)
 
 
