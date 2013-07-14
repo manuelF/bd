@@ -1,7 +1,7 @@
 CREATE TABLE paises(
 	idPais INTEGER IDENTITY NOT NULL,
 	nombre VARCHAR(255) NOT NULL,
-    Primary Key (idPais)
+    PRIMARY KEY (idPais)
 );
 
 CREATE TABLE ciudades(
@@ -72,7 +72,6 @@ CREATE TABLE usuarios(
 	profesion VARCHAR(255),
 	email VARCHAR(255),
 	clavehash VARCHAR(255),
-	idClase INTEGER FOREIGN KEY REFERENCES clases(idClase),
 	idPaisNacimiento INTEGER FOREIGN KEY REFERENCES paises(idPais),
 	idClaseFrecuente INTEGER FOREIGN KEY REFERENCES clases(idClase),
     Primary Key (idUsuario)
