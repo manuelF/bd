@@ -1,3 +1,4 @@
+
  --  ____                              _                   _ _           _           
  -- |  _ \                            | |                 (_) |         | |          
  -- | |_) | ___  _ __ _ __ __ _ _ __  | | __ _ ___    __ _ _| | __ _  __| | __ _ ___ 
@@ -7,6 +8,24 @@
  --                                                   __/ |                          
  --                                                  |___/                           
 
+
+
+USE Aerolinea;
+
+TRUNCATE TABLE aeronaves;
+TRUNCATE TABLE ciudades;
+TRUNCATE TABLE ciudadesFavoritas
+TRUNCATE TABLE clases
+TRUNCATE TABLE disponeDeAsientos
+TRUNCATE TABLE haceEscalaEn
+TRUNCATE TABLE paises
+TRUNCATE TABLE preciosParaClase
+TRUNCATE TABLE reservas
+TRUNCATE TABLE tarjetas
+TRUNCATE TABLE telefonosAeropuertos
+TRUNCATE TABLE usuarios
+TRUNCATE TABLE vuelosConEscalas
+TRUNCATE TABLE vuelosDirectos
 
 
 --INSERT INTO usuarios VALUES (id,nombre,apellido,tel,fechaNac,prefer,dir,profesion,mail,hash,idClase,idPaisNacimiento,idClaseFrecuente)
@@ -19,7 +38,6 @@ INSERT INTO usuarios VALUES (6,'Matías','Bender',71628411,'22/8/1990','preferen
 INSERT INTO usuarios VALUES (7,'Vanesa','Stricker',14142625,'7/6/1990','preferenciasDeVane','Quilmes 1122','Monitos o algo asi','nuestroseñorjesucristo@dios.com',816351277,1,1,1)
 INSERT INTO usuarios VALUES (8,'Federico','Lebrón',99999987,'16/1/1988','preferenciasDeLebron','Google 1133','Decir giladas','lebron@tuhermana.com',999999999,1,1,1)
 
-
 --INSERT INTO tarjetas VALUES (idUsuario,idTarjeta,empresa,nroTarjeta,codigoSeg,dir)
 INSERT INTO tarjetas VALUES (1,1,'Santander Rio',7123212345678765,444,'Cangrejos 1211')
 INSERT INTO tarjetas VALUES (1,2,'HSBC',9898989897678985,865,'Cangrejos 1211')
@@ -29,7 +47,6 @@ INSERT INTO tarjetas VALUES (5,5,'Santander Rio',1234512361231236,123,'Google 11
 INSERT INTO tarjetas VALUES (3,6,'City Bank',4543256765789543,111,'Lejos 1211')
 INSERT INTO tarjetas VALUES (8,7,'Banco de Google',4444444444444444,666,'Google 1113')
 INSERT INTO tarjetas VALUES (1,8,'Nación',1234567890123456,543,'Santa Fe 1234')
-
 
 --INSERT INTO ciudadesFavoritas VALUES (idUsuario,idCiudad)
 INSERT INTO ciudadesFavoritas VALUES (1,1)
@@ -43,7 +60,6 @@ INSERT INTO ciudadesFavoritas VALUES (3,1)
 INSERT INTO ciudadesFavoritas VALUES (4,4)
 INSERT INTO ciudadesFavoritas VALUES (5,1)
 INSERT INTO ciudadesFavoritas VALUES (7,1)
-
 
 -- INSERT INTO paises VALUES (idPais,nombre)
 INSERT INTO paises VALUES (1,'Argentina')
@@ -204,7 +220,6 @@ INSERT INTO preciosParaClase VALUES (5,4,500)
 INSERT INTO haceEscalaEn VALUES (1,10,1)
 INSERT INTO haceEscalaEn VALUES (1,11,2)
 INSERT INTO haceEscalaEn VALUES (1,12,3)
-
 INSERT INTO haceEscalaEn VALUES (2,1,1)
 INSERT INTO haceEscalaEn VALUES (2,2,2)
 
@@ -223,7 +238,3 @@ INSERT INTO reservas VALUES (7,3,'tarjeta','1/3/2015','Voy en primera, pagar Mar
 INSERT INTO reservas VALUES (8,2,'lecop','1/3/2015','Necesito que me paralelicen el viaje',5,3)
 INSERT INTO reservas VALUES (9,1,'CEDIN','1/3/2015','En el vuelo quiero un tecito y un bajo',3,2)
 INSERT INTO reservas VALUES (10,6,'patacones clase B','1/3/2015','Un avion de la clase popular y obrera. Pero viajo en primera',2,1)
-
-
-
-
