@@ -14,19 +14,21 @@ AS
 	DECLARE @usuario INTEGER
 	DECLARE @idVuelo INTEGER
 		
-	SELECT @usuario=inserted.idUsuario,@idVuelo = idVueloConEscalas FROM inserted
+	SELECT	@usuario=inserted.idUsuario,
+			@idVuelo = idVueloConEscalas 
+	FROM inserted
 	
 	-- Conseguimos las fechas y aeropuertos 
 	-- de salida y llegada
 	SELECT @fechaSalida=v.fechaSalida, @idAeropuertoSalida=v.idAeropuertoSalida
 		FROM vuelosDirectos v,vuelosConEscalas ve, reservas,inserted as new
 			WHERE v.idVuelo = ve.idVueloPartida
-			AND ve.idVueloConEscalas = new.idVueloConEscalas
+			AND ve.idVueloConEscalas = @idVuelo
 
 	SELECT @fechaLlegada=v.fechaLlegada, @fechaSalida=v.idAeropuertoLlegada
 		FROM vuelosDirectos v,vuelosConEscalas ve, reservas, inserted as new
 			WHERE v.idVuelo = ve.idVueloLlegada
-			AND ve.idVueloConEscalas = new.idVueloConEscalas
+			AND ve.idVueloConEscalas = @idVuelo
 
 	-- Conseguimos el aeropuerto de llegada y el de salida
 	
@@ -40,7 +42,7 @@ AS
 				v.fechaSalida < @fechaLlegada 
 				AND v.fechaLlegada > @fechaSalida
 				AND he.idVueloConEscalas = r.idVueloConEscalas
-				AND r.idUsuario = new.idUsuario
+				AND r.idUsuario = @usuario
 		EXCEPT
 		(
 		-- Reservas que tienen el mismo aeropuerto de salida
@@ -48,6 +50,7 @@ AS
 			FROM reservas r, vuelosDirectos v, haceEscalaEn he
 			WHERE v.idAeropuertoSalida = @idAeropuertoSalida
 				AND v.idVuelo = he.idVuelo
+				AND fechaSalida = @fechaSalida
 				AND he.idVueloConEscalas = r.idVueloConEscalas
 				AND r.idUsuario = @usuario
 		 INTERSECT
@@ -57,6 +60,7 @@ AS
 			WHERE v.idAeropuertoLlegada = @idAeropuertoLlegada
 				AND v.idVuelo = he.idVuelo
 				AND he.idVueloConEscalas = r.idVueloConEscalas
+				AND v.fechaLlegada = @fechaLlegada
 				AND r.idUsuario = @usuario
 		)
 
