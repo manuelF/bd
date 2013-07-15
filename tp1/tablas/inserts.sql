@@ -84,6 +84,7 @@ INSERT INTO vuelosDirectos VALUES (7,'20090101','20090102',6,5)
 INSERT INTO vuelosDirectos VALUES (3,'20100101','20100102',5,7)
 INSERT INTO vuelosDirectos VALUES (2,'20110101','20110102',7,8)
 INSERT INTO vuelosDirectos VALUES (1,'20120101','20120102',8,9)
+INSERT INTO vuelosDirectos VALUES (1,'20120101','20120103',3,2) -- Crashea
 
 
 -- INSERT INTO disponeDeAsientos VALUES (idAeronave,idClase,asientos)
@@ -136,6 +137,7 @@ INSERT INTO vuelosConEscalas VALUES (11,11) --8
 INSERT INTO vuelosConEscalas VALUES (8,8)	--9
 INSERT INTO vuelosConEscalas VALUES (13,13) --10
 INSERT INTO vuelosConEscalas VALUES (7,7)	--11
+INSERT INTO vuelosConEscalas VALUES (14,14)	--12
 
 
 -- INSERT INTO preciosParaClase VALUES (idVueloConEscalas,idClase,precio)
