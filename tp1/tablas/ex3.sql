@@ -21,12 +21,12 @@ AS
 					)
 			)
 			AND
-			( -- y ese vuelo no tenga mas asientos
+			( -- y ese vuelo este sobrevendido
 				EXISTS
 				(SELECT * FROM DisponeDeAsientos da
 					WHERE v.idAeronave = da.idAeronave
 					AND da.idClase = new.idClase
-					AND da.asientos >=
+					AND da.asientos <
 						( -- contar asientos ocupados de un vuelo/clase
 						SELECT COUNT(*) FROM reservas r
 							WHERE r.idClase = new.idClase
@@ -54,7 +54,7 @@ AS
 			)
 		))
 		BEGIN
-			RAISERROR ('No hay asientos sufientes',10,1)
+			RAISERROR ('No hay asientos suficientes para la reserva',10,1)
 			ROLLBACK TRANSACTION
 			RETURN
 		END

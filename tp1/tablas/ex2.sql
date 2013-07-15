@@ -39,11 +39,11 @@ AS
 	-- Conseguimos el aeropuerto de llegada y el de salida
 	
 	-- Nos fijamos si una reserva con distinto aeropuerto 
-	-- se superpone 	
+	-- se superpone. Para eso obtenemos todas las que se superponen
+	-- y les sacamos las que tienen el mismo aeropuerto 	
 	SELECT r.idReserva AS idReserva
 		-- Reservas que se superponen
-		FROM reservas r,vuelosDirectos v,vuelosConEscalas ve,
-			 haceEscalaEn he, inserted as new
+		FROM reservas r,vuelosDirectos v,vuelosConEscalas ve,haceEscalaEn he
 			WHERE 
 				v.fechaSalida < @fechaLlegada 
 				AND v.fechaLlegada > @fechaSalida
@@ -77,15 +77,13 @@ AS
 
 	IF(@@ROWCOUNT > 0)
 		BEGIN
-			DECLARE @ErrMessage VARCHAR(255)
-			SELECT @ErrMessage='Reserva '+CONVERT(VARCHAR(255),@usuario)+' se superpone con otra'
-			RAISERROR (@ErrMessage,10,1)
+			RAISERROR ('Reserva se superpone con otra',10,1)
 			ROLLBACK TRANSACTION
 			RETURN
 		END
 	
 	-- Nos fijamos si hay mas de 2 reservas con esa fecha 
-	-- de partiday llegada e iguales aeropuertos de salida y llegada
+	-- de partida y llegada e iguales aeropuertos de salida y llegada
 	SELECT r.idReserva
 		FROM reservas r,vuelosDirectos v,vuelosConEscalas ve
 		WHERE r.idVueloConEscalas = ve.idVueloConEscalas
