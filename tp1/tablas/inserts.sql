@@ -199,6 +199,13 @@ INSERT INTO ciudadesFavoritas VALUES (4,4)
 INSERT INTO ciudadesFavoritas VALUES (5,1)
 INSERT INTO ciudadesFavoritas VALUES (7,1)
 
+-- INSERT INTO haceEscalaEn VALUES (idVueloConEscalas,idVuelo,numeroEscala)
+INSERT INTO haceEscalaEn VALUES (1,10,1)
+INSERT INTO haceEscalaEn VALUES (1,11,2)
+INSERT INTO haceEscalaEn VALUES (1,12,3)
+INSERT INTO haceEscalaEn VALUES (2,1,1)
+INSERT INTO haceEscalaEn VALUES (2,2,2)
+INSERT INTO haceEscalaEn VALUES (3,9,1)
 
 
 -- INSERT INTO reservas VALUES (idReserva,idUsuario,tipoPago,fechaCiaducidad,datosViajante,idVueloConEscalas,idClase)
