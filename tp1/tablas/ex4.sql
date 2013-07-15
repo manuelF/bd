@@ -1,22 +1,18 @@
 CREATE PROCEDURE reporteAeropuertosPorRango(@inicio date, @fin date)
 AS
-	DECLARE @actual = TRUNCAR(@inicio)
-	WHILE @actual <= @fin
-		-- Sacar para cada aeropuerto cuantos viajes hay
-
-	SELECT A.aeropuerto, COUNT(*) as entraron FROM
-		Aeropuerto A WHERE
-			reserva.idVueloConEscalas = vueloConEscalas.idVueloConEscalas
-			AND ((vueloConEscalas.idVueloSalida = vuelosDirectos.idVuelo AND 
-					vuelosDirectos.idAeropuertoLlegada = A.idAeropuerto) OR
-				 (vueloConEscalas.idVueloLlegada = vuelosDirectos.idVuelo AND 
-					vuelosDirectos.idAeropuertoLlegada = A.idAeropuerto) OR EXISTS
-				 (SELECT * FROM haceEscalaEn WHERE 
-				 	haceEscalaEn.idVueloConEscalas = vuelosConEscalas.idVuelosConEscalas AND
-				 	haceEscalaEn.idVueloDirecto = vuelosDirectos.idVueloDirecto AND
-				 	vuelosDirectos.idAeropuertoLlegada = A.idAeropuerto ))
+	SELECT A.idAeropuerto, ve.idVueloConEscalas FROM
+		Aeropuertos A, reservas r,vuelosConEscalas ve,vuelosDirectos v WHERE
+			r.idVueloConEscalas = ve.idVueloConEscalas
+			AND ((ve.idVueloPartida = v.idVuelo AND 
+					v.idAeropuertoLlegada = A.idAeropuerto) OR
+				 (ve.idVueloLlegada = v.idVuelo AND 
+					v.idAeropuertoLlegada = A.idAeropuerto) OR EXISTS
+				 (SELECT * FROM haceEscalaEn,vuelosDirectos vv WHERE 
+				 	haceEscalaEn.idVueloConEscalas = ve.idVueloConEscalas AND
+				 	haceEscalaEn.idVuelo = vv.idVuelo AND
+				 	vv.idAeropuertoLlegada = A.idAeropuerto ))
 	
-
+/**
 	SELECT A.idAeropuerto, A.nombre, MONTH(@actual),YEAR(@actual), PasajerosIN.pasajerosIN, PasajerosOUT.PasajerosOUT
 	FROM Aeropuertos as A, (
 		-- tabla con la cantidad de pasajeros de entrada a un aeropuerto
@@ -139,3 +135,4 @@ AS
 	AND PasajerosIN.ANO == PasajerosOUT.ANO
 	
 	ORDER BY (PasajerosIN.pasajerosIN + PasajerosOUT.pasajerosOUT) DESC
+*/
