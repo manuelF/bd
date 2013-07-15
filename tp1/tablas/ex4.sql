@@ -1,6 +1,8 @@
+USE Aerolinea
+GO
+
 CREATE PROCEDURE reporteAeropuertosPorRango(@inicio date, @fin date)
 AS
-		
 		SELECT	ISNULL(lhs.aeropuerto,rhs.aeropuerto) AS aeropuerto,
 				ISNULL(lhs.mes,rhs.mes) AS mes,
 				ISNULL(lhs.anio,rhs.anio) AS anio,
