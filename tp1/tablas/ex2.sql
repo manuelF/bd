@@ -18,6 +18,7 @@ AS
 	DECLARE @idVuelo INTEGER
 	DECLARE @idNueva INTEGER
 	
+	-- Conseguimos el usuario, vuelo e id de reserva
 	SELECT	@usuario=inserted.idUsuario,
 			@idVuelo = idVueloConEscalas, 
 			@idNueva = idReserva
@@ -30,7 +31,7 @@ AS
 			WHERE v.idVuelo = ve.idVueloPartida
 			AND ve.idVueloConEscalas = @idVuelo
 
-	SELECT @fechaLlegada=v.fechaLlegada, @fechaSalida=v.idAeropuertoLlegada
+	SELECT @fechaLlegada=v.fechaLlegada, @idAeropuertoLlegada=v.idAeropuertoLlegada
 		FROM vuelosDirectos v,vuelosConEscalas ve, reservas, inserted as new
 			WHERE v.idVuelo = ve.idVueloLlegada
 			AND ve.idVueloConEscalas = @idVuelo
@@ -46,32 +47,37 @@ AS
 			WHERE 
 				v.fechaSalida < @fechaLlegada 
 				AND v.fechaLlegada > @fechaSalida
-				AND he.idVueloConEscalas = r.idVueloConEscalas
+				AND ve.idVueloConEscalas = r.idVueloConEscalas
+				AND ((he.idVueloConEscalas = ve.idVueloConEscalas AND
+						he.idVuelo = v.idVuelo) OR 
+					  ve.idVueloPartida = v.idVuelo OR
+					  ve.idVueloLlegada = v.idVuelo)
 				AND r.idUsuario = @usuario
 		EXCEPT
 		(
-		-- Reservas que tienen el mismo aeropuerto de salida
+		-- Reservas que tienen el mismo aeropuerto de salida y misma fecha de salida
 		SELECT r.idReserva AS idReserva
-			FROM reservas r, vuelosDirectos v, haceEscalaEn he
-			WHERE v.idAeropuertoSalida = @idAeropuertoSalida
-				AND v.idVuelo = he.idVuelo
-				AND fechaSalida = @fechaSalida
-				AND he.idVueloConEscalas = r.idVueloConEscalas
+			FROM reservas r, vuelosDirectos v, 
+				 vuelosConEscalas ve			
+		WHERE v.idAeropuertoSalida = @idAeropuertoSalida
+				AND v.idVuelo = ve.idVueloPartida
+				AND v.fechaSalida = @fechaSalida
+				AND ve.idVueloConEscalas = r.idVueloConEscalas
 				AND r.idUsuario = @usuario
 		 INTERSECT
-		 -- Reservas que tienen el mismo aeropuerto de llegada
+		 -- Reservas que tienen el mismo aeropuerto de llegada y misma fecha de llegada
 		 SELECT r.idReserva AS idReserva
-			FROM reservas r, vuelosDirectos v, haceEscalaEn he
+			FROM reservas r, vuelosConEscalas ve, vuelosDirectos v
 			WHERE v.idAeropuertoLlegada = @idAeropuertoLlegada
-				AND v.idVuelo = he.idVuelo
-				AND he.idVueloConEscalas = r.idVueloConEscalas
+				AND v.idVuelo = ve.idVueloLlegada
 				AND v.fechaLlegada = @fechaLlegada
+				AND ve.idVueloConEscalas = r.idVueloConEscalas
 				AND r.idUsuario = @usuario
 		)
 
-	IF(@@ROWCOUNT > 1)
+	IF(@@ROWCOUNT > 0)
 		BEGIN
-			DECLARE @ErrMessage VARCHAR
+			DECLARE @ErrMessage VARCHAR(255)
 			SELECT @ErrMessage='Reserva '+CONVERT(VARCHAR(255),@usuario)+' se superpone con otra'
 			RAISERROR (@ErrMessage,10,1)
 			ROLLBACK TRANSACTION
@@ -79,7 +85,7 @@ AS
 		END
 	
 	-- Nos fijamos si hay mas de 2 reservas con esa fecha 
-	-- de partida e iguales aeropuertos
+	-- de partiday llegada e iguales aeropuertos de salida y llegada
 	SELECT r.idReserva
 		FROM reservas r,vuelosDirectos v,vuelosConEscalas ve
 		WHERE r.idVueloConEscalas = ve.idVueloConEscalas
@@ -109,7 +115,7 @@ AS
 		BEGIN
 			IF @fechaSalida <= DATEADD(day,7,GETDATE()) 
 			BEGIN
-				RAISERROR('La reserva es para dentro de mas de 7 dias',10,1)
+				RAISERROR('La reserva es para dentro los proximos 7 dias',10,1)
 				ROLLBACK TRANSACTION
 				RETURN
 			END

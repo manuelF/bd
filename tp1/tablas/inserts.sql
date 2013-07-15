@@ -10,6 +10,8 @@
  
 USE Aerolinea;
 
+BEGIN TRANSACTION
+
 -- INSERT INTO clases VALUES (idClase, nombre)
 INSERT INTO clases VALUES ('Primera')
 INSERT INTO clases VALUES ('Buisness')
@@ -230,11 +232,27 @@ INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',10,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',9,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',7,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',11,4)
-
-
+INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',12,4)
 
 INSERT INTO reservas VALUES (7,'efectivo','20160101','Ay dios mío espero que no se caiga esta máquina de Satán voladora',4,2)
 INSERT INTO reservas VALUES (3,'tarjeta','20150301','Voy en primera, pagar Marky Sucker Verg',1,1)
 INSERT INTO reservas VALUES (2,'lecop','20150301','Necesito que me paralelicen el viaje',5,3)
 INSERT INTO reservas VALUES (1,'CEDIN','20160402','En el vuelo quiero un tecito y un bajo',3,2)
 INSERT INTO reservas VALUES (6,'patacones clase B','20151115','Un avion de la clase popular y obrera. Pero viajo en primera',2,1)
+
+COMMIT TRANSACTION
+GO
+
+-- A PARTIR DE ACA ES FRUTA
+
+--SELECT usuarios.nombre,reservas.idReserva,vuelosConEscalas.idVueloConEscalas,
+--		p.nombre,pp.nombre,vuelosDirectos.fechaLlegada,vuelosDirectos.fechaSalida, 
+--		a.idAeropuerto AS idAeropuertoLlegada, aa.idAeropuerto as IdAeropuertoSalida
+--FROM usuarios,reservas,vuelosDirectos,paises p, paises pp, vuelosConEscalas, 
+--	aeropuertos a, aeropuertos aa, ciudades c, ciudades cc 
+--WHERE
+--	usuarios.idUsuario = 8 AND reservas.idUsuario = usuarios.idUsuario AND reservas.idVueloConEscalas = vuelosConEscalas.idVueloConEscalas
+--	AND (vuelosConEscalas.idVueloLlegada = vuelosDirectos.idVuelo OR vuelosConEscalas.idVueloPartida = vuelosDirectos.idVuelo OR EXISTS
+--		(SELECT * FROM haceEscalaEn h WHERE h.idVueloConEscalas = vuelosConEscalas.idVueloConEscalas AND h.idVuelo = vuelosDirectos.idVuelo))
+--		AND vuelosDirectos.idAeropuertoLlegada = a.idAeropuerto AND a.idCiudad = c.idCiudad AND c.idPais = p.idPais AND vuelosDirectos.idAeropuertoSalida =
+--		aa.idAeropuerto AND aa.idCiudad = cc.idCiudad AND cc.idPais = pp.idPais
