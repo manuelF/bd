@@ -42,7 +42,7 @@ INSERT INTO aeropuertos VALUES (20,'taxi','Ezeiza',1)
 INSERT INTO aeropuertos VALUES (10,'bondi','Aeroparque',1)
 INSERT INTO aeropuertos VALUES (600,'taxi','Heathrow',3)
 INSERT INTO aeropuertos VALUES (620,'sulky','Pajas Blancas',2)
-INSERT INTO aeropuertos VALUES (50,'auto','Carrasco',6)
+INSERT INTO aeropuertos VALUES (50,'auto','Carrasco',5)
 INSERT INTO aeropuertos VALUES (110,'camello','Doha International Airport',6)
 INSERT INTO aeropuertos VALUES (180,'subte','Guarulhos',7)
 
