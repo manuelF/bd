@@ -65,8 +65,9 @@ AS
 		FROM reservas r,vuelosDirectos v,vuelosConEscala ve
 		WHERE r.idVuelosConEscalas = ve.idVueloConEscalas
 			AND v.idVuelo = ve.idVueloPartida
-			AND v.idAeropuertoLlegada = @idAeropuertoLlegada
+			AND v.idAeropuertoSalida = @idAeropuertoSalida
 			AND v.fechaSalida = @fechaSalida
+			AND r.idUsuario = new.idUsuario
 	INTERSECT
 	SELECT r.idReservas
    		FROM reservas r,vuelosDirectos v,vuelosConEscala ve
@@ -74,6 +75,7 @@ AS
 			AND v.idVuelo = ve.idVueloPartida
 			AND v.idAeropuertoLlegada = @idAeropuertoLlegada
 			AND v.fechaLlegada = @fechaLlegada
+			AND r.idUsuario = new.idUsuario
 	
 	if(@@ROWCOUNT > 1)
 		BEGIN
