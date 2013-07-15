@@ -2,7 +2,10 @@ IF OBJECT_ID ('RestringirReservasUsuario','TR') IS NOT NULL
    DROP TRIGGER RestringirReservasUsuario;
 GO
 
-CREATE TRIGGER RestringirReservasUsuario ON Aerolinea.dbo.reservas
+USE Aerolinea;
+GO
+
+CREATE TRIGGER RestringirReservasUsuario ON reservas
 	AFTER INSERT
 AS 
 	DECLARE @fechaSalida DATETIME
@@ -13,9 +16,11 @@ AS
 
 	DECLARE @usuario INTEGER
 	DECLARE @idVuelo INTEGER
-		
+	DECLARE @idNueva INTEGER
+	
 	SELECT	@usuario=inserted.idUsuario,
-			@idVuelo = idVueloConEscalas 
+			@idVuelo = idVueloConEscalas, 
+			@idNueva = idReserva
 	FROM inserted
 	
 	-- Conseguimos las fechas y aeropuertos 
@@ -66,7 +71,9 @@ AS
 
 	IF(@@ROWCOUNT > 1)
 		BEGIN
-			RAISERROR ('Reservas se superponen',10,1)
+			DECLARE @ErrMessage VARCHAR
+			SELECT @ErrMessage='Reserva '+CONVERT(VARCHAR(255),@usuario)+' se superpone con otra'
+			RAISERROR (@ErrMessage,10,1)
 			ROLLBACK TRANSACTION
 			RETURN
 		END

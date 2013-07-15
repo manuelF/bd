@@ -1,3 +1,5 @@
+USE Aerolinea;
+
 CREATE TABLE paises(
 	idPais INTEGER IDENTITY NOT NULL,
 	nombre VARCHAR(255) NOT NULL,

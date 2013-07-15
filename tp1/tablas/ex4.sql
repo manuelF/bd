@@ -44,5 +44,5 @@ AS
 			ON lhs.aeropuerto = rhs.aeropuerto 
 				AND lhs.anio = rhs.anio 
 				AND lhs.mes = rhs.mes
-		
+				
 		ORDER BY(total) DESC

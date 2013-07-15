@@ -26,7 +26,7 @@ AS
 				(SELECT * FROM DisponeDeAsientos da
 					WHERE v.idAeronave = da.idAeronave
 					AND da.idClase = new.idClase
-					AND da.asientos > 
+					AND da.asientos >=
 						( -- contar asientos ocupados de un vuelo/clase
 						SELECT COUNT(*) FROM reservas r
 							WHERE r.idClase = new.idClase
