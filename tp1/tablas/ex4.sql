@@ -3,6 +3,7 @@ AS
 	SELECT A.idAeropuerto, COUNT(*) AS entraron FROM
 		Aeropuertos A, reservas r,vuelosConEscalas ve,vuelosDirectos v WHERE
 			r.idVueloConEscalas = ve.idVueloConEscalas
+<<<<<<< HEAD
 			AND ((ve.idVueloPartida = v.idVuelo AND 
 					v.idAeropuertoLlegada = A.idAeropuerto) OR
 				 (ve.idVueloLlegada = v.idVuelo AND 
@@ -11,6 +12,15 @@ AS
 				 	haceEscalaEn.idVueloConEscalas = ve.idVueloConEscalas AND
 				 	haceEscalaEn.idVuelo = v.idVuelo AND
 				 	v.idAeropuertoLlegada = A.idAeropuerto )) GROUP BY(A.idAeropuerto)
+=======
+			AND v.idAeropuertoLlegada = A.idAeropuerto AND
+				v.fechaLlegada >= @fechaActual AND
+				(ve.idVueloPartida = v.idVuelo OR
+				 ve.idVueloLlegada = v.idVuelo OR EXISTS
+				 (SELECT * FROM haceEscalaEn WHERE 
+				 	haceEscalaEn.idVueloConEscalas = ve.idVueloConEscalas AND
+				 	haceEscalaEn.idVuelo = v.idVuelo)) GROUP BY(A.idAeropuerto)
+>>>>>>> FRUUUTA
 	
 /**
 	SELECT A.idAeropuerto, A.nombre, MONTH(@actual),YEAR(@actual), PasajerosIN.pasajerosIN, PasajerosOUT.PasajerosOUT
