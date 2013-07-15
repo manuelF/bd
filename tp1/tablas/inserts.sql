@@ -124,15 +124,16 @@ INSERT INTO disponeDeAsientos VALUES (1,1,10)
 
 
 
-
-
-
 -- INSERT INTO vuelosConEscalas VALUES (idVueloConEscalas,idViajePartida,idViajeLlegada)
 INSERT INTO vuelosConEscalas VALUES (5,13)
 INSERT INTO vuelosConEscalas VALUES (7,3)
 INSERT INTO vuelosConEscalas VALUES (8,4)
 INSERT INTO vuelosConEscalas VALUES (5,5)
 INSERT INTO vuelosConEscalas VALUES (6,6)
+INSERT INTO vuelosConEscalas VALUES (3,3)
+INSERT INTO vuelosConEscalas VALUES (10,10)
+INSERT INTO vuelosConEscalas VALUES (11,11)
+INSERT INTO vuelosConEscalas VALUES (8,8)
 
 
 -- INSERT INTO preciosParaClase VALUES (idVueloConEscalas,idClase,precio)
@@ -160,9 +161,6 @@ INSERT INTO preciosParaClase VALUES (5,1,3000)
 INSERT INTO preciosParaClase VALUES (5,2,2000)
 INSERT INTO preciosParaClase VALUES (5,3,1000)
 INSERT INTO preciosParaClase VALUES (5,4,500)
-
-
-
 
 
 
@@ -203,17 +201,17 @@ INSERT INTO ciudadesFavoritas VALUES (7,1)
 
 
 
-
-
-
-
-
 -- INSERT INTO reservas VALUES (idReserva,idUsuario,tipoPago,fechaCiaducidad,datosViajante,idVueloConEscalas,idClase)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',1,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',2,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',3,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',4,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',5,4)
+INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',6,4)
+INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',7,4)
+INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',8,4)
+INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',9,4)
+
 
 INSERT INTO reservas VALUES (7,'efectivo','20160101','Ay dios mío espero que no se caiga esta máquina de Satán voladora',4,2)
 INSERT INTO reservas VALUES (3,'tarjeta','20150301','Voy en primera, pagar Marky Sucker Verg',1,1)
