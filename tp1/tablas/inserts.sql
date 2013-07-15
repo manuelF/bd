@@ -42,7 +42,7 @@ INSERT INTO aeropuertos VALUES (20,'taxi','Ezeiza',1)
 INSERT INTO aeropuertos VALUES (10,'bondi','Aeroparque',1)
 INSERT INTO aeropuertos VALUES (600,'taxi','Heathrow',3)
 INSERT INTO aeropuertos VALUES (620,'sulky','Pajas Blancas',2)
-INSERT INTO aeropuertos VALUES (50,'auto','Carrasco',6)
+INSERT INTO aeropuertos VALUES (50,'auto','Carrasco',5)
 INSERT INTO aeropuertos VALUES (110,'camello','Doha International Airport',6)
 INSERT INTO aeropuertos VALUES (180,'subte','Guarulhos',7)
 
@@ -62,12 +62,12 @@ INSERT INTO telefonosAeropuertos VALUES (9,13187416)
 
 -- INSERT INTO aeronaves VALUES (tripulacion,millas,modelo,idPaisOrigen)
 INSERT INTO aeronaves VALUES ('Capitan Jack Sparrow',40000,'Boeing 747',4)
-INSERT INTO aeronaves VALUES ('Master Gibbs',12000,'Boeing 767',7)
+INSERT INTO aeronaves VALUES ('Master Gibbs',12000,'Boeing 767',5)
 INSERT INTO aeronaves VALUES ('Almirante Brown',35900,'Airbus A320',2)
 INSERT INTO aeronaves VALUES ('Capitan Barbosa',88880,'Douglas DC-9',3)
 INSERT INTO aeronaves VALUES ('Capitan Barbosa',77110,'Boeing 747',4)
 INSERT INTO aeronaves VALUES ('Capitan Picard',11100,'Boeing 747',5)
-INSERT INTO aeronaves VALUES ('Capitan Han Solo',99999,'Millenium Falcon',8)
+INSERT INTO aeronaves VALUES ('Capitan Han Solo',99999,'Millenium Falcon',6)
 
 
 -- INSERT INTO vuelosDirectos VALUES (idVuelo,idAeronave,fechaSalida,fechaLlegada,idAeropuertoSalida,idAeropuertoLlegada)
@@ -124,22 +124,16 @@ INSERT INTO disponeDeAsientos VALUES (1,1,10)
 
 
 
--- INSERT INTO haceEscalaEn VALUES (idVueloConEscalas,idVuelo,numeroEscala)
-INSERT INTO haceEscalaEn VALUES (1,10,1)
-INSERT INTO haceEscalaEn VALUES (1,11,2)
-INSERT INTO haceEscalaEn VALUES (1,12,3)
-INSERT INTO haceEscalaEn VALUES (2,1,1)
-INSERT INTO haceEscalaEn VALUES (2,2,2)
-INSERT INTO haceEscalaEn VALUES (3,9,1)
-
-
-
 -- INSERT INTO vuelosConEscalas VALUES (idVueloConEscalas,idViajePartida,idViajeLlegada)
 INSERT INTO vuelosConEscalas VALUES (5,13)
 INSERT INTO vuelosConEscalas VALUES (7,3)
 INSERT INTO vuelosConEscalas VALUES (8,4)
 INSERT INTO vuelosConEscalas VALUES (5,5)
 INSERT INTO vuelosConEscalas VALUES (6,6)
+INSERT INTO vuelosConEscalas VALUES (3,3)
+INSERT INTO vuelosConEscalas VALUES (10,10)
+INSERT INTO vuelosConEscalas VALUES (11,11)
+INSERT INTO vuelosConEscalas VALUES (8,8)
 
 
 -- INSERT INTO preciosParaClase VALUES (idVueloConEscalas,idClase,precio)
@@ -167,9 +161,6 @@ INSERT INTO preciosParaClase VALUES (5,1,3000)
 INSERT INTO preciosParaClase VALUES (5,2,2000)
 INSERT INTO preciosParaClase VALUES (5,3,1000)
 INSERT INTO preciosParaClase VALUES (5,4,500)
-
-
-
 
 
 
@@ -210,17 +201,17 @@ INSERT INTO ciudadesFavoritas VALUES (7,1)
 
 
 
-
-
-
-
-
 -- INSERT INTO reservas VALUES (idReserva,idUsuario,tipoPago,fechaCiaducidad,datosViajante,idVueloConEscalas,idClase)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',1,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',2,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',3,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',4,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',5,4)
+INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',6,4)
+INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',7,4)
+INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',8,4)
+INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',9,4)
+
 
 INSERT INTO reservas VALUES (7,'efectivo','20160101','Ay dios mío espero que no se caiga esta máquina de Satán voladora',4,2)
 INSERT INTO reservas VALUES (3,'tarjeta','20150301','Voy en primera, pagar Marky Sucker Verg',1,1)
