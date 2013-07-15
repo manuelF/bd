@@ -52,7 +52,7 @@ AS
 				AND v.idVuelo = he.idVuelo
 				AND he.idVueloConEscalas = r.idVueloConEscalas)
 
-	IF(@@ROWCOUNT > 0)
+	IF(@@ROWCOUNT > 1)
 		BEGIN
 			RAISERROR ('Reservas se superponen',10,1)
 			ROLLBACK TRANSACTION
@@ -62,22 +62,22 @@ AS
 	-- Nos fijamos si hay mas de 2 reservas con esa fecha 
 	-- de partida e iguales aeropuertos
 	SELECT r.idReservas
-		FROM reservas r,vuelosDirectos v,vuelosConEscala ve
+		FROM reservas r,vuelosDirectos v,vuelosConEscalas ve
 		WHERE r.idVuelosConEscalas = ve.idVueloConEscalas
 			AND v.idVuelo = ve.idVueloPartida
 			AND v.idAeropuertoSalida = @idAeropuertoSalida
 			AND v.fechaSalida = @fechaSalida
-			AND r.idUsuario = new.idUsuario
+			AND r.idUsuario = inserted.idUsuario
 	INTERSECT
 	SELECT r.idReservas
-   		FROM reservas r,vuelosDirectos v,vuelosConEscala ve
+   		FROM reservas r,vuelosDirectos v,vuelosConEscalas ve
 		WHERE r.idVueloConEscalas = ve.idVueloConEscalas
 			AND v.idVuelo = ve.idVueloPartida
 			AND v.idAeropuertoLlegada = @idAeropuertoLlegada
 			AND v.fechaLlegada = @fechaLlegada
-			AND r.idUsuario = new.idUsuario
+			AND r.idUsuario = inserted.idUsuario
 	
-	if(@@ROWCOUNT > 1)
+	if(@@ROWCOUNT > 2)
 		BEGIN
 			RAISERROR ('Mas de dos reservas por aeropuerto',10,1)
 			ROLLBACK TRANSACTION
@@ -86,9 +86,9 @@ AS
 
 	-- Nos fijamos si, habiendo una reserva, la reserva tiene 
 	-- fecha de partida en los proximos dias	
-	IF(@@ROWCOUNT = 1)
+	IF(@@ROWCOUNT = 2)
 		BEGIN
-			IF @fechaSalida >= DATEADD(day,7,GETDATE()) 
+			IF @fechaSalida <= DATEADD(day,7,GETDATE()) 
 			BEGIN
 				RAISERROR('La reserva es para dentro de mas de 7 dias',10,1)
 				ROLLBACK TRANSACTION
