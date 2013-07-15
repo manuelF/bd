@@ -6,7 +6,7 @@ SELECT nombre, apellido, idUsuario FROM usuarios
 				SELECT p.idPais FROM paises p WHERE NOT EXISTS (
 					SELECT idReserva FROM reservas r, vuelosConEscalas ve,
 						vuelosDirectos v, aeropuertos ap, ciudades c
-					WHERE r.idUsuario = u.idUsuario	
+					WHERE r.idUsuario = 8 -- u.idUsuario	
 						AND r.idVueloConEscalas = ve.idVueloConEscalas
 						AND ve.idVueloLlegada = v.idVuelo
 						AND ap.idAeropuerto = v.idAeropuertoLlegada
