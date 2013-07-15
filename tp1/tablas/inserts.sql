@@ -70,7 +70,7 @@ INSERT INTO aeronaves VALUES ('Capitan Barbosa',88880,'Douglas DC-9',3)
 INSERT INTO aeronaves VALUES ('Capitan Barbosa',77110,'Boeing 747',4)
 INSERT INTO aeronaves VALUES ('Capitan Picard',11100,'Boeing 747',5)
 INSERT INTO aeronaves VALUES ('Capitan Han Solo',99999,'Millenium Falcon',6)
-
+INSERT INTO aeronaves VALUES ('Baron Rojo',99999,'Fokker Dr 1',1)
 
 -- INSERT INTO vuelosDirectos VALUES (idVuelo,idAeronave,fechaSalida,fechaLlegada,idAeropuertoSalida,idAeropuertoLlegada)
 INSERT INTO vuelosDirectos VALUES (1,'20000101','20000102',1,2)
@@ -86,8 +86,8 @@ INSERT INTO vuelosDirectos VALUES (7,'20090101','20090102',6,5)
 INSERT INTO vuelosDirectos VALUES (3,'20100101','20100102',5,7)
 INSERT INTO vuelosDirectos VALUES (2,'20110101','20110102',7,8)
 INSERT INTO vuelosDirectos VALUES (1,'20120101','20120102',8,9)
-INSERT INTO vuelosDirectos VALUES (1,'20120101','20120103',3,2) -- Crashea
-
+INSERT INTO vuelosDirectos VALUES (1,'20120101','20120103',3,2) --Con esto crashea el trigger de no superponer
+INSERT INTO vuelosDirectos VALUES (8,'20120101','20120102',8,9) --Con esto crashea el trigger de no sobrevender
 
 -- INSERT INTO disponeDeAsientos VALUES (idAeronave,idClase,asientos)
 INSERT INTO disponeDeAsientos VALUES (7,4,90)
@@ -96,12 +96,12 @@ INSERT INTO disponeDeAsientos VALUES (7,2,30)
 INSERT INTO disponeDeAsientos VALUES (7,1,15)
 
 INSERT INTO disponeDeAsientos VALUES (6,4,45)
-INSERT INTO disponeDeAsientos VALUES (6,3,0)
+INSERT INTO disponeDeAsientos VALUES (6,3,30)
 INSERT INTO disponeDeAsientos VALUES (6,2,15)
 INSERT INTO disponeDeAsientos VALUES (6,1,10)
 
-INSERT INTO disponeDeAsientos VALUES (5,4,0)
-INSERT INTO disponeDeAsientos VALUES (5,3,0)
+INSERT INTO disponeDeAsientos VALUES (5,4,20)
+INSERT INTO disponeDeAsientos VALUES (5,3,40)
 INSERT INTO disponeDeAsientos VALUES (5,2,2)
 INSERT INTO disponeDeAsientos VALUES (5,1,12)
 
@@ -112,8 +112,8 @@ INSERT INTO disponeDeAsientos VALUES (4,1,11)
 
 INSERT INTO disponeDeAsientos VALUES (3,4,88)
 INSERT INTO disponeDeAsientos VALUES (3,3,12)
-INSERT INTO disponeDeAsientos VALUES (3,2,0)
-INSERT INTO disponeDeAsientos VALUES (3,1,0)
+INSERT INTO disponeDeAsientos VALUES (3,2,5)
+INSERT INTO disponeDeAsientos VALUES (3,1,5)
 
 INSERT INTO disponeDeAsientos VALUES (2,4,2)
 INSERT INTO disponeDeAsientos VALUES (2,3,3)
@@ -125,7 +125,7 @@ INSERT INTO disponeDeAsientos VALUES (1,3,30)
 INSERT INTO disponeDeAsientos VALUES (1,2,20)
 INSERT INTO disponeDeAsientos VALUES (1,1,10)
 
-
+INSERT INTO disponeDeAsientos VALUES (8,1,0) --Esta es para romper invariante
 
 -- INSERT INTO vuelosConEscalas VALUES (idVueloConEscalas,idViajePartida,idViajeLlegada)
 INSERT INTO vuelosConEscalas VALUES (5,13)  --1
@@ -140,7 +140,7 @@ INSERT INTO vuelosConEscalas VALUES (8,8)	--9
 INSERT INTO vuelosConEscalas VALUES (13,13) --10
 INSERT INTO vuelosConEscalas VALUES (7,7)	--11
 INSERT INTO vuelosConEscalas VALUES (14,14)	--12
-
+INSERT INTO vuelosConEscalas VALUES (15,15)	--13
 
 -- INSERT INTO preciosParaClase VALUES (idVueloConEscalas,idClase,precio)
 INSERT INTO preciosParaClase VALUES (1,1,10000)
@@ -232,13 +232,15 @@ INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',10,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',9,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',7,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',11,4)
-INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',12,4)
+--INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',12,4)
 
 INSERT INTO reservas VALUES (7,'efectivo','20160101','Ay dios mío espero que no se caiga esta máquina de Satán voladora',4,2)
 INSERT INTO reservas VALUES (3,'tarjeta','20150301','Voy en primera, pagar Marky Sucker Verg',1,1)
 INSERT INTO reservas VALUES (2,'lecop','20150301','Necesito que me paralelicen el viaje',5,3)
 INSERT INTO reservas VALUES (1,'CEDIN','20160402','En el vuelo quiero un tecito y un bajo',3,2)
 INSERT INTO reservas VALUES (6,'patacones clase B','20151115','Un avion de la clase popular y obrera. Pero viajo en primera',2,1)
+
+--INSERT INTO reservas VALUES (6,'patacones clase B','20151115','Quiero un avion donde no pueda viajar',13,1) -- Esta rompe el invariante de asientos
 
 COMMIT TRANSACTION
 GO
@@ -256,3 +258,46 @@ GO
 --		(SELECT * FROM haceEscalaEn h WHERE h.idVueloConEscalas = vuelosConEscalas.idVueloConEscalas AND h.idVuelo = vuelosDirectos.idVuelo))
 --		AND vuelosDirectos.idAeropuertoLlegada = a.idAeropuerto AND a.idCiudad = c.idCiudad AND c.idPais = p.idPais AND vuelosDirectos.idAeropuertoSalida =
 --		aa.idAeropuerto AND aa.idCiudad = cc.idCiudad AND cc.idPais = pp.idPais
+
+	-- SELECT * FROM vuelosConEscalas WHERE vuelosConEscalas.idVueloConEscalas = 13
+
+	--SELECT * FROM vuelosConEscalas ve, vuelosDirectos v, vuelosDirectos vv
+	--	WHERE ve.idVueloConEscalas = 11 AND v.idVuelo = ve.idVueloPartida AND vv.idVuelo = ve.idVueloLlegada
+	--	AND 
+	--	EXISTS -- exista algun vuelo
+	--	(SELECT * FROM vuelosDirectos v 
+	--		WHERE -- tal que
+	--		( -- el vuelo pertenezca al vuelo con escala
+	--			v.idVuelo = ve.idVueloPartida
+	--			OR v.idVuelo = ve.idVueloLLegada
+	--			OR EXISTS  
+	--				(SELECT * FROM HaceEscalaEn he
+	--					WHERE he.idVueloConEscalas = ve.idVueloConEscalas
+	--					AND v.idVuelo = he.idVuelo
+	--				)
+	--		)
+	--		AND
+	--		( -- y ese vuelo este sobrevendido
+	--			EXISTS
+	--			(SELECT * FROM DisponeDeAsientos da
+	--				WHERE v.idAeronave = da.idAeronave
+	--				AND da.idClase = 4
+	--				AND da.asientos <
+	--					( -- contar asientos ocupados de un vuelo/clase
+	--					SELECT COUNT(*) FROM reservas r
+	--						WHERE r.idClase = 4
+	--						AND 
+	--						(EXISTS (SELECT * FROM HaceEscalaEn he2
+	--									WHERE v.idVuelo = he2.idVuelo	
+	--									AND he2.idVueloConEscalas = r.idVueloConEscalas) 
+	--							OR EXISTS 
+	--								(SELECT * FROM vuelosConEscalas ve2
+	--									WHERE ve2.idVueloConEscalas = 
+	--											r.idVueloConEscalas
+	--									AND (v.idVuelo = ve2.idVueloPartida OR v.idVuelo = ve2.idVueloLLegada )
+	--								)
+	--						)
+	--					)
+	--			)
+	--		)
+	--	)
