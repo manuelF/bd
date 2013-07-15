@@ -2,7 +2,7 @@ IF OBJECT_ID ('RestringirReservasUsuario','TR') IS NOT NULL
    DROP TRIGGER RestringirReservasUsuario;
 GO
 
-CREATE TRIGGER RestringirReservasUsuario ON Reservas
+CREATE TRIGGER RestringirReservasUsuario ON Aerolinea.dbo.reservas
 	AFTER INSERT
 AS 
 	DECLARE @fechaSalida DATETIME
@@ -13,58 +13,63 @@ AS
 
 	-- Conseguimos las fechas y aeropuertos 
 	-- de salida y llegada
-	SELECT @fechaSalida=v.fechaSalida, @idAeropuertoSalida=v.aeropuertoSalida
-		FROM vuelos v,vuelosConEscalas ve, reservas,inserted as new
+	SELECT @fechaSalida=v.fechaSalida, @idAeropuertoSalida=v.idAeropuertoSalida
+		FROM vuelosDirectos v,vuelosConEscalas ve, reservas,inserted as new
 			WHERE v.idVuelo = ve.idVueloPartida
-			AND ve.idVueloConEscalas = new.idViajeConEscalas
+			AND ve.idVueloConEscalas = new.idVueloConEscalas
 
 	SELECT @fechaLlegada=v.fechaLlegada, @fechaSalida=v.idAeropuertoLlegada
-		FROM vuelos v,vuelosConEscalas ve, reservas, inserted as new
+		FROM vuelosDirectos v,vuelosConEscalas ve, reservas, inserted as new
 			WHERE v.idVuelo = ve.idVueloLlegada
-			AND ve.idVueloConEscalas = new.idViajeConEscalas
+			AND ve.idVueloConEscalas = new.idVueloConEscalas
+
 	-- Conseguimos el aeropuerto de llegada y el de salida
 	
 	-- Nos fijamos si una reserva con distinto aeropuerto 
 	-- se superpone 	
 	SELECT r.idReserva AS idReserva
-		FROM reservas r,vuelos v,vuelosConEscalas ve,
+		-- Reservas que se superponen
+		FROM reservas r,vuelosDirectos v,vuelosConEscalas ve,
 			 haceEscalaEn he, inserted as new
-			WHERE v.fechaSalida <= @fechaSalida
-				AND v.fechaLlegada >= @fechaLlegada
-				AND he.idVuelo = v.idVuelo
+			WHERE 
+				v.fechaSalida < @fechaLlegada 
+				AND v.fechaLlegada > @fechaSalida
 				AND he.idVueloConEscalas = r.idVueloConEscalas
-				AND r.idReserva = new.idUsuario
+				AND r.idUsuario = new.idUsuario
 		EXCEPT
+		(
+		-- Reservas que tienen el mismo aeropuerto de salida
 		SELECT r.idReserva AS idReserva
-			FROM reservas r, vuelos v, haceEscalaEn he
+			FROM reservas r, vuelosDirectos v, haceEscalaEn he
 			WHERE v.idAeropuertoSalida = @idAeropuertoSalida
 				AND v.idVuelo = he.idVuelo
-				AND v.idVueloConEscalas = r.idVueloConEscalas
+				AND he.idVueloConEscalas = r.idVueloConEscalas
 		 INTERSECT
+		 -- Reservas que tienen el mismo aeropuerto de llegada
 		 SELECT r.idReserva AS idReserva
-			FROM reservas r, vuelos v, haceEscalaEn he
+			FROM reservas r, vuelosDirectos v, haceEscalaEn he
 			WHERE v.idAeropuertoLlegada = @idAeropuertoLlegada
 				AND v.idVuelo = he.idVuelo
-				AND v.idVueloConEscalas = r.idVueloConEscalas
+				AND he.idVueloConEscalas = r.idVueloConEscalas)
 
 	IF(@@ROWCOUNT > 0)
-		BEGIN 
+		BEGIN
 			RAISERROR ('Reservas se superponen',10,1)
 			ROLLBACK TRANSACTION
 			RETURN
 		END
 	
 	-- Nos fijamos si hay mas de 2 reservas con esa fecha 
-	-- de partida igual aeropuerto
+	-- de partida e iguales aeropuertos
 	SELECT r.idReservas
-		FROM reservas r,vuelos v,vuelosConEscala ve
+		FROM reservas r,vuelosDirectos v,vuelosConEscala ve
 		WHERE r.idVuelosConEscalas = ve.idVueloConEscalas
 			AND v.idVuelo = ve.idVueloPartida
 			AND v.idAeropuertoLlegada = @idAeropuertoLlegada
 			AND v.fechaSalida = @fechaSalida
 	INTERSECT
 	SELECT r.idReservas
-   		FROM reservas r,vuelos v,vuelosConEscala ve
+   		FROM reservas r,vuelosDirectos v,vuelosConEscala ve
 		WHERE r.idVueloConEscalas = ve.idVueloConEscalas
 			AND v.idVuelo = ve.idVueloPartida
 			AND v.idAeropuertoLlegada = @idAeropuertoLlegada
