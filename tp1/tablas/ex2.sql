@@ -11,6 +11,11 @@ AS
 	DECLARE @idAeropuertoSalida INTEGER
 	DECLARE @idAeropuertoLlegada INTEGER
 
+	DECLARE @usuario INTEGER
+	DECLARE @idVuelo INTEGER
+		
+	SELECT @usuario=inserted.idUsuario,@idVuelo = idVueloConEscalas FROM inserted
+	
 	-- Conseguimos las fechas y aeropuertos 
 	-- de salida y llegada
 	SELECT @fechaSalida=v.fechaSalida, @idAeropuertoSalida=v.idAeropuertoSalida
@@ -44,13 +49,16 @@ AS
 			WHERE v.idAeropuertoSalida = @idAeropuertoSalida
 				AND v.idVuelo = he.idVuelo
 				AND he.idVueloConEscalas = r.idVueloConEscalas
+				AND r.idUsuario = @usuario
 		 INTERSECT
 		 -- Reservas que tienen el mismo aeropuerto de llegada
 		 SELECT r.idReserva AS idReserva
 			FROM reservas r, vuelosDirectos v, haceEscalaEn he
 			WHERE v.idAeropuertoLlegada = @idAeropuertoLlegada
 				AND v.idVuelo = he.idVuelo
-				AND he.idVueloConEscalas = r.idVueloConEscalas)
+				AND he.idVueloConEscalas = r.idVueloConEscalas
+				AND r.idUsuario = @usuario
+		)
 
 	IF(@@ROWCOUNT > 1)
 		BEGIN
@@ -61,21 +69,21 @@ AS
 	
 	-- Nos fijamos si hay mas de 2 reservas con esa fecha 
 	-- de partida e iguales aeropuertos
-	SELECT r.idReservas
+	SELECT r.idReserva
 		FROM reservas r,vuelosDirectos v,vuelosConEscalas ve
-		WHERE r.idVuelosConEscalas = ve.idVueloConEscalas
+		WHERE r.idVueloConEscalas = ve.idVueloConEscalas
 			AND v.idVuelo = ve.idVueloPartida
 			AND v.idAeropuertoSalida = @idAeropuertoSalida
 			AND v.fechaSalida = @fechaSalida
-			AND r.idUsuario = inserted.idUsuario
+			AND r.idUsuario = @usuario
 	INTERSECT
-	SELECT r.idReservas
+	SELECT r.idReserva
    		FROM reservas r,vuelosDirectos v,vuelosConEscalas ve
 		WHERE r.idVueloConEscalas = ve.idVueloConEscalas
 			AND v.idVuelo = ve.idVueloPartida
 			AND v.idAeropuertoLlegada = @idAeropuertoLlegada
 			AND v.fechaLlegada = @fechaLlegada
-			AND r.idUsuario = inserted.idUsuario
+			AND r.idUsuario = @usuario
 	
 	if(@@ROWCOUNT > 2)
 		BEGIN

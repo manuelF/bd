@@ -207,6 +207,7 @@ INSERT INTO haceEscalaEn VALUES (2,1,1)
 INSERT INTO haceEscalaEn VALUES (2,2,2)
 INSERT INTO haceEscalaEn VALUES (3,9,1)
 
+PRINT 'CREANDO RESERVAS'
 
 -- INSERT INTO reservas VALUES (idReserva,idUsuario,tipoPago,fechaCiaducidad,datosViajante,idVueloConEscalas,idClase)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',1,4)
