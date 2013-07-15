@@ -1,8 +1,8 @@
-IF OBJECT_ID ('RestringirReservasUsuario','TR') IS NOT NULL
-   DROP TRIGGER RestringirReservasUsuario;
+USE Aerolinea;
 GO
 
-USE Aerolinea;
+IF OBJECT_ID ('RestringirReservasUsuario','TR') IS NOT NULL
+   DROP TRIGGER RestringirReservasUsuario;
 GO
 
 CREATE TRIGGER RestringirReservasUsuario ON reservas
@@ -118,3 +118,4 @@ AS
 				RETURN
 			END
 		END
+GO

@@ -1,8 +1,8 @@
-IF OBJECT_ID ('RestringirCupo','TR') IS NOT NULL
-   DROP TRIGGER RestringirCupo;
+USE Aerolinea
 GO
 
-USE Aerolinea
+IF OBJECT_ID ('RestringirCupo','TR') IS NOT NULL
+   DROP TRIGGER RestringirCupo;
 GO
 
 CREATE TRIGGER RestringirCupo ON reservas
@@ -53,3 +53,4 @@ AS
 			ROLLBACK TRANSACTION
 			RETURN
 		END
+GO

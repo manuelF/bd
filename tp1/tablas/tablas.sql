@@ -1,4 +1,5 @@
 USE Aerolinea;
+GO
 
 CREATE TABLE paises(
 	idPais INTEGER IDENTITY NOT NULL,
@@ -141,3 +142,4 @@ CREATE TABLE haceEscalaEn(
 	numeroEscala INTEGER,
     PRIMARY KEY (idVueloConEscalas,idVuelo)    
 );
+GO

@@ -168,7 +168,9 @@ INSERT INTO preciosParaClase VALUES (5,2,2000)
 INSERT INTO preciosParaClase VALUES (5,3,1000)
 INSERT INTO preciosParaClase VALUES (5,4,500)
 
-
+-- Estos son para probar el stored procedure que borra superpuestos (ej 5)
+INSERT INTO preciosParaClase VALUES (11,3,1000)
+INSERT INTO preciosParaClase VALUES (11,4,5000)
 
 
 --INSERT INTO usuarios VALUES (username,nombre,apellido,tel,fechaNac,prefer,dir,profesion,mail,hash,idClase,idPaisNacimiento,idClaseFrecuente)
@@ -213,8 +215,6 @@ INSERT INTO haceEscalaEn VALUES (2,1,1)
 INSERT INTO haceEscalaEn VALUES (2,2,2)
 INSERT INTO haceEscalaEn VALUES (3,9,1)
 
-PRINT 'CREANDO RESERVAS'
-
 -- INSERT INTO reservas VALUES (idReserva,idUsuario,tipoPago,fechaCiaducidad,datosViajante,idVueloConEscalas,idClase)
 -- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',1,4)
 -- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',2,4)
@@ -232,7 +232,9 @@ INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',10,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',9,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',7,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',11,4)
---INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',12,4)
+INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',11,3)
+			
+--INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',12,4) -- Este rompe el invariante de reservas no se pisan
 
 INSERT INTO reservas VALUES (7,'efectivo','20160101','Ay dios mío espero que no se caiga esta máquina de Satán voladora',4,2)
 INSERT INTO reservas VALUES (3,'tarjeta','20150301','Voy en primera, pagar Marky Sucker Verg',1,1)
@@ -244,60 +246,3 @@ INSERT INTO reservas VALUES (6,'patacones clase B','20151115','Un avion de la cl
 
 COMMIT TRANSACTION
 GO
-
--- A PARTIR DE ACA ES FRUTA
-
---SELECT usuarios.nombre,reservas.idReserva,vuelosConEscalas.idVueloConEscalas,
---		p.nombre,pp.nombre,vuelosDirectos.fechaLlegada,vuelosDirectos.fechaSalida, 
---		a.idAeropuerto AS idAeropuertoLlegada, aa.idAeropuerto as IdAeropuertoSalida
---FROM usuarios,reservas,vuelosDirectos,paises p, paises pp, vuelosConEscalas, 
---	aeropuertos a, aeropuertos aa, ciudades c, ciudades cc 
---WHERE
---	usuarios.idUsuario = 8 AND reservas.idUsuario = usuarios.idUsuario AND reservas.idVueloConEscalas = vuelosConEscalas.idVueloConEscalas
---	AND (vuelosConEscalas.idVueloLlegada = vuelosDirectos.idVuelo OR vuelosConEscalas.idVueloPartida = vuelosDirectos.idVuelo OR EXISTS
---		(SELECT * FROM haceEscalaEn h WHERE h.idVueloConEscalas = vuelosConEscalas.idVueloConEscalas AND h.idVuelo = vuelosDirectos.idVuelo))
---		AND vuelosDirectos.idAeropuertoLlegada = a.idAeropuerto AND a.idCiudad = c.idCiudad AND c.idPais = p.idPais AND vuelosDirectos.idAeropuertoSalida =
---		aa.idAeropuerto AND aa.idCiudad = cc.idCiudad AND cc.idPais = pp.idPais
-
-	-- SELECT * FROM vuelosConEscalas WHERE vuelosConEscalas.idVueloConEscalas = 13
-
-	--SELECT * FROM vuelosConEscalas ve, vuelosDirectos v, vuelosDirectos vv
-	--	WHERE ve.idVueloConEscalas = 11 AND v.idVuelo = ve.idVueloPartida AND vv.idVuelo = ve.idVueloLlegada
-	--	AND 
-	--	EXISTS -- exista algun vuelo
-	--	(SELECT * FROM vuelosDirectos v 
-	--		WHERE -- tal que
-	--		( -- el vuelo pertenezca al vuelo con escala
-	--			v.idVuelo = ve.idVueloPartida
-	--			OR v.idVuelo = ve.idVueloLLegada
-	--			OR EXISTS  
-	--				(SELECT * FROM HaceEscalaEn he
-	--					WHERE he.idVueloConEscalas = ve.idVueloConEscalas
-	--					AND v.idVuelo = he.idVuelo
-	--				)
-	--		)
-	--		AND
-	--		( -- y ese vuelo este sobrevendido
-	--			EXISTS
-	--			(SELECT * FROM DisponeDeAsientos da
-	--				WHERE v.idAeronave = da.idAeronave
-	--				AND da.idClase = 4
-	--				AND da.asientos <
-	--					( -- contar asientos ocupados de un vuelo/clase
-	--					SELECT COUNT(*) FROM reservas r
-	--						WHERE r.idClase = 4
-	--						AND 
-	--						(EXISTS (SELECT * FROM HaceEscalaEn he2
-	--									WHERE v.idVuelo = he2.idVuelo	
-	--									AND he2.idVueloConEscalas = r.idVueloConEscalas) 
-	--							OR EXISTS 
-	--								(SELECT * FROM vuelosConEscalas ve2
-	--									WHERE ve2.idVueloConEscalas = 
-	--											r.idVueloConEscalas
-	--									AND (v.idVuelo = ve2.idVueloPartida OR v.idVuelo = ve2.idVueloLLegada )
-	--								)
-	--						)
-	--					)
-	--			)
-	--		)
-	--	)

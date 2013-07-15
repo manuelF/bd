@@ -12,3 +12,4 @@ SELECT nombre, apellido, idUsuario FROM usuarios
 						AND ap.idAeropuerto = v.idAeropuertoLlegada
 						AND c.idCiudad = ap.idCiudad
 						AND c.idPais = p.idPais)));
+GO

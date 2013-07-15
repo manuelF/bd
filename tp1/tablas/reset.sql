@@ -1,4 +1,5 @@
 USE Aerolinea
+GO
 
 /* Drop all non-system stored procs */
 DECLARE @name VARCHAR(128)
