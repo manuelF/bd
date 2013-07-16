@@ -73,19 +73,19 @@ INSERT INTO aeronaves VALUES ('Capitan Han Solo',99999,'Millenium Falcon',6)
 INSERT INTO aeronaves VALUES ('Baron Rojo',99999,'Fokker Dr 1',1)
 
 -- INSERT INTO vuelosDirectos VALUES (idVuelo,idAeronave,fechaSalida,fechaLlegada,idAeropuertoSalida,idAeropuertoLlegada)
-INSERT INTO vuelosDirectos VALUES (1,'20000101','20000102',1,2)
-INSERT INTO vuelosDirectos VALUES (1,'20010101','20010102',2,4)
-INSERT INTO vuelosDirectos VALUES (1,'20020101','20020102',4,3)
-INSERT INTO vuelosDirectos VALUES (2,'20030101','20030102',4,2)
-INSERT INTO vuelosDirectos VALUES (2,'20040101','20040102',1,6)
-INSERT INTO vuelosDirectos VALUES (4,'20050101','20050102',3,4)
-INSERT INTO vuelosDirectos VALUES (5,'20060101','20060102',9,1)
-INSERT INTO vuelosDirectos VALUES (6,'20070101','20070102',4,8)
-INSERT INTO vuelosDirectos VALUES (7,'20080101','20080102',8,4)
-INSERT INTO vuelosDirectos VALUES (7,'20090101','20090102',6,5)
-INSERT INTO vuelosDirectos VALUES (3,'20100101','20100102',5,7)
-INSERT INTO vuelosDirectos VALUES (2,'20110101','20110102',7,8)
-INSERT INTO vuelosDirectos VALUES (1,'20120101','20120102',8,9)
+INSERT INTO vuelosDirectos VALUES (1,'20000101','20000102',1,2) -- 1
+INSERT INTO vuelosDirectos VALUES (1,'20010101','20010102',2,4) -- 2
+INSERT INTO vuelosDirectos VALUES (1,'20020101','20020102',4,3) -- 3
+INSERT INTO vuelosDirectos VALUES (2,'20030101','20030102',4,2) -- 4
+INSERT INTO vuelosDirectos VALUES (2,'20040101','20040102',1,6) -- 5
+INSERT INTO vuelosDirectos VALUES (4,'20050101','20050102',3,4) -- 6
+INSERT INTO vuelosDirectos VALUES (5,'20060101','20060102',9,1) -- 7
+INSERT INTO vuelosDirectos VALUES (6,'20070101','20070102',4,8) -- 8
+INSERT INTO vuelosDirectos VALUES (7,'20080101','20080102',8,4) -- 9
+INSERT INTO vuelosDirectos VALUES (7,'20090101','20090102',6,5) -- 10
+INSERT INTO vuelosDirectos VALUES (3,'20100101','20100102',5,7) -- 11
+INSERT INTO vuelosDirectos VALUES (2,'20110101','20110102',7,8) -- 12
+INSERT INTO vuelosDirectos VALUES (1,'20120101','20120102',8,9) -- 13
 INSERT INTO vuelosDirectos VALUES (1,'20120101','20120103',3,2) --Con esto crashea el trigger de no superponer
 INSERT INTO vuelosDirectos VALUES (8,'20120101','20120102',8,9) --Con esto crashea el trigger de no sobrevender
 
@@ -232,7 +232,7 @@ INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',10,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',9,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',7,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',11,4)
-INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',11,3)
+-- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',11,3)
 			
 --INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',12,4) -- Este rompe el invariante de reservas no se pisan
 
