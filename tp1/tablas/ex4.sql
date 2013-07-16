@@ -11,7 +11,7 @@ AS
 		-- y bajaron. Para eso usamos una columna extra, total
 		SELECT	ISNULL(lhs.aeropuerto,rhs.aeropuerto) AS aeropuerto,
 				ISNULL(lhs.mes,rhs.mes) AS mes,
-				ISNULL(lhs.anio,rhs.anio) AS año,
+				ISNULL(lhs.anio,rhs.anio) AS anio,
 				ISNULL(entraron,0) AS entraron,
 				ISNULL(salieron,0) AS salieron,
 				ISNULL(entraron,0)+ISNULL(salieron,0) AS total 

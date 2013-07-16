@@ -9,7 +9,7 @@
 
 			\item Resoluci\'on:
 
-			\lstinputlisting{primeraConsulta.sql}
+			\lstinputlisting{../tablas/ex1.sql}
 		\end{itemize}
 	\item Segunda funcionalidad:
 		\begin{itemize}
@@ -20,7 +20,7 @@
 			de los pr\'oximos 7 d\'ias.
 			\item Resultado: Vamos a utilizar un \textit{trigger}:
 
-			\lstinputlisting{segundaConsulta.sql}
+			\lstinputlisting{../tablas/ex2.sql}
 		\end{itemize}
 	\item Tercera funcionalidad:
 		\begin{itemize}
@@ -35,7 +35,40 @@
 
 			Esta restricci\'on la implementamos mediante un \textit{trigger} en la inserci\'on de una reserva. 
 			
-			\lstinputlisting{terceraConsulta.sql}
+			\lstinputlisting{../tablas/ex3.sql}
 		\end{itemize}
+	
+	\item Cuarta funcionalidad:
+		\begin{itemize}
+			\item Enunciado: Obtener un reporte que como m\'inimo contenga: Todos los c\'odigos identificatorios de los
+			aeropuertos, un per\'iodo de tiempo de la forma a\~no/mes, la cantidad de pasajeros que ascendieron y
+			descendieron en ese aeropuerto durante el per\'iodo. El reporte debe estar ordenado por la cantidad total de personas
+			que viajaron. Y debe ser ejecutado para un rango de fechas. Aclaraci\'on: dependiendo del rango de fechas, para
+			un mismo aeropuerto pueden aparecer varios per\'iodos distintos.
+
+		\item Resultado: Para este caso usamos tambi\'en un \textit{stored procedure}.
+			Para producir este reporte, consideramos que un pasajero pis\'o un aeropuerto si tiene una reserva
+			para un vuelo con escalas tal que tiene un vuelo que llega (o sale de, seg\'un corresponda) entre las fechas que se
+			pasan como par\'ametro. Si un vuelo con escalas tiene varias escalas en ese aeropuerto, se considera una vez.
+
+			\lstinputlisting{../tablas/ex4.sql}
+		\end{itemize}
+
+	\item Quinta funcionalidad:
+		\begin{itemize}
+			\item Enunciado: Para las reservas superpuestas que se permiten en el punto anterior (ver funcionalidad n\'umero
+			2), se debe contar con una funcionalidad que cancele una de las reservas duplicadas (la m\'as econ\'omica) cuando
+			la fecha de partida se encuentre dentro de los pr\'oximos 7 d\'ias.
+
+		\item Resultado: Implementamos la funcionalidad como un \textit{stored procedure}. El mismo recibe el id de una reserva y
+			elimina la reserva m\'as barata que coincide con ella que se encuentre dentro de los pr\'oximos 7 d\'ias de la
+			misma y que tenga el mismo aeropuerto de salida y llegada, y la misma fecha de partida del primer vuelo y de
+			llegada del \'ultimo vuelo. La raz\'on por la que se implement\'o esto as\'i es porque el caso de uso que vimos para
+			esta funcionalidad es, dado que un usuario quiere registrar una reserva nueva, se le informa que tiene otra reserva
+			que se superpone a esa y entonces indica que quiere cancelarla.
+
+			\lstinputlisting{../tablas/ex5.sql}
+		\end{itemize}
+
 \end{itemize}
 

@@ -20,11 +20,10 @@ CK corresponde a \textit{Candidate Key} o \textit{Clave candidata}, y FK corresp
 			\item \textit{PK = CK: } (idUsuario,idCiudad)
 			\item \textit{FK:} idUsuario,idCiudad
 		\end{itemize}
-	\item \textbf{Tarjeta}(\underline{\dashuline{idUsuario},idTarjeta},empresa,nroTarjeta,
-	codigoSeguridad,direccion)
+	\item \textbf{Tarjeta}(\underline{nroTarjeta,idUsuario,empresa,codigoSeguridad,direccion)
 		\begin{itemize}
-			\item \textit{PK:} (idUsuario,idTarjeta)
-			\item \textit{CK:} (idUsuario,idTarjeta), (idUsuario,empresa,nroTarjeta)
+			\item \textit{PK:} (empresa,nroTarjeta)
+			\item \textit{CK:} (empresa,nroTarjeta)
 			\item \textit{FK:} idUsuario
 		\end{itemize}
 	\item \textbf{Reservas}(\underline{idReserva},\dashuline{idUsuario},tipoPago,fechaCaducidad, datosViajante,

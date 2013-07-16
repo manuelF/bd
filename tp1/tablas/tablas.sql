@@ -106,7 +106,7 @@ CREATE TABLE tarjetas(
 	empresa VARCHAR(255),
 	codigoSeguridad INTEGER NOT NULL,
 	direccion VARCHAR(255),
-    PRIMARY KEY (nroTarjeta)        
+    PRIMARY KEY (nroTarjeta,empresa)        
 );
 
 CREATE TABLE vuelosConEscalas(
