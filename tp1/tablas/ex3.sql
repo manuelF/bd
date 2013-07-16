@@ -8,13 +8,17 @@ GO
 CREATE TRIGGER RestringirCupo ON reservas
 	AFTER INSERT
 AS
+	-- Buscamos si existe un viaje dentro del viaje con escalas de la
+	-- nueva reserva tal que este sobrevendido para la clase de esta reserva
+	-- Para eso vemos si
 	IF EXISTS (SELECT * FROM vuelosConEscalas ve,inserted as new
 		WHERE ve.idVueloConEscalas = new.idVueloConEscalas
 		AND 
 		EXISTS -- exista algun vuelo
 		(SELECT * FROM vuelosDirectos v 
 			WHERE -- tal que
-			( -- el vuelo pertenezca al vuelo con escala
+			( -- el vuelo pertenezca al vuelo con escala de la reserva
+			  -- nueva que se creo
 				v.idVuelo = ve.idVueloPartida
 				OR v.idVuelo = ve.idVueloLLegada
 				OR EXISTS  
@@ -24,13 +28,16 @@ AS
 					)
 			)
 			AND
-			( -- y ese vuelo este sobrevendido
+			( -- y ese vuelo este sobrevendido, o sea
+			  -- que la cantidad de asientos sea menor que la cantidad de reservas
+			  -- que tengan a ese vuelo
 				EXISTS
 				(SELECT * FROM DisponeDeAsientos da
 					WHERE v.idAeronave = da.idAeronave
 					AND da.idClase = new.idClase
 					AND da.asientos <
-						( -- contar asientos ocupados de un vuelo/clase
+						( -- contar asientos ocupados para la clase que estamos viendo
+						  -- y que tenga este vuelo entre sus vuelos con escalas
 						SELECT COUNT(*) FROM reservas r
 							WHERE r.idClase = new.idClase
 							AND 

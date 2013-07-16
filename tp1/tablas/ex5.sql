@@ -15,7 +15,7 @@ AS
 	
 	DECLARE @usuario INTEGER
 
-	-- Conseguimos el usuario
+	-- Conseguimos el usuario de la reserva nueva
 	SELECT @usuario=reservas.idUsuario FROM reservas 
 	WHERE reservas.idReserva=@idReserva
 	
@@ -35,6 +35,9 @@ AS
 
 	DECLARE @reservaABorrar AS INT;
 
+	-- Borramos la reserva que se superponga en los proximos 7 dias, tenga
+	-- mismo aeropuerto de llegada y salida y misma fecha de llegada y salida
+	-- y que sea la mas barata
 	SELECT TOP 1 @reservaABorrar=r.idReserva 
 		FROM reservas r, vuelosDirectos v, vuelosDirectos vv, 
 				vuelosConEscalas ve, preciosParaClase ppc

@@ -41,6 +41,13 @@ AS
 	-- Nos fijamos si una reserva con distinto aeropuerto 
 	-- se superpone. Para eso obtenemos todas las que se superponen
 	-- y les sacamos las que tienen el mismo aeropuerto 	
+
+	-- Para eso obtenemos todas las reservas que se superponen, y le sacamos
+	-- a ese conjunto las que tienen igual aeropuerto y fecha de llegada e igual
+	-- aeropuerto y fecha de salida.
+	
+	-- Para obtener las que cumplen las dos cosas, en este caso decidimos usar una
+	-- interseccion de resultados
 	SELECT r.idReserva AS idReserva
 		-- Reservas que se superponen
 		FROM reservas r,vuelosDirectos v,vuelosConEscalas ve,haceEscalaEn he
@@ -64,6 +71,7 @@ AS
 				AND v.fechaSalida = @fechaSalida
 				AND ve.idVueloConEscalas = r.idVueloConEscalas
 				AND r.idUsuario = @usuario
+		 -- Las intersecamos con
 		 INTERSECT
 		 -- Reservas que tienen el mismo aeropuerto de llegada y misma fecha de llegada
 		 SELECT r.idReserva AS idReserva
@@ -84,6 +92,7 @@ AS
 	
 	-- Nos fijamos si hay mas de 2 reservas con esa fecha 
 	-- de partida y llegada e iguales aeropuertos de salida y llegada
+	-- Esto se hace de igual manera que antes
 	SELECT r.idReserva
 		FROM reservas r,vuelosDirectos v,vuelosConEscalas ve
 		WHERE r.idVueloConEscalas = ve.idVueloConEscalas
