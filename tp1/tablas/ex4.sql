@@ -19,7 +19,7 @@ AS
 			-- Calculamos, para cada aeropuerto, cuantos viajes hay tales que tengan
 			-- una reserva asociada y que haya aterrizado entre las fechas pedidas, y
 			-- en el que el aeropuerto de llegada sea el aeropuerto pedido. Agrupamos
-			-- el resultado por año y mes
+			-- el resultado por anio y mes
 			(SELECT A.idAeropuerto AS aeropuerto, MONTH(v.fechaLlegada) AS mes, 
 				YEAR(v.fechaLlegada) AS anio, 
 				COUNT(*) AS entraron 
@@ -47,7 +47,7 @@ AS
 			-- Calculamos, para cada aeropuerto, cuantos viajes hay tales que tengan
 			-- una reserva asociada y que haya aterrizado entre las fechas pedidas, y
 			-- en el que el aeropuerto de salida sea el aeropuerto pedido. Agrupamos
-			-- el resultado por año y mes
+			-- el resultado por anio y mes
 			
 			(SELECT A.idAeropuerto AS aeropuerto, MONTH(v.fechaSalida) AS mes, 
 				YEAR(v.fechaSalida) AS anio, 

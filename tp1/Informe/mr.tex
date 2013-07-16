@@ -20,7 +20,7 @@ CK corresponde a \textit{Candidate Key} o \textit{Clave candidata}, y FK corresp
 			\item \textit{PK = CK: } (idUsuario,idCiudad)
 			\item \textit{FK:} idUsuario,idCiudad
 		\end{itemize}
-	\item \textbf{Tarjeta}(\underline{nroTarjeta,idUsuario,empresa,codigoSeguridad,direccion)
+	\item \textbf{Tarjeta}(\underline{idUsuario},nroTarjeta,empresa,\dashuline{idUsuario},codigoSeguridad,direccion)
 		\begin{itemize}
 			\item \textit{PK:} (empresa,nroTarjeta)
 			\item \textit{CK:} (empresa,nroTarjeta)

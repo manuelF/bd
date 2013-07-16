@@ -32,7 +32,6 @@ CREATE TABLE telefonosAeropuertos(
     PRIMARY KEY(idAeropuerto,numero)
 );
 
-
 CREATE TABLE clases(
 	idClase INTEGER IDENTITY NOT NULL,
 	nombre VARCHAR(255) NOT NULL,
@@ -101,12 +100,13 @@ CREATE TABLE ciudadesFavoritas(
 
 
 CREATE TABLE tarjetas(
+	idUsuario INTEGER IDENTITY NOT NULL,
 	nroTarjeta INTEGER NOT NULL,
 	idUsuario INTEGER NOT NULL FOREIGN KEY REFERENCES usuarios(idUsuario),
 	empresa VARCHAR(255),
 	codigoSeguridad INTEGER NOT NULL,
 	direccion VARCHAR(255),
-    PRIMARY KEY (nroTarjeta,empresa)        
+    PRIMARY KEY (idUsuario)        
 );
 
 CREATE TABLE vuelosConEscalas(
