@@ -171,7 +171,7 @@ INSERT INTO usuarios VALUES ('elLocoDeLaMotosierra','Julián','Sackmann',4567183
 INSERT INTO usuarios VALUES ('gbengolea','Gastón','Bengolea',71627489,'19881107','preferenciasDeGasti','Libertador 1234','Vago','gasti@bengolea.com',875132975,1,4)
 INSERT INTO usuarios VALUES ('elMatiDeAltamira','Matías','Bender',71628411,'19900822','preferenciasDeMati','Por Ahí 1211','Responde preguntas por mail','watibender@pomail.com',919191919,1,1)
 INSERT INTO usuarios VALUES ('arcangelGabriel','Vanesa','Stricker',14142625,'19900607','preferenciasDeVane','Quilmes 1122','Monitos o algo asi','vane@monits.com',816351277,1,3)
-INSERT INTO usuarios VALUES ('lasMonadasDeTuHermana','Federico','Lebrón',99999987,'19880116','preferenciasDeLebron','Google 1133','Google it','flebron@gugl.com',999999999,1,2)
+INSERT INTO usuarios VALUES ('lasMonadasLocas','Federico','Lebrón',99999987,'19880116','preferenciasDeLebron','Google 1133','Google it','flebron@gugl.com',999999999,1,2)
 
 
 --INSERT INTO tarjetas VALUES (nroTarjeta,idUsuario,empresa,codigoSeg,dir)
@@ -222,9 +222,6 @@ INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',9,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',7,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',11,4)
--- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',11,3)
-			
---INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',12,4) -- Este rompe el invariante de reservas no se pisan
 
 INSERT INTO reservas VALUES (7,'efectivo','20160101','Ay dios mío espero que no se caiga esta máquina de Satán voladora',4,2)
 INSERT INTO reservas VALUES (3,'tarjeta','20150301','Voy en primera, pagar Marky',1,1)
@@ -232,7 +229,41 @@ INSERT INTO reservas VALUES (2,'lecop','20150301','Necesito que me paralelicen e
 INSERT INTO reservas VALUES (1,'CEDIN','20160402','En el vuelo quiero un tecito y un bajo',3,2)
 INSERT INTO reservas VALUES (6,'patacones clase B','20151115','Un avion de la clase popular y obrera. Pero viajo en primera',2,1)
 
---INSERT INTO reservas VALUES (6,'patacones clase B','20151115','Quiero un avion donde no pueda viajar',13,1) -- Esta rompe el invariante de asientos
+-- TEST EJERCICIO 1: Correr la query directamente desde ex1.sql
+-- El resultado debiera ser el usuario Federico Lebron (numero 8)
+
+-- TEST EJERCICIO 2:
+
+--INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',12,4) -- Este insert rompe el invariante de reservas no se pisan (ex2)
+
+-- Ejecute el primer insert y luego el segundo insert
+-- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',11,3) -- Hacer esto no deberia romper porque estan juntas
+-- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',11,3) -- Hacer esto este y el anterior si, rompe ex2
+
+-- TEST EJERCICIO 3:
+
+--INSERT INTO reservas VALUES (6,'patacones clase B','20151115','Quiero un avion donde no pueda viajar',13,1) -- Esta rompe el invariante de asientos (ex3)
+
+-- TEST EJERCICIO 4
+--CREATE TABLE #temp(aeropuerto INTEGER, mes INTEGER, anio INTEGER, entraron INTEGER, salieron INTEGER, total INTEGER);
+--INSERT INTO #temp EXEC reporteAeropuertosPorRango @inicio='1900-01-01', @fin='9999-01-01'
+--SELECT aeropuerto,SUM(entraron),SUM(salieron) FROM #temp GROUP BY aeropuerto
+--DROP TABLE #temp
+--El resultado debiera ser igual a la tabla en el informe
+
+-- TEST EJERCICIO 5
+-- Ejecute lo siguiente
+--INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',11,3) -- Hacer esto no deberia romper porque estan juntas
+--SELECT idReserva, precio FROM reservas,preciosParaClase 
+--WHERE reservas.idUsuario = 8 AND 
+--	preciosParaClase.idVueloConEscalas = reservas.idVueloConEscalas AND
+--	preciosParaClase.idClase = reservas.idClase
+--EXEC cancelarReservaDuplicada @idReserva=6
+--SELECT idReserva, precio FROM reservas,preciosParaClase 
+--WHERE reservas.idUsuario = 8 AND 
+--	preciosParaClase.idVueloConEscalas = reservas.idVueloConEscalas AND
+--	preciosParaClase.idClase = reservas.idClase
+-- Debiera borrar la reserva numero 12
 
 COMMIT TRANSACTION
 GO

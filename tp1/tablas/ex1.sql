@@ -1,4 +1,5 @@
 USE Aerolinea;
+GO
 
 SELECT nombre, apellido, idUsuario FROM usuarios
 	WHERE idUsuario IN (
