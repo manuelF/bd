@@ -70,7 +70,7 @@ CREATE TABLE usuarios(
 	telefono INTEGER,
 	fechaNacimiento DATE,
 	preferencias VARCHAR(255),
-	dirección VARCHAR(255),
+	direccion VARCHAR(255),
 	profesion VARCHAR(255),
 	email VARCHAR(255),
 	clavehash VARCHAR(255),

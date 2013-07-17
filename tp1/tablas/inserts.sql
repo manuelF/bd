@@ -6,7 +6,7 @@ BEGIN TRANSACTION
 INSERT INTO clases VALUES ('Primera')
 INSERT INTO clases VALUES ('Buisness')
 INSERT INTO clases VALUES ('Turista')
-INSERT INTO clases VALUES ('Económica')
+INSERT INTO clases VALUES ('Economica')
 
 
 -- INSERT INTO paises VALUES (idPais,nombre)
@@ -20,7 +20,7 @@ INSERT INTO paises VALUES ('Qatar')
 
 -- INSERT INTO ciudades VALUES (idCiudad,nombre,idPais)
 INSERT INTO ciudades VALUES ('Buenos Aires',1)
-INSERT INTO ciudades VALUES ('Córdoba',1)
+INSERT INTO ciudades VALUES ('Cordoba',1)
 INSERT INTO ciudades VALUES ('Londres',3)
 INSERT INTO ciudades VALUES ('New York',2)
 INSERT INTO ciudades VALUES ('Montevideo',5)
@@ -165,24 +165,24 @@ INSERT INTO preciosParaClase VALUES (11,4,5000)
 
 --INSERT INTO usuarios VALUES (username,nombre,apellido,tel,fechaNac,prefer,dir,profesion,mail,hash,idClase,idPaisNacimiento,idClaseFrecuente)
 INSERT INTO usuarios VALUES ('odioElTecladoDeLasMac','Juampi','Darago',41238894,'19910114','preferenciasDeJuampi','Santa Fe 1234','Vago','jpdarago@gmail.com',123123123,1,2)
-INSERT INTO usuarios VALUES ('elManuDeLaGente','Manu','Ferrería',47896512,'19891231','preferenciasDeManu','Cabildo 1331','Vago','mferreria@gmail.com',172834961,1,3)
+INSERT INTO usuarios VALUES ('elManuDeLaGente','Manu','Ferreria',47896512,'19891231','preferenciasDeManu','Cabildo 1331','Vago','mferreria@gmail.com',172834961,1,3)
 INSERT INTO usuarios VALUES ('agauna','Pablo','Gauna',478912342,'19880815','preferenciasDePablo','Lejos 12314','Vago pero en Facebook','pagauna@gmail.com',721343214,1,1)
-INSERT INTO usuarios VALUES ('elLocoDeLaMotosierra','Julián','Sackmann',45671832,'19891226','preferenciasDeJuli','Cerca 11123','Vago','jsackmann@gmail.com',987656753,1,1)
-INSERT INTO usuarios VALUES ('gbengolea','Gastón','Bengolea',71627489,'19881107','preferenciasDeGasti','Libertador 1234','Vago','gasti@bengolea.com',875132975,1,4)
-INSERT INTO usuarios VALUES ('elMatiDeAltamira','Matías','Bender',71628411,'19900822','preferenciasDeMati','Por Ahí 1211','Responde preguntas por mail','watibender@pomail.com',919191919,1,1)
+INSERT INTO usuarios VALUES ('elLocoDeLaMotosierra','Julian','Sackmann',45671832,'19891226','preferenciasDeJuli','Cerca 11123','Vago','jsackmann@gmail.com',987656753,1,1)
+INSERT INTO usuarios VALUES ('gbengolea','Gaston','Bengolea',71627489,'19881107','preferenciasDeGasti','Libertador 1234','Vago','gasti@bengolea.com',875132975,1,4)
+INSERT INTO usuarios VALUES ('elMatiDeAltamira','Matias','Bender',71628411,'19900822','preferenciasDeMati','Por Ahi 1211','Responde preguntas por mail','watibender@pomail.com',919191919,1,1)
 INSERT INTO usuarios VALUES ('arcangelGabriel','Vanesa','Stricker',14142625,'19900607','preferenciasDeVane','Quilmes 1122','Monitos o algo asi','vane@monits.com',816351277,1,3)
-INSERT INTO usuarios VALUES ('lasMonadasLocas','Federico','Lebrón',99999987,'19880116','preferenciasDeLebron','Google 1133','Google it','flebron@gugl.com',999999999,1,2)
+INSERT INTO usuarios VALUES ('lasMonadasLocas','Federico','Lebron',99999987,'19880116','preferenciasDeLebron','Google 1133','Google it','flebron@gugl.com',999999999,1,2)
 
 
 --INSERT INTO tarjetas VALUES (nroTarjeta,idUsuario,empresa,codigoSeg,dir)
 INSERT INTO tarjetas VALUES (75342,1,'Santander Rio',444,'Cangrejos 1211')
 INSERT INTO tarjetas VALUES (91343,2,'HSBC',865,'Cangrejos 1211')
 INSERT INTO tarjetas VALUES (12321,3,'Santander Rio',998,'Cabildo 1331')
-INSERT INTO tarjetas VALUES (98786,4,'Patagonia',444,'Lejos 12314') --¿Mismo cod de seg?
-INSERT INTO tarjetas VALUES (62435,5,'Santander Rio',123,'Google 1133') --¿Mismo nro de tarjeta?
+INSERT INTO tarjetas VALUES (98786,4,'Patagonia',444,'Lejos 12314') --Mismo cod de seg?
+INSERT INTO tarjetas VALUES (62435,5,'Santander Rio',123,'Google 1133') --Mismo nro de tarjeta?
 INSERT INTO tarjetas VALUES (88876,6,'City Bank',111,'Lejos 1211')
 INSERT INTO tarjetas VALUES (44444,7,'Banco de Google',666,'Google 1113')
-INSERT INTO tarjetas VALUES (55523,8,'Nación',543,'Santa Fe 1234')
+INSERT INTO tarjetas VALUES (55523,8,'Nacion',543,'Santa Fe 1234')
 
 --INSERT INTO ciudadesFavoritas VALUES (idUsuario,idCiudad)
 INSERT INTO ciudadesFavoritas VALUES (1,1)
@@ -223,7 +223,7 @@ INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',7,4)
 INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',11,4)
 
-INSERT INTO reservas VALUES (7,'efectivo','20160101','Ay dios mío espero que no se caiga esta máquina de Satán voladora',4,2)
+INSERT INTO reservas VALUES (7,'efectivo','20160101','Ay dios mio espero que no se caiga esta maquina de Satan voladora',4,2)
 INSERT INTO reservas VALUES (3,'tarjeta','20150301','Voy en primera, pagar Marky',1,1)
 INSERT INTO reservas VALUES (2,'lecop','20150301','Necesito que me paralelicen el viaje',5,3)
 INSERT INTO reservas VALUES (1,'CEDIN','20160402','En el vuelo quiero un tecito y un bajo',3,2)
