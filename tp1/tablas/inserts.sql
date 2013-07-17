@@ -1,13 +1,3 @@
-
- --  ____                              _                   _ _           _           
- -- |  _ \                            | |                 (_) |         | |          
- -- | |_) | ___  _ __ _ __ __ _ _ __  | | __ _ ___    __ _ _| | __ _  __| | __ _ ___ 
- -- |  _ < / _ \| '__| '__/ _` | '__| | |/ _` / __|  / _` | | |/ _` |/ _` |/ _` / __|
- -- | |_) | (_) | |  | | | (_| | |    | | (_| \__ \ | (_| | | | (_| | (_| | (_| \__ \
- -- |____/ \___/|_|  |_|  \__,_|_|    |_|\__,_|___/  \__, |_|_|\__,_|\__,_|\__,_|___/
- --                                                   __/ |                          
- --                                                  |___/                           
- 
 USE Aerolinea;
 
 BEGIN TRANSACTION
@@ -174,14 +164,14 @@ INSERT INTO preciosParaClase VALUES (11,4,5000)
 
 
 --INSERT INTO usuarios VALUES (username,nombre,apellido,tel,fechaNac,prefer,dir,profesion,mail,hash,idClase,idPaisNacimiento,idClaseFrecuente)
-INSERT INTO usuarios VALUES ('odioElTecladoDeLasMac','Juampi','Darago',41238894,'19910114','preferenciasDeJuampi','Santa Fe 1234','Vago','jpdarago@tuhermana.com',123123123,1,2)
-INSERT INTO usuarios VALUES ('elManuDeLaGente','Manu','Ferrería',47896512,'19891231','preferenciasDeManu','Cabildo 1331','Vago','mferreria@tuhermana.com',172834961,1,3)
-INSERT INTO usuarios VALUES ('agauna','Pablo','Gauna',478912342,'19880815','preferenciasDePablo','Lejos 12314','Vago pero en Facebook','pagauna@tuhermana.com',721343214,1,1)
-INSERT INTO usuarios VALUES ('elLocoDeLaMotosierra','Julián','Sackmann',45671832,'19891226','preferenciasDeJuli','Cerca 11123','Vago y boludo','quepajaesto@tuvieja.com',987656753,1,1)
-INSERT INTO usuarios VALUES ('gbengolea','Gastón','Bengolea',71627489,'19881107','preferenciasDeGasti','Libertador 1234','Vago','elena@tuvieja.com',875132975,1,4)
-INSERT INTO usuarios VALUES ('elWatiDeAltamira','Matías','Bender',71628411,'19900822','preferenciasDeMati','Por Ahí 1211','Responde preguntas por mail','watibender@tutia.com',919191919,1,1)
-INSERT INTO usuarios VALUES ('arcangelGabriel','Vanesa','Stricker',14142625,'19900607','preferenciasDeVane','Quilmes 1122','Monitos o algo asi','nuestroseñorjesucristo@dios.com',816351277,1,3)
-INSERT INTO usuarios VALUES ('lasMonadasDeTuHermana','Federico','Lebrón',99999987,'19880116','preferenciasDeLebron','Google 1133','Decir giladas','lebron@tuhermana.com',999999999,1,2)
+INSERT INTO usuarios VALUES ('odioElTecladoDeLasMac','Juampi','Darago',41238894,'19910114','preferenciasDeJuampi','Santa Fe 1234','Vago','jpdarago@gmail.com',123123123,1,2)
+INSERT INTO usuarios VALUES ('elManuDeLaGente','Manu','Ferrería',47896512,'19891231','preferenciasDeManu','Cabildo 1331','Vago','mferreria@gmail.com',172834961,1,3)
+INSERT INTO usuarios VALUES ('agauna','Pablo','Gauna',478912342,'19880815','preferenciasDePablo','Lejos 12314','Vago pero en Facebook','pagauna@gmail.com',721343214,1,1)
+INSERT INTO usuarios VALUES ('elLocoDeLaMotosierra','Julián','Sackmann',45671832,'19891226','preferenciasDeJuli','Cerca 11123','Vago','jsackmann@gmail.com',987656753,1,1)
+INSERT INTO usuarios VALUES ('gbengolea','Gastón','Bengolea',71627489,'19881107','preferenciasDeGasti','Libertador 1234','Vago','gasti@bengolea.com',875132975,1,4)
+INSERT INTO usuarios VALUES ('elMatiDeAltamira','Matías','Bender',71628411,'19900822','preferenciasDeMati','Por Ahí 1211','Responde preguntas por mail','watibender@pomail.com',919191919,1,1)
+INSERT INTO usuarios VALUES ('arcangelGabriel','Vanesa','Stricker',14142625,'19900607','preferenciasDeVane','Quilmes 1122','Monitos o algo asi','vane@monits.com',816351277,1,3)
+INSERT INTO usuarios VALUES ('lasMonadasDeTuHermana','Federico','Lebrón',99999987,'19880116','preferenciasDeLebron','Google 1133','Google it','flebron@gugl.com',999999999,1,2)
 
 
 --INSERT INTO tarjetas VALUES (nroTarjeta,idUsuario,empresa,codigoSeg,dir)
@@ -216,28 +206,28 @@ INSERT INTO haceEscalaEn VALUES (2,2,2)
 INSERT INTO haceEscalaEn VALUES (3,9,1)
 
 -- INSERT INTO reservas VALUES (idReserva,idUsuario,tipoPago,fechaCiaducidad,datosViajante,idVueloConEscalas,idClase)
--- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',1,4)
--- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',2,4)
--- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',3,4)
--- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',4,4)
--- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',5,4)
--- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',6,4)
--- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',7,4)
--- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',8,4)
--- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',9,4)
--- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',10,4)
-INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',4,4)
-INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',8,4)
-INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',10,4)
-INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',9,4)
-INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',7,4)
-INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',11,4)
--- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',11,3)
+-- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',1,4)
+-- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',2,4)
+-- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',3,4)
+-- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',4,4)
+-- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',5,4)
+-- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',6,4)
+-- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',7,4)
+-- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',8,4)
+-- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',9,4)
+-- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',10,4)
+INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',4,4)
+INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',8,4)
+INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',10,4)
+INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',9,4)
+INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',7,4)
+INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',11,4)
+-- INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',11,3)
 			
---INSERT INTO reservas VALUES (8,'tarjeta','20150101','Este es homosexual',12,4) -- Este rompe el invariante de reservas no se pisan
+--INSERT INTO reservas VALUES (8,'tarjeta','20150101','Solo acepto Google Airlines',12,4) -- Este rompe el invariante de reservas no se pisan
 
 INSERT INTO reservas VALUES (7,'efectivo','20160101','Ay dios mío espero que no se caiga esta máquina de Satán voladora',4,2)
-INSERT INTO reservas VALUES (3,'tarjeta','20150301','Voy en primera, pagar Marky Sucker Verg',1,1)
+INSERT INTO reservas VALUES (3,'tarjeta','20150301','Voy en primera, pagar Marky',1,1)
 INSERT INTO reservas VALUES (2,'lecop','20150301','Necesito que me paralelicen el viaje',5,3)
 INSERT INTO reservas VALUES (1,'CEDIN','20160402','En el vuelo quiero un tecito y un bajo',3,2)
 INSERT INTO reservas VALUES (6,'patacones clase B','20151115','Un avion de la clase popular y obrera. Pero viajo en primera',2,1)

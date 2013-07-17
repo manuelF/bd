@@ -12,12 +12,11 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{fancyhdr}
-\usepackage[activeacute, spanish]{babel}
+\usepackage[activeacute, spanish,english]{babel}
 \usepackage{cancel}
 \usepackage[utf8]{inputenc}
 \usepackage{algorithm}
-\usepackage{algpseudocode}
+%\usepackage{algpseudocode}
 \usepackage{afterpage}
 \usepackage{caratula}
 \usepackage{url}
@@ -26,6 +25,10 @@
 \usepackage{ulem}
 \usepackage{dashrule}
 \usepackage{pdflscape}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
+
 
 \floatname{algorithm}{Algoritmo}
 
@@ -41,22 +44,11 @@
 \newcommand{\Continue}{\textbf{continue }}
 \newcommand{\Param}{\textbf{param }}
 
-\newenvironment{proof}[1][Demostraci\'on]{\begin{trivlist}
-\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-\newenvironment{definition}[1][Definici\'on]{\begin{trivlist}
-\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-\newenvironment{example}[1][Ejemplo]{\begin{trivlist}
-\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-\newenvironment{remark}[1][Observaci\'on]{\begin{trivlist}
-\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
 
-\newcommand{\qed}{\nobreak \ifvmode \relax \else
-      \ifdim\lastskip<1.5em \hskip-\lastskip
-      \hskip1.5em plus0em minus0.5em \fi \nobreak
-      \vrule height0.75em width0.5em depth0.25em\fi}
+
 
 \parindent 0em
-\algrenewcommand{\algorithmiccomment}[1]{//\textit{#1} }
+%\algrenewcommand{\algorithmiccomment}[1]{//\textit{#1} }
 
 \lstset{language=sql,numbers=left,tabsize=2,
 	morekeywords={BEGIN,DECLARE,FOR,CREATE,PROCEDURE,RAISEERROR,EACH,ROW,BEFORE,AFTER,MINUS,IF},
@@ -97,10 +89,10 @@
 
 \include{consultas}
 
-\include{conclusiones}
+\include{basepruebas}
 
 \begin{landscape}
-	\begin{figure}[H]
+	\begin{figure}[h]
 		\caption{Diagrama Entidad Relaci\'on correspondiente al dise\~no del trabajo pr\'actico}
 		\label{fig::der}
 		\includegraphics[width=1.45\textwidth]{der.pdf}
