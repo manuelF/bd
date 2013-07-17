@@ -1,6 +1,6 @@
-
 \section{Pruebas}
 Para realizar los tests se realizó una base con los siguientes viajes. Para simplificar, sólo se muestra la información relevante:
+
 \begin{center}
 	
 \selectlanguage{english}
@@ -23,7 +23,6 @@ Para realizar los tests se realizó una base con los siguientes viajes. Para sim
 	\node[state]         (9) [above left of=fi] {$9$};
 	\node[fill=none,draw=none,text=white,inner sep=0pt]         (i1) [above right of=2] {};
 	\node[fill=none,draw=none,text=white,inner sep=0pt]         (i2) [below of=3] {};
-
 
 	\path (1) edge              node {1} (2)
 	      (2) edge [bend right] node {2} (4)
@@ -48,8 +47,6 @@ Para realizar los tests se realizó una base con los siguientes viajes. Para sim
 \end{tikzpicture}
 \end{center}
 \selectlanguage{spanish}
-
-
 
 Donde los nodos representan los índices de los siguientes aeropuertos:
 \begin{center}
@@ -108,6 +105,7 @@ Los usuarios realizaron las siguientes reservas:
 \end{center}
 
 La consulta SQL del ejercicio 5, modificada de la siguiente forma para claridad de resultados:
+
 \begin{align*}
 	& \text{\texttt{SELECT} aeropuerto, \texttt{SUM}(entrada), \texttt{SUM}(salida)} \\
 	& \text{\texttt{FROM} resultado\_ejercicio\_5} \\
@@ -129,4 +127,3 @@ Debería dar la siguiente tabla:
 		9 & 2 & 2 \\
 	\end{tabular}
 \end{center}
-
